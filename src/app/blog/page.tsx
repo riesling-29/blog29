@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { getAllPostsMetadata } from "@/lib/posts";
-import { formatDate } from "@/utils/formatDate";
+
+// 날짜를 바로 문자열로 표시 (외부 모듈 의존성 제거)
+function formatDateSimple(dateStr: string) {
+  return dateStr;
+}
 
 export const metadata = {
   title: "Blog",
@@ -37,7 +41,7 @@ export default function BlogIndex() {
                 <p className="mt-2 text-sm text-zinc-400">{data.excerpt}</p>
               </div>
               <span className="shrink-0 text-xs text-zinc-500 group-hover:text-emerald-400 transition-colors">
-                {formatDate(data.date)}
+                {formatDateSimple(data.date)}
               </span>
             </div>
           </Link>

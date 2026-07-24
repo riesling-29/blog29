@@ -12,6 +12,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  // Next.js 15/16에서 params는 Promise이므로 반드시 await
   const { slug } = await params;
   const post = getAllPostsMetadata().find((p) => p.slug === slug);
   return {
@@ -21,9 +22,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function PostPage({ params }: PageProps) {
+  // Next.js 15/16에서 params는 Promise이므로 반드시 await
   const { slug } = await params;
   const { data, content } = await getPostContent(slug);
-
+  
   return (
     <article className="max-w-3xl mx-auto px-4 py-12">
       <header className="mb-10">
