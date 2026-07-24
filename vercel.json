@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "github": {
+    "enabled": true,
+    "deploymentType": "autodeploy",
+    "prComments": true
+  }
+}
