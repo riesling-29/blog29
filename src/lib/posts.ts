@@ -33,7 +33,11 @@ export function getAllPostsMetadata() {
 export async function getPostContent(slug: string) {
   const postPath = join(postsDirectory, `${slug}.mdx`);
   const fileContents = readFileSync(postPath, "utf8");
-  const { data, content } = matter(fileContents);
-  const result = await compileMDX({ source: content }) as any;
-  return { data: data as PostData, Content: result.Content };
+  const { data, content: mdxSource } = matter(fileContents);
+  const result = await compileMDX({ source: mdxSource });
+  // compileMDX returns { content: React.ReactElement, frontmatter }
+  return {
+    data: data as PostData,
+    content: result.content as React.ReactElement,
+  };
 }

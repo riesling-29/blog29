@@ -1,0 +1,40 @@
+---
+title: "My Journey Building This Blog"
+date: "2026-07-23"
+excerpt: "A short reflection on setting up the blog platform on Vercel."
+---
+
+# My Journey Building This Blog
+
+Setting up this blog was a fun and educational experience. I wanted something fast, modern, and easy to maintain.
+
+## Why Next.js?
+
+I chose [Next.js](https://nextjs.org) because it offers an excellent developer experience with features like:
+
+- **Server Components** for fast initial loads
+- **File-based routing** for simple navigation
+- **MDX support** for writing rich content
+
+### The MDX Experience
+
+MDX allows me to write blog posts as `.mdx` files, combining Markdown with React components.
+
+```tsx
+export function Greeting({ name }) {
+  return <p>Hello, {name}!</p>;
+}
+```
+
+## Deployment to Vercel
+
+Deploying to Vercel was incredibly straightforward. With a GitHub repository connected, every push triggers an automatic build and deployment.
+
+### What's Next?
+
+- [ ] Add syntax highlighting
+- [ ] Improve SEO metadata
+- [ ] Add a newsletter signup form
+- [ ] Dark mode toggle
+
+Thank you for reading!
