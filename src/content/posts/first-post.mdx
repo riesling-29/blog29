@@ -1,40 +1,48 @@
 ---
-title: "My Journey Building This Blog"
+title: "Vercel에서 Git 기반 블로그가 배포되는 방식"
 date: "2026-07-23"
-excerpt: "A short reflection on setting up the blog platform on Vercel."
+updated: "2026-08-04"
+excerpt: "MDX 파일을 추가한 뒤 Preview와 Production 배포가 만들어지는 흐름을 정리합니다."
+category: "배포"
+tags: ["Vercel", "GitHub", "Next.js"]
+featured: false
+draft: false
 ---
 
-# My Journey Building This Blog
+## 현재 구조
 
-Setting up this blog was a fun and educational experience. I wanted something fast, modern, and easy to maintain.
+이 블로그는 데이터베이스에서 글을 읽지 않습니다. 저장소의 MDX 파일을 Next.js가 빌드할 때 읽고,
+각 파일을 `/blog/파일명` 경로의 정적 페이지로 만듭니다.
 
-## Why Next.js?
-
-I chose [Next.js](https://nextjs.org) because it offers an excellent developer experience with features like:
-
-- **Server Components** for fast initial loads
-- **File-based routing** for simple navigation
-- **MDX support** for writing rich content
-
-### The MDX Experience
-
-MDX allows me to write blog posts as `.mdx` files, combining Markdown with React components.
-
-```tsx
-export function Greeting({ name }) {
-  return <p>Hello, {name}!</p>;
-}
+```text
+MDX 파일 추가
+  → Git 커밋
+  → GitHub 브랜치에 push
+  → Vercel이 Next.js 빌드
+  → Preview 또는 Production 주소 생성
 ```
 
-## Deployment to Vercel
+## Preview와 Production
 
-Deploying to Vercel was incredibly straightforward. With a GitHub repository connected, every push triggers an automatic build and deployment.
+Vercel의 [Git 배포 문서](https://vercel.com/docs/git)에 따르면 Production Branch가 아닌 브랜치의 push와 Pull Request는
+Preview 배포를 만들고, Production Branch에 반영된 커밋은 운영 배포를 만듭니다. 이 저장소에서는 `main`을 운영 브랜치로
+사용한다는 전제로 문서와 작업 흐름을 구성했습니다.
 
-### What's Next?
+대시보드의 실제 Branch Tracking 값은 다음 위치에서 한 번 확인해야 합니다.
 
-- [ ] Add syntax highlighting
-- [ ] Improve SEO metadata
-- [ ] Add a newsletter signup form
-- [ ] Dark mode toggle
+1. Vercel Dashboard에서 `blog29` 프로젝트 선택
+2. **Settings → Environments → Production → Branch Tracking** 이동
+3. Production Branch가 `main`인지 확인
 
-Thank you for reading!
+## 새 글을 올리는 권장 순서
+
+1. `_template.mdx`를 복사하고 영문 소문자 파일명을 정합니다.
+2. 처음에는 `draft: true`로 작성합니다.
+3. 로컬에서 내용을 확인하고 `draft: false`로 바꿉니다.
+4. 별도 브랜치에 push해 Vercel Preview 주소를 확인합니다.
+5. 검토가 끝나면 `main`에 반영합니다.
+
+## 판단의 유효범위
+
+이 설명은 2026-08-04에 확인한 Vercel 공식 문서와 현재 저장소 설정을 기준으로 합니다.
+Vercel의 Git 연결이 해제되거나 Production Branch가 변경되면 이 흐름은 더 이상 그대로 성립하지 않습니다.

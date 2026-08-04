@@ -1,145 +1,86 @@
-"use client";
+import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 
-import { useState, useEffect } from "react";
+export const metadata: Metadata = {
+  title: "소개",
+  description: "Blog29의 기록 원칙과 운영 방식",
+};
+
+const principles = [
+  {
+    number: "01",
+    title: "사실과 해석을 구분합니다",
+    description: "확인된 정보와 그 정보에서 도출한 판단이 섞이지 않도록 글의 구조를 나눕니다.",
+  },
+  {
+    number: "02",
+    title: "철회 조건을 남깁니다",
+    description: "주장이 성립하는 근거뿐 아니라 어떤 증거가 나오면 판단을 바꿀지도 함께 기록합니다.",
+  },
+  {
+    number: "03",
+    title: "기록을 갱신합니다",
+    description: "글은 완결된 선언보다 특정 시점의 판단에 가깝습니다. 변경 이력은 Git에 남습니다.",
+  },
+];
+
+const stack = ["Next.js 16", "React 19", "TypeScript", "MDX", "Tailwind CSS", "Vercel"];
 
 export default function AboutPage() {
-  const [visible, setVisible] = useState<Record<string, boolean>>({});
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisible((prev) => ({ ...prev, [entry.target.id]: true }));
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    document.querySelectorAll("[data-animate]").forEach((el) => {
-      observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const skills = [
-    { name: "Next.js", category: "Framework" },
-    { name: "TypeScript", category: "Language" },
-    { name: "React", category: "Library" },
-    { name: "Tailwind CSS", category: "Styling" },
-    { name: "MDX", category: "Content" },
-    { name: "Node.js", category: "Runtime" },
-    { name: "Git", category: "Tool" },
-    { name: "Vercel", category: "Platform" },
-  ];
-
   return (
-    <main className="min-h-screen bg-[#0f172a] text-gray-100">
-      <div className="max-w-5xl mx-auto px-6 py-24">
-        {/* Hero Section */}
-        <section
-          id="hero"
-          data-animate
-          className={`mb-24 text-center transition-all duration-700 ${
-            visible["hero"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6">
-            Welcome to{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
-              Blog29
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            생각과 기록을 남기는 기술 블로그입니다.{" "}
-            <br />
-            Next.js와 MDX로 글을 관리하고 정적 페이지로 제공합니다.
+    <main className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+      <header className="max-w-4xl">
+        <p className="font-mono text-xs tracking-[0.22em] text-emerald-300">ABOUT THE ARCHIVE</p>
+        <h1 className="mt-5 text-5xl font-bold leading-[1.1] tracking-[-0.04em] text-white sm:text-7xl">
+          결론보다 과정을,
+          <span className="block text-slate-500">확신보다 근거를 보관합니다.</span>
+        </h1>
+        <p className="mt-8 max-w-3xl text-lg leading-8 text-slate-400">
+          Blog29는 기술에 한정되지 않은 개인 기록 저장소입니다. 연구 메모, 도구 사용기,
+          문화와 사회에 대한 관찰처럼 나중에 다시 검토할 가치가 있는 내용을 축적합니다.
+        </p>
+      </header>
+
+      <section className="mt-20 grid gap-5 md:grid-cols-3" aria-labelledby="principles-heading">
+        <h2 id="principles-heading" className="sr-only">기록 원칙</h2>
+        {principles.map((principle) => (
+          <article key={principle.number} className="rounded-2xl border border-white/10 bg-slate-900/50 p-6">
+            <span className="font-mono text-xs text-emerald-300">{principle.number}</span>
+            <h3 className="mt-8 text-xl font-semibold text-white">{principle.title}</h3>
+            <p className="mt-3 leading-7 text-slate-500">{principle.description}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="mt-20 grid gap-10 border-t border-white/10 pt-12 lg:grid-cols-2">
+        <div>
+          <p className="font-mono text-xs tracking-[0.2em] text-slate-500">HOW IT WORKS</p>
+          <h2 className="mt-4 text-3xl font-bold text-white">운영 방식</h2>
+          <p className="mt-5 max-w-xl leading-8 text-slate-400">
+            글은 데이터베이스가 아니라 저장소의 MDX 파일로 관리합니다. 따라서 글 수정도 코드 수정과 같은 방식으로
+            검토할 수 있고, main 브랜치에 반영된 버전이 Vercel의 운영 배포 대상이 됩니다.
           </p>
-        </section>
+          <a
+            href={siteConfig.githubUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-6 inline-flex text-sm font-semibold text-emerald-300 transition hover:text-emerald-200"
+          >
+            GitHub 저장소 보기 →
+          </a>
+        </div>
 
-        {/* About Section */}
-        <section
-          id="about"
-          data-animate
-          className={`mb-24 transition-all duration-700 ${
-            visible["about"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <h2 className="text-3xl font-bold text-white mb-6 border-l-4 border-emerald-400 pl-4">
-            About Me
-          </h2>
-          <div className="space-y-4 text-gray-300 text-lg leading-relaxed">
-            <p className="whitespace-pre-line">
-              Blog29는 마크다운 문서와 코드를 함께 담을 수 있는 MDX 기반의 블로그입니다.
-              각 글은 저장소에서 버전 관리되며 빌드 시점에 정적 페이지로 생성됩니다.
-            </p>
-            <p className="whitespace-pre-line">
-              현재는 블로그 구축 과정과 기술 선택을 기록한 두 개의 예시 글을 제공하고 있습니다.
-              새로운 MDX 파일을 추가하고 배포하면 블로그 목록에 날짜순으로 반영됩니다.
-            </p>
-          </div>
-        </section>
-
-        {/* Skills Section */}
-        <section
-          id="skills"
-          data-animate
-          className={`mb-24 transition-all duration-700 ${
-            visible["skills"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <h2 className="text-3xl font-bold text-white mb-6 border-l-4 border-emerald-400 pl-4">
-            Built With
-          </h2>
-          <div className="flex flex-wrap gap-3">
-            {skills.map((skill) => (
-              <span
-                key={skill.name}
-                className="group px-4 py-2 rounded-full bg-[#1e293b] text-gray-300 text-sm border border-gray-700 hover:border-emerald-400 hover:text-emerald-400 transition-all duration-300 inline-flex items-center gap-2"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                {skill.name}
-                <span className="text-gray-500 text-xs ml-1">{skill.category}</span>
+        <div>
+          <p className="font-mono text-xs tracking-[0.2em] text-slate-500">BUILT WITH</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {stack.map((item) => (
+              <span key={item} className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-slate-400">
+                {item}
               </span>
             ))}
           </div>
-        </section>
-
-        {/* Links Section */}
-        <section
-          id="links"
-          data-animate
-          className={`mb-24 transition-all duration-700 ${
-            visible["links"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <h2 className="text-3xl font-bold text-white mb-6 border-l-4 border-emerald-400 pl-4">
-            Connect
-          </h2>
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="https://github.com/riesling-29"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 px-6 py-4 rounded-xl bg-[#1e293b] text-gray-300 hover:bg-emerald-500/10 hover:text-emerald-400 border border-gray-700 hover:border-emerald-400 transition-all duration-300"
-            >
-              <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.299-1.23 3.299-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.285 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-              </svg>
-              <span className="font-medium">GitHub</span>
-              <span className="text-gray-500 text-sm group-hover:text-emerald-400 transition-colors">riesling-29</span>
-            </a>
-
-          </div>
-        </section>
-
-        {/* Footer */}
-        <footer className="mt-24 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-          <p>© {new Date().getFullYear()} Blog29. Built with Next.js & MDX.</p>
-        </footer>
-      </div>
+        </div>
+      </section>
     </main>
   );
 }
