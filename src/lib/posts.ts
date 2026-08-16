@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import matter from "gray-matter";
+import remarkGfm from "remark-gfm";
 import { compileMDX } from "next-mdx-remote/rsc";
 
 export type PostData = {
@@ -100,7 +101,10 @@ export async function getPostContent(slug: string) {
 
   const fileName = `${slug}.mdx`;
   const { data, content: mdxSource } = readPostSource(fileName);
-  const result = await compileMDX({ source: mdxSource });
+  const result = await compileMDX({
+    source: mdxSource,
+    options: { mdxOptions: { remarkPlugins: [remarkGfm] } },
+  });
   return {
     data,
     content: result.content as React.ReactElement,
