@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" role="img" aria-label="AI 에이전트 분업 구조: code, decision model, reasoning LLM, human의 4층 계층">
+  <rect width="720" height="460" fill="#0b1220"/>
+  <text x="360" y="34" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold" fill="#e6edf5">AI 에이전트 분업 구조</text>
+  <text x="360" y="58" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#8a97a8">하나의 큰 생성 모델이 아니라, 각 판단을 각 계층이 담당</text>
+
+  <!-- Layer 1: code -->
+  <rect x="80" y="84" width="560" height="72" rx="10" fill="#12203a" stroke="#3b5f8a" stroke-width="1.5"/>
+  <text x="100" y="118" font-family="sans-serif" font-size="16" font-weight="bold" fill="#7fd0ff">code</text>
+  <text x="100" y="140" font-family="sans-serif" font-size="13" fill="#c7d3e2">결정적 계산 · 권한 · 중복 확인 · 날짜</text>
+  <text x="620" y="130" text-anchor="end" font-family="sans-serif" font-size="12" fill="#5f7186">확률 0 / 1</text>
+
+  <!-- arrow -->
+  <line x1="360" y1="156" x2="360" y2="184" stroke="#5f7186" stroke-width="2"/>
+  <polygon points="354,184 366,184 360,192" fill="#5f7186"/>
+  <text x="380" y="178" font-family="sans-serif" font-size="12" fill="#8a97a8">확률적 판단이 필요하면</text>
+
+  <!-- Layer 2: decision model -->
+  <rect x="80" y="192" width="560" height="72" rx="10" fill="#12203a" stroke="#3b5f8a" stroke-width="1.5"/>
+  <text x="100" y="226" font-family="sans-serif" font-size="16" font-weight="bold" fill="#7fd0ff">decision model</text>
+  <text x="100" y="248" font-family="sans-serif" font-size="13" fill="#c7d3e2">반복적 bounded decision · routing · gate · stop/retry</text>
+  <text x="620" y="238" text-anchor="end" font-family="sans-serif" font-size="12" fill="#5f7186">Jev 등</text>
+
+  <!-- arrow -->
+  <line x1="360" y1="264" x2="360" y2="292" stroke="#5f7186" stroke-width="2"/>
+  <polygon points="354,292 366,292 360,300" fill="#5f7186"/>
+  <text x="380" y="286" font-family="sans-serif" font-size="12" fill="#8a97a8">애매하거나 어려우면</text>
+
+  <!-- Layer 3: reasoning LLM -->
+  <rect x="80" y="300" width="560" height="72" rx="10" fill="#12203a" stroke="#3b5f8a" stroke-width="1.5"/>
+  <text x="100" y="334" font-family="sans-serif" font-size="16" font-weight="bold" fill="#7fd0ff">reasoning LLM</text>
+  <text x="100" y="356" font-family="sans-serif" font-size="13" fill="#c7d3e2">복잡한 추론 · 계획 · 코드 · 생성</text>
+  <text x="620" y="346" text-anchor="end" font-family="sans-serif" font-size="12" fill="#5f7186">GPT · Claude 등</text>
+
+  <!-- arrow -->
+  <line x1="360" y1="372" x2="360" y2="400" stroke="#5f7186" stroke-width="2"/>
+  <polygon points="354,400 366,400 360,408" fill="#5f7186"/>
+  <text x="380" y="394" font-family="sans-serif" font-size="12" fill="#8a97a8">사람이 봐야 하면</text>
+
+  <!-- Layer 4: human -->
+  <rect x="80" y="408" width="560" height="44" rx="10" fill="#12203a" stroke="#3b5f8a" stroke-width="1.5"/>
+  <text x="100" y="436" font-family="sans-serif" font-size="16" font-weight="bold" fill="#7fd0ff">human</text>
+  <text x="100" y="448" font-family="sans-serif" font-size="13" fill="#c7d3e2">필요한 경우 개입 · 승인 · 수정</text>
+</svg>
