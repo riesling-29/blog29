@@ -1,140 +1,235 @@
 ---
-title: "Jev: LLM이 아니라, 판단을 반환하는 인터페이스"
+title: "Jev: 왜 강력한 LLM이 있는데도 별도 판단 모델이 등장했는가"
 date: "2026-09-20"
-excerpt: "Jev는 자유 답변을 쓰는 LLM이 아니라, 미리 정의한 후보·단계·질문에 대해 선택·점수·확률을 반환하는 분류·판단 인터페이스입니다. 언제 Jev를 쓰고 언제 LLM을 써야 하는지를, 하나의 고객 문의 사례로 설명합니다."
+excerpt: "ChatGPT·Claude 같은 LLM이 말을 잘하는데도, 소프트웨어 안의 반복적 판단은 여전히 어렵다. Jev가 Rule·분류기·LLM structured output과 무엇이 같고 무엇이 다른지, 그리고 AI 에이전트의 routing·stop·guardrail에서 왜 주목받는지를 설명한다."
 category: "AI"
-tags: ["Jev", "LLM", "분류", "AI 에이전트"]
+tags: ["Jev", "LLM", "AI 에이전트", "판단"]
 featured: false
 draft: false
 ---
 
-## 이 글이 설명하는 것
+## 1. 시작: "모델은 이미 말을 잘하는데 왜 자동화는 생각보다 어렵나?"
 
-고객이 "배송이 아직 안 왔습니다. 어디까지 왔는지 확인해 주세요"라고 문의했다고 하자. 시스템에는 두 가지 일이 동시에 생긴다. 하나는 고객에게 보낼 설명을 작성하는 일이고, 다른 하나는 이 문의를 배송 담당으로 보낼지, 주문 정보를 먼저 조회할지, 사람이 검토해야 할지 결정하는 일이다.
+TypeSafe의 창업자가 Jev 발표문에서 먼저 건넨 질문은 이렇다. LLM은 사람에게 전달할 텍스트를 만드는 데 최적화되어 있다. 그런데 소프트웨어 내부에서는 수많은 순간마다 실제로 필요한 것이 긴 문장이 아니다.
 
-두 일은 같은 프로그램 안에 있지만, 필요한 출력이 다르다. 문장을 쓰는 일과 다음 일을 고르는 일은 같은 출력이 아니기 때문이다.
+* 어느 tool을 쓸 것인가
+* 계속할 것인가
+* 멈출 것인가
+* 사람이 봐야 하는가
+* 위험도는 어느 정도인가
 
-이 글은 그 경계에 놓인 도구, **Jev**를 설명한다. Jev는 TypeSafe AI가 만든 **System One model**이다. 입력 상태와 질문을 받아, 프로그램이 사용할 선택·점수·확률을 반환한다. 자유로운 답변이나 코드를 작성하는 인터페이스가 아니라, 미리 정의한 답변 공간 안에서 판단하는 인터페이스다.
+이런 판단은 "잘 말한 문장"이 아니라, 프로그램이 바로 처리할 수 있는 값이다. TypeSafe는 이 문제를 Jev라는 모델로 접근한다.
 
-핵심 결론은 한 문장이다. **Jev는 LLM의 모든 역할을 대신하는 모델이 아니라, 소프트웨어 안의 제한된 판단을 별도 인터페이스로 처리하려는 모델이다.**
+Jev의 입출력을 TypeSafe의 표현 그대로 쓰면, **unstructured state in → typed probabilistic decisions out**이다. 쉬운 말로 풀어면, 정리되지 않은 상태(문자열이나 JSON)를 넣고, 타입이 정해진 확률적 판단을 낸다. "이 문의는 배송 조회가 0.78, 해당 없음이 0.12" 같은 값이 나오는 식이다. 문장을 쓰는 일과 다음 일을 고르는 일이 같은 출력이 아니라는 것, 그게 출발점이다.
 
-## Jev가 하는 일: 답변 공간 안에서 판단
+## 2. System One Model이라는 발상
 
-Jev는 입력을 `state`와 `questions`로 받는다. `state`는 판단에 필요한 자료(문자열이나 JSON)이고, `questions`는 그 자료에 대해 묻는 질문이다. 한 요청의 질문들은 같은 상태를 보지만 각각 따로 평가된다. 질문 B가 같은 요청의 질문 A 결과를 읽는다고 가정하면 안 된다.
+Jev는 TypeSafe가 **System One model**이라고 부르는 계열이다. 이름은 Kahneman의 System 1 / System 2에서 가져왔다. 단, 인간 인지과학 모델과 AI 구조가 동일하다는 주장이 아니다. 이름의 유래일 뿐이다.
 
-질문 형식은 세 종류다.
+대비를 이렇게 놓는다.
 
-| 형식 | 쉬운 뜻 | 반환의 핵심 |
+| | 역할 |
+|---|---|
+| **System 2** | GPT·Claude 같은 reasoning·generation 모델. 분석, 계획, 코드, 글쓰기, 어려운 문제 |
+| **System 1** | Jev가 목표로 하는 영역. 분류, routing, scoring, gating, stop/retry 같은 반복적이고 제한된 판단 |
+
+여기서 핵심은 "Jev가 GPT를 대체한다"가 아니다. **"에이전트 내부의 모든 판단까지 GPT에게 맡길 필요가 있는가?"**라는 질문이다. 어려운 추론은 System 2에, 반복되는 작은 판단은 System 1에, 이렇게 나눌 수 있다면 그 작은 판단을 따로 최적화할 이유가 생긴다.
+
+## 3. 실제로 Jev에 무엇을 보내는가
+
+하나의 에이전트 예를 붙인다. 사용자가 "배송이 아직 안 왔습니다. 어디까지 왔는지 확인해 주세요"라고 물었다고 하자.
+
+```text
+state:
+  현재 사용자 요청 + 필요한 최소 context (주문 정보, 배송 상태)
+
+questions:
+  - 어떤 tool을 쓸 것인가?
+  - 이 요청이 위험한가?
+  - human review가 필요한가?
+```
+
+`state`는 판단에 필요한 자료다. 문자열이나 JSON이면 된다. `questions`는 그 자료에 대해 묻는 질문이다. 한 요청의 질문들은 같은 상태를 보지만 각각 따로 평가된다. 이 세 가지 질문 형식이 Jev의 핵심이다.
+
+**Choice** — 후보 중 하나를 고르는 상대적 판단. "이 문의는 배송 조회인가, 교환·반품인가, 결제인가, 해당 없음인가"처럼, 정해 둔 후보 집합 안에서 확률을 배분한다.
+
+**Score** — 서술된 단계들 사이에서 정도를 평가. "이 장애는 어느 심각도 단계인가"처럼, 순서가 있는 단계 설명을 주고 각 단계의 확률을 단계 번호와 가중합한 점수가 나온다. 빈칸에 임의 숫자를 쓰는 기능이 아니다.
+
+**Noul** — 하나의 명제가 참인지에 대한 확률적 판단. "이 메시지에 환불 요청이 있는가"처럼 yes일 확률을 반환한다.
+
+Choice가 특히 중요한 이유를 하나 더 붙인다. Choice는 항상 후보 중 확률을 배분하기 때문에, "아무 것도 하지 않는다"라는 절대적 판단이 별도로 필요할 수 있다. 목록 밖의 입력이 있을 수 있으면 `other`, `none`, `insufficient_information`처럼 의미가 명확한 후보를 설계해야 한다.
+
+## 4. "이거 그냥 classifier 아닌가?"
+
+이 반론은 정면으로 다뤄야 한다. Parallel은 Jev를 **"BERT + classification head를 써봤다면 익숙할 것"**이라고 표현했다. 입출력이 닮았다는 비유다.
+
+그러나 차이는 있다.
+
+| | 접근 |
+|---|---|
+| **전용 classifier** | 특정 task의 데이터를 수집 → 라벨을 붙여 → 학습 → serving. 하나의 작업에 특화한다. |
+| **Jev** | request time에 자연어 question과 candidate를 지정해, task-specific fine-tuning 없이 여러 bounded decision을 수행하려는 모델. |
+
+즉, 전용 분류기는 "이 작업"을 위해 데이터를 모아서 학습하는 반면, Jev는 "이번 요청에 이 후보를 줘"라고 매번 지정하는 방향으로 설계됐다.
+
+다만 여기서 정확히 해야 할 점이 있다. 기존에도 zero-shot classifier가 존재했고, LLM도 structured output을 반환할 수 있다. Hugging Face의 NLI 기반 zero-shot classification은 실행 시 후보 라벨을 지정할 수 있다. 따라서 "Jev가 분류나 JSON 출력을 최초로 발명했다"는 식으로 쓰면 안 된다.
+
+핵심은 기능의 최초 발명이 아니라, **decision을 독립된 model/API primitive로 최적화했다는 제품·연구 방향**에 있다.
+
+## 5. Rule / Classifier / Jev / LLM 비교
+
+이 비교는 본문에서 반드시 필요하다.
+
+| 축 | Code / Rule | 전용 classifier | Jev | LLM (reasoning) |
+|---|---|---|---|---|
+| deterministic 계산 | 강점 | 제한적 | 제한적 | 취약 |
+| task-specific training | 불필요 | 필수 | 불필요 | 불필요 |
+| runtime에 후보 변경 | 코드 수정 | 재학습 | 가능 | 가능 |
+| probability output | 없음 | 있음 | 있음 | 있음 (structured output) |
+| 자유 생성 | 없음 | 없음 | 없음 | 강점 |
+| 복잡한 reasoning | 없음 | 없음 | 제한적 | 강점 |
+| latency/cost | 가장 낮음 | 낮음 | 낮음 (제작사 주장) | 가장 높음 |
+| 대표 사용처 | 날짜·권한·중복 확인 | 특화 작업 | 반복적 bounded decision | 추론·생성 |
+
+이 표에서 "아무 AI도 쓰지 않고 code/rule을 유지한다"는 정상적인 대안이다. 날짜 계산, 권한 검사, 중복 실행 확인처럼 코드로 정확히 해결 가능한 문제를 Jev에게 넘기는 것을 권하지 않는다. 의미 해석이 필요 없는 단계까지 AI로 바꾸면 추가 호출의 편익이 없을 수도 있다.
+
+## 6. Agent에서 왜 흥미로운가
+
+이 부분이 이번 글의 핵심이다.
+
+기존 에이전트는 이렇게 돌아간다.
+
+```text
+User
+  → LLM
+  → LLM이 reasoning
+  → tool 선택
+  → tool 실행
+  → LLM
+  → 계속/중단 판단
+  → ...
+```
+
+매 턴마다 reasoning LLM이 호출된다. tool을 고르는 일, 계속할지 멈출지 결정하는 일, 위험도를 재확인하는 일까지 전부 같은 큰 모델이 한다.
+
+대안은 이렇게 나눈다.
+
+```text
+State
+  → 작은 bounded decision (Jev 등)
+  → 확실하면 Tool / Stop / Retry
+  → 어렵거나 애매하면 reasoning LLM
+  → 실행은 code/policy가 통제
+```
+
+여기서 Jev는 "에이전트의 brain 전체"가 아니다. **reflex / router / gate / decision layer** 정도다. 반사처럼 빠르게, 제한된 후보 안에서 판단을 하고, 애매한 것만 reasoning LLM으로 넘긴다.
+
+Vercel이 제시한 용도가 이 구조를 실물로 보여준다.
+
+* 다음 tool / subagent 선택
+* continue / retry / ask / stop
+* urgency / risk 평가
+* guardrails
+* human escalation
+
+이 다섯 가지가 바로 "반복적이고 제한된 판단"이다. 매번 LLM을 부르기보다, 이 판단을 전용 계층으로 처리하면 지연과 비용이 줄고, 실행 통제는 code/policy가 담당한다.
+
+## 7. Hermes 사례
+
+TypeSafe의 **Skill suggestion cookbook**을 별도 사례로 다룬다.
+
+Nous Research Hermes의 특정 커밋 skill 목록 182개를 대상으로 한 구조다.
+
+1차: 전체 182 skill을 얕게 평가. 필요한 skill 자체가 있는지도 함께 판단한다.
+2차: 상위 3개만 자세히 읽고 다시 평가.
+
+결과는 한 개를 추천하거나, 아무 것도 추천하지 않을 수 있다.
+
+TypeSafe가 공개한 488-request 실험 수치:
+
+| 지표 | 개선 전 | 개선 후 |
 |---|---|---|
-| `Choice` | 이 후보들 중 무엇인가? | `choice`, `probabilities`, `confidence` |
-| `Score` | 정해 둔 단계 중 어느 정도인가? | `score`, `probabilities`, `legend`, `confidence` |
-| `Noul` | 이 명제의 답이 yes인가? | `noul` (별도 `confidence` 필드 없음) |
+| wrong skill | 16.8% | 7.3% |
+| skill이 필요 없는데 load | 9.8% | 4.0% |
+| 정답 skill을 직접 알려준 조건 | 2.5% | 1.2% |
 
-`Choice`는 후보 각각의 확률을 반환하며 그 합은 1이다. 목록 밖의 입력이 있을 수 있으면 `other`, `none`, `insufficient_information`처럼 의미가 명확한 후보를 설계해야 한다. 단일 선택이 필요한 문제인지, 여러 조건이 동시에 참일 수 있는 문제인지부터 구분한다.
+이것은 **TypeSafe 자체 실험**이다. `claude-haiku-4-5-20251001`을 사용한 단일 턴 요청 488개에 대한 결과다. 전체 에이전트 성공률이나 사용자의 현재 Hermes 환경 결과로 일반화하면 안 된다.
 
-`Score`는 빈칸에 임의 숫자를 쓰는 기능이 아니다. 순서가 있는 단계 설명을 주고, 각 단계의 확률을 단계 번호와 가중합한 값이 반환된다. 예를 들어 0·1·2 단계에 대한 확률이 0.1·0.7·0.2라면 점수는 `0×0.1 + 1×0.7 + 2×0.2 = 1.1`이다. 이것이 실제 장애 규모 1.1이나 110%를 뜻하는 것은 아니다.
+이 사례의 의미는 숫자 자체보다, **"큰 LLM 앞에 작은 decision layer를 넣는다"는 실제 구조**를 보여주는 데 있다. 추론 모델 전체를 바꾸지 않고, 어떤 지침을 읽을지 보조하는 작은 판단을 앞에 붙였다.
 
-`Noul`의 0.1은 해당 yes/no 질문에 yes일 가능성을 낮게 평가했다는 뜻이지, "모델의 자신감이 10%"라는 뜻이 아니다. 또한 0.5 근처의 값만으로 정보 부족과 본래의 모호함을 완전히 구별할 수 있다고 주장하지 않는다.
+## 8. 왜 이름이 Jev인가
 
-가상의 예. 위 고객 문의를 `Choice`로 분류하면:
+이름은 William Stanley Jevons와 Jevons paradox에서 가져왔다. Jevons paradox는, 어떤 재화의 가격이 크게 내려가면 오히려 수요가 늘어서 총 소비가 증가하는 현상을 가리킨다.
 
-```text
-후보: 배송 조회 / 교환·반품 / 결제 / 해당 없음
-가상의 확률: 배송 조회 0.78 / 교환·반품 0.06 / 결제 0.04 / 해당 없음 0.12
-```
+TypeSafe의 thesis를 이 이름에 붙여 풀어면: AI intelligence의 단가가 크게 낮아지면, 기존 작업을 싸게 하는 데 그치지 않고, **지금은 AI를 호출하지 않던 수많은 작은 판단에도 intelligence가 사용될 수 있다.**
 
-이 수치는 성능 측정치가 아니다. 프로그램은 이런 판단을 받아도 인증, 주문 식별자, 허용된 조회 범위를 별도로 확인해야 한다. 잘 분류했다는 사실만으로 고객 계정을 조회할 권한이 생기지는 않는다.
+이것이 Jev가 단순한 classifier API 이상을 주장하는 이유다. "작은 판단에 AI를 쓰는 것" 자체가 새로운 수요를 만든다는 것이다.
 
-## 숫자와 한계: 제작사 평가 vs 독립 검증
+## 9. 발표 직후 왜 화제가 되었나
 
-TypeSafe의 출시 글은 자체 workflow 평가에서 **193.6배 빠름, 444.6배 저렴함**을 제시한다. 기준은 정답 라벨만이 아니라 외부 대형 모델들의 참조 확률이며, 비교 LLM에는 확률까지 반환하도록 한 wrapper를 사용했다. 평가 작업은 회사 내부에서 구성되었다. 이 수치가 "현실적 개선 폭의 높은 쪽"이라고 설명한다는 점도 붙인다.
+| 날짜 | 사건 |
+|---|---|
+| 2026-09-15 | TypeSafe가 Jev early access를 발표 |
+| 2026-09-16 | Vercel이 AI Gateway 제공을 공지 |
+| 2026-09-17 | LangChain이 Jev를 harness에 연결하는 글을 공개 |
+| 2026-09-18 | Vercel이 첫 24시간 유료 팀 약 13% 사용을 보고 |
+| 2026-09-18 | Parallel이 자체 검색·분류 작업의 외부 테스트를 공개 |
 
-"70–500ms" 역시 제작사 발표 범위다. 사용자 PC에서 측정한 p50·p95 지연이라고 쓰면 안 된다. 전체 업무 시간에는 네트워크, 상태 구성, 도구 실행과 후속 검토도 들어간다.
+Vercel 수치는 **Vercel AI Gateway 내부의 초기 adoption**이다. 전체 시장 점유율이 아니다. "모두가 갈아타고 있다"가 아니라, "연동 소개와 초기 사용 보고가 빠르게 나왔다" 정도로 범위를 제한한다.
 
-Parallel의 외부 테스트에서는, 검색 재정렬에서 Jev가 내부 reranker 중 하나와 비슷한 **NDCG@10=0.7**을 기록했다. NDCG는 관련 문서가 검색 결과의 앞쪽에 잘 배치되는지를 보는 순위 품질 지표다. 0.7을 "질문 70% 정답"으로 번역하지 않는다. 반면 topic classification과 query freshness classification에서는 Parallel의 자체 특화 모델이 더 나았다고 밝혔다. 문서당 Jev 비용이 자체 reranker보다 높았다는 설명도 있다.
+## 10. 성능은 아직 이렇게 봐야 한다
 
-즉, 외부 사례에서도 장점과 약점이 함께 관찰되었다. "독립 평가를 통과한 만능 분류기"라는 식으로 요약하면 안 된다.
+TypeSafe의 자체 workflow benchmark에서 **193.6배 빠름, 444.6배 저렴함**을 제시한다. 이것은 **vendor benchmark**다. 기준은 정답 라벨만이 아니라 외부 대형 모델들의 참조 확률이며, 비교 LLM에는 확률까지 반환하도록 한 wrapper를 사용했다. 평가 작업은 회사 내부에서 구성됐다.
 
-## confidence를 읽는 법
+바로 옆에 Parallel의 외부 테스트를 붙인다.
 
-공식 문서에서 `Choice`·`Score`의 `confidence`는 반환된 확률분포의 모양을 하나의 값으로 요약한 통계량이다. 후보 확률의 최댓값과 무조건 같지 않으며, 별도의 "이 결정이 맞을 확률"으로 읽으면 안 된다. 이번에 확인한 설명 문서에서는 정확한 계산식을 특정하지 않았다. 엔트로피나 마진 공식이라고 임의로 적지 않는다.
+* reranking: NDCG@10 0.7, 내부 시스템 중 하나와 유사
+* topic classification: 자체 특화 모델이 우세
+* freshness classification: 자체 특화 모델이 우세
+* 자체 인프라를 가진 Parallel에서는 Jev의 문서당 비용이 더 높았음
 
-따라서 **`confidence = 0.9` → "실제 정답률이 90%" → "안전하니 실행"**이라는 연결은 성립한다고 확인되지 않았다. 임계값은 질문 형식, 후보 집합, 데이터, 버전, 잘못 실행했을 때의 손실을 고려해 검증해야 한다.
+따라서 "LLM보다 수백 배 빠르니 모든 classifier를 교체한다"가 아니다. **"전용 classifier를 만들 만큼 데이터와 인프라가 없는 bounded decision에서는 상당히 흥미로운 zero-shot starting point"**라는 식으로 정리한다.
 
-교육용 예. 모델이 배송 문의라고 약 80%의 확률을 준 사례를 충분히 모았을 때, 실제 배송 문의의 비율도 약 80%라면 그 구간은 잘 보정되어 있다고 말할 수 있다. 한 건이 반드시 맞는다는 보증은 아니다. 전체 평균이 좋아도 특정 언어·업무·위험도 구간에서는 다를 수 있으므로 나누어 검증해야 한다.
+## 11. 한계
 
-TypeSafe는 **RLCD — Reinforcement Learning for Calibrated Decisions**를 사용해 결정과 확률을 학습한다고 설명한다. 이는 제작사의 학습 방식 설명이다. RLCD가 기존 모든 학습 방법보다 우월하다거나 완전히 재현 가능한 알고리즘이 공개되었다는 뜻은 아니다. 학습 데이터 전체, 모델 파라미터 수, 재현 가능한 학습 절차는 알 수 없음이다.
+* 정밀 산술·날짜 계산에 부적합할 수 있다.
+* irrelevant context가 많으면 품질이 저하될 수 있다.
+* adversarial input / prompt injection 해결책이 아니다. 구조화된 출력이 injection 방어를 보장하지 않는다.
+* typed output이라고 의미상 정답이 보장되는 것은 아니다.
+* confidence를 실제 정답률로 직접 해석하지 않는다.
+* 한국어 production calibration은 현재 확인되지 않는다.
 
-## LLM Structured Outputs와의 관계
+## 12. 마지막 결론
 
-"Jev만 JSON을 반환한다"는 설명은 부정확하다. OpenAI의 Structured Outputs처럼 LLM에도 지정한 스키마에 맞추어 값을 반환하는 기능이 있다. 공식 문서 역시 구조가 맞는 출력에 내용상 오류가 들어갈 수 있음을 설명한다. JSON 사용 가능 여부만으로 둘을 구분할 수 없다.
+Jev의 의미는 "또 하나의 더 똑똑한 LLM"이 등장했다는 데 있지 않다. AI 에이전트를 하나의 거대한 생성 모델에 맡기는 대신,
 
-비교할 축은 출력 형식만이 아니라, 해당 판단에서의 정확도, 지연, 비용, 확률의 유용성, 필요한 운영 작업이다. Jev가 어떤 작업에서 유리한지는 이 축들을 같은 조건으로 측정해야 한다. 이는 비교 설계 원칙이지, Jev의 우위를 입증한 결과가 아니다.
+* code는 계산하고
+* decision model은 판단하고
+* reasoning model은 어려운 문제를 풀고
+* human은 필요한 경우 개입하는
 
-"기존 분류기는 반드시 매번 학습해야 한다"도 과장이다. Hugging Face의 NLI 기반 zero-shot classification은 실행 시 후보 라벨을 지정할 수 있다. 질문·후보를 자연어로 바꾸어 활용하는 범용 분류라는 발상이 Jev에서 처음 생겼다고 쓰면 안 된다.
+분업형 architecture가 현실적인 선택지가 되고 있다는 점에 있다.
 
-Jev를 "BERT에 분류 헤드를 붙인 것"으로 확정하는 것도 피한다. 입출력이 닮았다는 비유와 실제 내부 구조를 확인했다는 주장은 다르다.
-
-## 한계: 공식 문서가 밝히는 약점
-
-2026-09-17 검토 표시가 붙은 `Jev 1.13 jaggedness` 문서는 다음 한계를 명시한다.
-
-- 정밀 산술·개수 세기·날짜 비교, 복잡한 간접 추론은 취약할 수 있다.
-- 무관한 내용이 많은 상태는 정확도를 낮출 수 있다.
-- 적대적으로 작성된 입력은 답을 바꿀 수 있다. 구조화된 출력이 prompt injection 방어를 보장하지 않는다.
-- 따로 물은 명제·부정 명제의 확률이 보완 관계를 이루거나, 같은 질문의 Noul과 Choice 값이 일치한다고 보장하지 않는다.
-
-여기서 중요한 구분은 **"허용되지 않은 형식·선택지를 만들지 않는다"와 "허용된 후보 중 틀린 것을 고르지 않는다"는 다른 주장**이라는 것이다. 출시 글의 환각 관련 표현을 "의미상 오류 0%"로 번역하면 안 된다.
-
-단순히 확률을 여러 개 반환했다고 질문 간 결합확률이 생기는 것도 아니다. 서로 관련된 판단을 독립이라고 놓고 곱해서 전체 안전 확률을 만들지 않는다.
-
-## 코드 먼저, 모델 나중에
-
-Jev를 업무 시스템에 넣을 때, 모든 판단을 모델에 넘기는 것이 정답이 아니다. "남은 시간이 2시간보다 짧은가", "동일한 작업을 이미 실행했는가", "사용자가 승인했는가"는 모델을 부르기 전에 프로그램·데이터베이스에서 확인할 수 있는 문제로 설계할 수 있다. 의미 해석이 필요 없는 단계까지 AI로 바꾸면 추가 호출의 편익이 없을 수도 있다.
-
-```text
-업무 이벤트
-   ↓
-코드: 관련 객체·이력 조회, 날짜 계산, 접근 권한·중복 확인
-   ↓
-이번 판단에 필요한 상태만 구성
-   ↓
-의미 해석이 필요한가?
-   ├─ 아니오 → 기존 규칙·계산 / 아무 조치 없음
-   └─ 예 → Jev 등 판단 모델의 후보 평가
-                ↓
-      코드의 정책·권한·검증 조건 적용
-                ↓
-    조회 / 사람에게 전달 / 추가 정보 / 보류 / 제한된 실행
-                ↓
-      제안, 실제 결정, 실행 결과를 구분해 기록
-```
-
-이것은 제안 아키텍처이지 Jev의 기본 탑재 기능이나 실제 구현 확인이 아니다. 핵심은 **좁은 판단은 모델에, 결과를 합치는 로직과 실행 통제는 코드에** 두는 방식이다.
-
-## 결론: 언제 Jev, 언제 LLM
-
-Jev는 LLM의 모든 역할을 대신하는 모델이 아니라, 소프트웨어 안의 제한된 판단을 별도 인터페이스로 처리하려는 모델이다. 관심의 초점은 "얼마나 말을 잘하는가"에서 "어떤 판단을 코드에 넘기고, 언제 실행하지 않을 것인가"로 이동한다.
-
-판단·분류·점수가 필요한 곳에 Jev, 자유 생성이 필요한 곳에 LLM. 다만 그 분리가 실제로 더 유리한지는 업무별 정확도·비용·실패 위험을 함께 비교해야 한다.
-
-## 반증 조건과 유효기간
-
-이 글의 사실 설명은 2026-09-20에 확인한 TypeSafe 공식 문서와 관련 원문을 기준으로 썼다.
-
-- 제작사 사양이 바뀌면 수치 재확인.
-- 독립 벤치마크가 공개되면 성능 절 재작성.
-- 한국어 업무에서 확률 보정이 검증되면 confidence 절 보강.
-- Jev의 오판·fallback 때문에 총비용이 늘면 결론 수정.
-- 사용자는 "자유 답변"으로 Jev를 설명하면 논지 재검토.
-
-이것은 편집상 검토 기한이며 기술적 보증 기간이 아니다.
+Jev가 그 자리를 차지할지는 아직 검증이 필요하다. 하지만 "모든 AI 작업이 text generation일 필요는 없다"는 문제 제기는 충분히 주목할 가치가 있다.
 
 ## 참고 자료
 
-- [TypeSafe — Jev 공식 문서](https://typesafe.ai)
-- [TypeSafe — Jev 1.13 jaggedness 한계 설명](https://typesafe.ai)
-- [Parallel — Jev 외부 테스트](https://parallel.ai)
-- [OpenAI — Structured Outputs 문서](https://platform.openai.com/docs/guides/structured-outputs)
-- [LangChain — Jev harness 연결 글](https://langchain.com)
-- [Vercel — AI Gateway 공지](https://vercel.com)
+- [TypeSafe — Introduction](https://docs.typesafe.ai/introduction)
+- [TypeSafe — System One](https://docs.typesafe.ai/concepts/system-one)
+- [TypeSafe — State](https://docs.typesafe.ai/concepts/state)
+- [TypeSafe — Choice](https://docs.typesafe.ai/primitives/choice)
+- [TypeSafe — Score](https://docs.typesafe.ai/primitives/score)
+- [TypeSafe — Noul](https://docs.typesafe.ai/primitives/noul)
+- [TypeSafe — Confidence](https://docs.typesafe.ai/confidence)
+- [TypeSafe — AI primer (RLCD)](https://docs.typesafe.ai/introduction/machine-learning-primer)
+- [TypeSafe — Models](https://docs.typesafe.ai/models)
+- [TypeSafe — Jev 1.13 jaggedness](https://docs.typesafe.ai/model-jaggedness/jev-1.13)
+- [TypeSafe — Introducing System One Models & Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev)
+- [TypeSafe — Skill suggestion cookbook](https://docs.typesafe.ai/cookbooks/skill_suggestion)
+- [TypeSafe — How to build with System One](https://docs.typesafe.ai/concepts/how-to-build-with-system-one)
+- [Parallel — Testing out Jev](https://parallel.ai/blog/testing-jev)
+- [Vercel — AI Gateway Jev launch](https://vercel.com/blog/ai-gateway-jev-model-launch)
+- [Vercel — Jev on AI Gateway](https://vercel.com/changelog/typesafe-ai-jev-now-available-on-ai-gateway)
+- [LangChain — Building a Harness with Jev](https://www.langchain.com/blog/building-a-harness-with-jev)
+- [OpenAI — Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)
+- [Hugging Face — ZeroShotClassificationPipeline](https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.ZeroShotClassificationPipeline)
