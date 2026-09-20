@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "observed_at": null,
+  "git_head": null,
+  "repo_root": null,
+  "content_directory": null,
+  "content_loader": null,
+  "schema_source": null,
+  "front_matter_required": [],
+  "article_examples": [],
+  "asset_directory": null,
+  "package_manager": null,
+  "check_commands": [],
+  "draft_filter_confirmed": false,
+  "workspace_excluded_from_loader": false,
+  "workspace_ignored_by_git": false,
+  "production_branch": null,
+  "production_branch_evidence": null,
+  "evidence": [],
+  "unknowns": []
+}

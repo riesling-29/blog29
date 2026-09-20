@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "task_id": null,
+  "updated_at": null,
+  "stage": "BRIEF",
+  "mode": "DRAFT",
+  "brief_path": null,
+  "draft_path": null,
+  "sources_path": null,
+  "review_path": null,
+  "decisions": [],
+  "unresolved": [],
+  "next_action": null,
+  "publication_status": "not_published"
+}
