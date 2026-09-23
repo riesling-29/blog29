@@ -43,28 +43,28 @@ export default async function PostPage({ params }: PageProps) {
 
   return (
     <main className="mx-auto max-w-4xl px-5 py-12 sm:px-8 sm:py-20">
-      <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-slate-500 transition hover:text-emerald-300">
+      <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-muted transition hover:text-accent">
         <span aria-hidden>←</span> 모든 글
       </Link>
 
       <article className="mt-10">
-        <header className="border-b border-white/10 pb-10">
+        <header className="border-b border-line pb-10">
           <div className="flex flex-wrap items-center gap-3 text-sm">
-            <span className="rounded-full border border-emerald-300/20 bg-emerald-300/8 px-3 py-1 text-emerald-300">
+            <span className="rounded-full border border-line bg-surface px-3 py-1 text-accent">
               {data.category}
             </span>
-            <time dateTime={data.date} className="text-slate-500">
+            <time dateTime={data.date} className="text-muted">
               {formatDate(data.date)}
             </time>
-            {data.updated && <span className="text-slate-600">수정 {formatDate(data.updated)}</span>}
+            {data.updated && <span className="text-muted">수정 {formatDate(data.updated)}</span>}
           </div>
-          <h1 className="mt-7 text-4xl font-bold leading-tight tracking-[-0.035em] text-white sm:text-6xl">
+          <h1 className="mt-7 text-4xl font-bold leading-tight tracking-[-0.035em] text-ink sm:text-6xl">
             {data.title}
           </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-400">{data.excerpt}</p>
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">{data.excerpt}</p>
           <div className="mt-7 flex flex-wrap gap-2">
             {data.tags.map((tag) => (
-              <span key={tag} className="font-mono text-xs text-slate-500">
+              <span key={tag} className="font-mono text-xs text-muted">
                 #{tag}
               </span>
             ))}
@@ -73,9 +73,9 @@ export default async function PostPage({ params }: PageProps) {
 
         <div className="prose-blog">{content}</div>
 
-        <footer className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-slate-500">이 글의 내용은 저장소의 MDX 원문과 함께 버전 관리됩니다.</p>
-          <Link href="/blog" className="text-sm font-semibold text-emerald-300 transition hover:text-emerald-200">
+        <footer className="mt-16 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-muted">riesling29 · Notes & Observations</p>
+          <Link href="/blog" className="text-sm font-semibold text-accent transition hover:text-accent-hover">
             다음 기록 찾기 →
           </Link>
         </footer>
@@ -83,3 +83,4 @@ export default async function PostPage({ params }: PageProps) {
     </main>
   );
 }
+

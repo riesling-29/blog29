@@ -53,15 +53,21 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `(function(){var t;try{t=localStorage.getItem('blog29-theme')}catch(e){}document.documentElement.dataset.theme=t==='light'||t==='dark'?t:window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'})()` }} />
+      </head>
       <body className="min-h-full">
+        <a href="#main-content" className="skip-link">본문 바로가기</a>
         <div className="flex min-h-screen flex-col">
           <SiteHeader />
-          <div className="flex-1">{children}</div>
+          <div id="main-content" className="flex-1" tabIndex={-1}>{children}</div>
           <SiteFooter />
         </div>
       </body>
     </html>
   );
 }
+
