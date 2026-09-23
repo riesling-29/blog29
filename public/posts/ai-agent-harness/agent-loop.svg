@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">AI 에이전트의 도구 실행과 피드백 루프</title>
+  <desc id="desc">사용자 목표가 하네스의 맥락 구성과 모델 판단을 거쳐 도구 요청으로 이어진다. 하네스가 권한을 검사하고 도구 실행 결과를 다시 모델에 제공한다.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101c31"/><stop offset="1" stop-color="#09111f"/></linearGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1L10 6 1 11" fill="none" stroke="#94a3b8" stroke-width="2"/></marker>
+    <marker id="loop" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1L10 6 1 11" fill="none" stroke="#6ee7b7" stroke-width="2"/></marker>
+  </defs>
+  <rect width="1200" height="650" rx="24" fill="url(#bg)"/>
+  <text x="44" y="59" fill="#f8fafc" font-size="27" font-weight="700" font-family="Arial, sans-serif">A tool request is not an execution</text>
+  <text x="44" y="91" fill="#94a3b8" font-size="17" font-family="Arial, sans-serif">Debugging example · read left to right, then follow the arrows below</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="34" y="143" width="250" height="143" rx="18" fill="#18243a" stroke="#64748b" stroke-width="2"/>
+    <text x="58" y="186" fill="#e2e8f0" font-size="23" font-weight="700">User goal</text>
+    <text x="58" y="221" fill="#cbd5e1" font-size="18">“Find and fix this bug”</text>
+    <text x="58" y="250" fill="#94a3b8" font-size="16">Scope and constraints</text>
+    <rect x="328" y="143" width="250" height="143" rx="18" fill="#143434" stroke="#34d399" stroke-width="2"/>
+    <text x="352" y="186" fill="#a7f3d0" font-size="23" font-weight="700">Harness</text>
+    <text x="352" y="221" fill="#cbd5e1" font-size="18">Goal + context + tools</text>
+    <text x="352" y="250" fill="#94a3b8" font-size="16">Builds the model input</text>
+    <rect x="622" y="143" width="250" height="143" rx="18" fill="#29203f" stroke="#a78bfa" stroke-width="2"/>
+    <text x="646" y="186" fill="#ddd6fe" font-size="23" font-weight="700">LLM</text>
+    <text x="646" y="221" fill="#cbd5e1" font-size="18">Chooses next action</text>
+    <text x="646" y="250" fill="#94a3b8" font-size="16">Or answers and stops</text>
+    <rect x="916" y="143" width="250" height="143" rx="18" fill="#342d23" stroke="#fbbf74" stroke-width="2"/>
+    <text x="940" y="186" fill="#fde68a" font-size="23" font-weight="700">Tool request</text>
+    <text x="940" y="221" fill="#cbd5e1" font-size="18">“Run the tests”</text>
+    <text x="940" y="250" fill="#94a3b8" font-size="16">Not executed yet</text>
+    <rect x="916" y="391" width="250" height="143" rx="18" fill="#143434" stroke="#34d399" stroke-width="2"/>
+    <text x="940" y="434" fill="#a7f3d0" font-size="23" font-weight="700">Permission</text>
+    <text x="940" y="469" fill="#cbd5e1" font-size="18">Allow · deny · ask</text>
+    <text x="940" y="498" fill="#94a3b8" font-size="16">Harness controls access</text>
+    <rect x="622" y="391" width="250" height="143" rx="18" fill="#172b38" stroke="#38bdf8" stroke-width="2"/>
+    <text x="646" y="434" fill="#bae6fd" font-size="23" font-weight="700">Tool execution</text>
+    <text x="646" y="469" fill="#cbd5e1" font-size="18">Files · shell · search</text>
+    <text x="646" y="498" fill="#94a3b8" font-size="16">Runs in the workspace</text>
+    <rect x="328" y="391" width="250" height="143" rx="18" fill="#18243a" stroke="#64748b" stroke-width="2"/>
+    <text x="352" y="434" fill="#e2e8f0" font-size="23" font-weight="700">Tool result</text>
+    <text x="352" y="469" fill="#cbd5e1" font-size="18">Test failed or passed</text>
+    <text x="352" y="498" fill="#94a3b8" font-size="16">Errors are feedback</text>
+    <text x="53" y="472" fill="#a7f3d0" font-size="20" font-weight="700">Next call</text>
+    <text x="53" y="504" fill="#cbd5e1" font-size="17">Result returns</text>
+  </g>
+  <g fill="none" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)">
+    <path d="M291 214H316"/><path d="M585 214H610"/><path d="M879 214H904"/>
+    <path d="M1041 297V379"/>
+    <path d="M903 463H884"/><path d="M609 463H590"/>
+  </g>
+  <path d="M318 463H285Q235 463 235 415V335Q235 307 263 307H452V298" fill="none" stroke="#6ee7b7" stroke-width="3" marker-end="url(#loop)"/>
+  <text x="44" y="611" fill="#94a3b8" font-size="17" font-family="Arial, sans-serif">The loop stops on completion, failure, interruption, or an approval gate, depending on the setup.</text>
+</svg>
