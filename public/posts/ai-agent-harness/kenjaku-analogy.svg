@@ -15,7 +15,9 @@
   <text x="600" y="359" fill="#65685e" text-anchor="middle" font-size="15" font-family="'Noto Sans KR', Arial, sans-serif">하나의 이미지가 비유의 전체를 이룹니다</text>
 
   <path d="M600 373V395M205 395H995" fill="none" stroke="#526044" stroke-width="2.5" stroke-linecap="round"/>
-  <path d="M205 395V431M600 395V431M995 395V431" fill="none" stroke="#526044" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M205 395V431" fill="none" stroke="#526044" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M600 395V431" fill="none" stroke="#526044" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M995 395V431" fill="none" stroke="#526044" stroke-width="2.5" marker-end="url(#arrow)"/>
 
   <rect x="28" y="445" width="354" height="346" rx="14" fill="#faf8f2" stroke="#d6d3c7" stroke-width="2"/>
   <rect x="423" y="445" width="354" height="346" rx="14" fill="#faf8f2" stroke="#d6d3c7" stroke-width="2"/>
@@ -54,7 +56,8 @@
   <text x="885" y="649" fill="#35432b" text-anchor="middle" font-size="14" font-family="'Noto Sans KR', Arial, sans-serif">목표</text>
   <text x="995" y="649" fill="#35432b" text-anchor="middle" font-size="14" font-family="'Noto Sans KR', Arial, sans-serif">도구 사용</text>
   <text x="1105" y="649" fill="#35432b" text-anchor="middle" font-size="14" font-family="'Noto Sans KR', Arial, sans-serif">결과 반영</text>
-  <path d="M930 643H948M1040 643H1058" fill="none" stroke="#526044" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <path d="M930 643H948" fill="none" stroke="#526044" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <path d="M1040 643H1058" fill="none" stroke="#526044" stroke-width="2.2" marker-end="url(#arrow)"/>
   <path d="M1105 688C1105 740 885 740 885 688" fill="none" stroke="#526044" stroke-width="2" marker-end="url(#arrow)"/>
   <text x="844" y="770" fill="#65685e" font-size="14" font-family="'Noto Sans KR', Arial, sans-serif">실행 결과를 보고 다음 단계를 이어 갑니다</text>
 
