@@ -84,6 +84,7 @@ h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
 .prose-blog pre code { border: 0; background: transparent; padding: 0; color: var(--foreground); font-size: .88rem; }
 .prose-blog hr { margin: 3rem 0; border-color: var(--line); }
 .prose-blog img { display: block; height: auto; max-width: 100%; margin: 2rem auto; border-radius: .3rem; }
+.prose-blog img[alt^="켄자쿠의 뇌와 몸"], .prose-blog img[alt^="켄자쿠 비유의 개념도"] { width: 100%; aspect-ratio: 1200 / 620; height: auto; object-fit: contain; margin: 1rem auto; }
 .prose-blog table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: .92rem; }
 .prose-blog :is(th,td) { border-bottom: 1px solid var(--line); padding: .85rem; text-align: left; min-width: 8rem; }
 .prose-blog th { color: var(--foreground); background: var(--surface); }
