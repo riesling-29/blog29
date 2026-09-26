@@ -75,10 +75,6 @@
   <text x="826" y="619" class="body ink">③ 저장소 연결 · Production Branch</text>
   <text x="826" y="647" class="small rust" font-weight="700">Production Branch = main</text>
 
-  <path d="M430 564H407" stroke="#536144" stroke-width="2.5" marker-start="url(#arrow-start)" marker-end="url(#arrow)"/>
-  <text x="418" y="548" class="small muted" text-anchor="middle">권한</text>
-  <path d="M770 564H779" stroke="#a45d43" stroke-width="2.5" marker-end="url(#arrow-rust)"/>
-  <text x="774" y="548" class="small rust" text-anchor="middle">push</text>
 
   <rect x="42" y="741" width="1116" height="681" rx="19" fill="#f0eee5" stroke="#d8d5c9" stroke-width="1.5"/>
   <text x="66" y="784" class="title ink" font-size="25" font-weight="700">글을 수정하고 공개하기</text>
@@ -89,7 +85,7 @@
     <circle cx="91" cy="878" r="20" fill="#536144"/><text x="91" y="884" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">1</text>
     <text x="123" y="885" class="cardhead ink">수정 요청</text>
     <text x="82" y="927" class="body ink">저장소 · 파일 경로 · 수정 범위</text>
-    <text x="82" y="957" class="small muted">例: 특정 MDX 절만 고치기</text>
+    <text x="82" y="957" class="small muted">예: 특정 MDX 절만 고치기</text>
 
     <rect x="430" y="842" width="340" height="150" rx="15" class="flowcard"/>
     <circle cx="463" cy="878" r="20" fill="#536144"/><text x="463" y="884" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">2</text>
