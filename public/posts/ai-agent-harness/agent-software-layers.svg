@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 790" role="img" aria-labelledby="title desc">
+<title id="title">AI 에이전트의 소프트웨어 구성과 외부 연결</title>
+<desc id="desc">사용자와 이벤트가 있는 환경에 연결된 AI 에이전트의 경계 안에 응용, 오케스트레이션, 추론 층이 있습니다. 추론 층의 모델은 오케스트레이션의 계획·메모리·도구·작업 흐름과 응용 층의 인터페이스에 연결됩니다. 오케스트레이션은 MCP를 통해 외부 애플리케이션에, A2A를 통해 다른 에이전트에 연결됩니다.</desc>
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#536347"/></marker>
+  <style>
+    text { font-family: 'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif; fill:#292b25 }
+    .sub { font-size:16px; fill:#63675d }
+    .tiny { font-size:14px; fill:#63675d }
+    .h { font-size:24px; font-weight:700 }
+    .chip { font-size:16px; font-weight:600; fill:#36462e }
+    .line { stroke:#536347; stroke-width:2.6; fill:none; marker-end:url(#arr) }
+  </style>
+</defs>
+<rect width="1200" height="790" rx="26" fill="#f7f3ea"/>
+<text x="64" y="42" class="sub" font-weight="700" fill="#536347">조직 내부 · 사용자와 에이전트</text>
+<text x="891" y="42" class="sub" font-weight="700" fill="#9d503d">외부 연결 자원</text>
+<line x1="64" y1="54" x2="813" y2="54" stroke="#d3d6cb" stroke-width="2"/>
+<line x1="886" y1="54" x2="1148" y2="54" stroke="#e1d4c9" stroke-width="2"/>
+
+<rect x="88" y="75" width="688" height="126" rx="18" fill="#fffdf8" stroke="#d9d2c4" stroke-width="2"/>
+<text x="115" y="111" class="h">환경</text>
+<text x="198" y="111" class="sub">에이전트가 관측하고 행동하는 곳</text>
+<rect x="115" y="132" width="146" height="45" rx="10" fill="#edf0e7"/>
+<text x="188" y="161" text-anchor="middle" class="chip">사용자 요청</text>
+<rect x="279" y="132" width="130" height="45" rx="10" fill="#edf0e7"/>
+<text x="344" y="161" text-anchor="middle" class="chip">이벤트</text>
+<path class="line" d="M240 201 V258"/>
+<path class="line" d="M641 258 V201"/>
+<text x="255" y="225" class="tiny">관측</text>
+<text x="652" y="225" class="tiny">행동</text>
+
+<rect x="56" y="244" width="760" height="500" rx="24" fill="#e9ede3" stroke="#536347" stroke-width="3" stroke-dasharray="10 7"/>
+<rect x="82" y="227" width="190" height="35" rx="17" fill="#536347"/>
+<text x="177" y="251" text-anchor="middle" font-size="18" font-weight="700" fill="#fffdf8" style="fill:#fffdf8">AI 에이전트</text>
+
+<rect x="89" y="279" width="694" height="118" rx="16" fill="#fffdf8" stroke="#cdd3c3" stroke-width="2"/>
+<text x="117" y="318" class="h">응용</text>
+<text x="117" y="347" class="sub">사용자와 주고받는 창구</text>
+<rect x="310" y="303" width="441" height="68" rx="12" fill="#edf0e7"/>
+<text x="332" y="326" class="tiny">입력 · 출력</text>
+<rect x="329" y="337" width="116" height="26" rx="6" fill="#fffdf8"/>
+<rect x="466" y="337" width="116" height="26" rx="6" fill="#fffdf8"/>
+<rect x="603" y="337" width="116" height="26" rx="6" fill="#fffdf8"/>
+<text x="387" y="355" text-anchor="middle" class="chip" font-size="14">화면</text>
+<text x="524" y="355" text-anchor="middle" class="chip" font-size="14">API</text>
+<text x="661" y="355" text-anchor="middle" class="chip" font-size="14">코드</text>
+
+<path d="M438 397 V414" stroke="#536347" stroke-width="2.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+<rect x="89" y="426" width="694" height="137" rx="16" fill="#fffdf8" stroke="#cdd3c3" stroke-width="2"/>
+<text x="117" y="468" class="h">오케스트레이션</text>
+<text x="117" y="495" class="sub">작업을 이어 가는 운영 구조</text>
+<rect x="317" y="454" width="434" height="79" rx="12" fill="#edf0e7"/>
+<text x="339" y="477" class="tiny">에이전트 프레임워크</text>
+<rect x="337" y="486" width="88" height="34" rx="7" fill="#fffdf8"/>
+<rect x="435" y="486" width="88" height="34" rx="7" fill="#fffdf8"/>
+<rect x="533" y="486" width="88" height="34" rx="7" fill="#fffdf8"/>
+<rect x="631" y="486" width="101" height="34" rx="7" fill="#fffdf8"/>
+<text x="381" y="508" text-anchor="middle" class="chip" font-size="14">계획</text>
+<text x="479" y="508" text-anchor="middle" class="chip" font-size="14">메모리</text>
+<text x="577" y="508" text-anchor="middle" class="chip" font-size="14">도구</text>
+<text x="681" y="508" text-anchor="middle" class="chip" font-size="14">작업 흐름</text>
+
+<path d="M438 563 V580" stroke="#536347" stroke-width="2.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+<rect x="89" y="593" width="694" height="116" rx="16" fill="#fffdf8" stroke="#cdd3c3" stroke-width="2"/>
+<text x="117" y="637" class="h">추론</text>
+<text x="117" y="666" class="sub">다음 출력을 만드는 모델</text>
+<rect x="317" y="617" width="434" height="66" rx="12" fill="#f2ece0"/>
+<text x="339" y="642" class="tiny">모델</text>
+<text x="339" y="669" font-size="17" font-weight="700">LLM 등 생성형 모델 · 그 밖의 모델</text>
+
+<rect x="891" y="399" width="257" height="145" rx="16" fill="#fffdf8" stroke="#ddcfc2" stroke-width="2"/>
+<text x="912" y="433" class="h" font-size="22">외부 애플리케이션</text>
+<text x="912" y="467" class="sub">CRM · 메시징</text>
+<text x="912" y="493" class="sub">데이터베이스 · 서비스</text>
+<path class="line" d="M783 468 H885"/>
+<rect x="811" y="437" width="58" height="25" rx="11" fill="#f7f3ea" stroke="#536347"/>
+<text x="840" y="455" text-anchor="middle" font-size="14" font-weight="700">MCP</text>
+
+<rect x="891" y="594" width="257" height="116" rx="16" fill="#fffdf8" stroke="#ddcfc2" stroke-width="2"/>
+<text x="912" y="632" class="h">다른 AI 에이전트</text>
+<text x="912" y="659" class="sub">별도의 응용 · 운영 · 추론</text>
+<path class="line" d="M783 541 H845 V651 H885"/>
+<rect x="850" y="550" width="54" height="26" rx="11" fill="#f7f3ea" stroke="#9d503d"/>
+<text x="877" y="569" text-anchor="middle" font-size="14" font-weight="700">A2A</text>
+<text x="600" y="775" text-anchor="middle" class="tiny">개념 참고: World Economic Forum, AI Agents in Action (2025), Figure 2</text>
+</svg>
