@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 760" role="img" aria-labelledby="title desc">
   <title id="title">AI 에이전트의 감지·판단·행동 구조</title>
-  <desc id="desc">사용자 목표가 환경에 들어가고, 센서가 정보를 받아 제어센터가 판단하고 도구 호출을 조정합니다. 이펙터가 행동을 실행하고, 결과가 환경과 제어센터로 돌아오는 순환 구조입니다.</desc>
+  <desc id="desc">AI 에이전트는 센서, 제어센터, 이펙터 전체로 표시됩니다. 사용자 목표는 제어센터로 들어가고, 센서가 환경의 정보를 전달합니다. 제어센터가 판단한 행동을 이펙터가 실행하며, 결과가 환경과 제어센터로 돌아옵니다.</desc>
   <defs>
     <marker id="arrow-olive" viewBox="0 0 10 10" refX="8.2" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#536347"/></marker>
     <marker id="arrow-terracotta" viewBox="0 0 10 10" refX="8.2" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9d503d"/></marker>
     <style>
-      text { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; fill: #292b25; }
+      text { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; }
       .serif { font-family: Georgia, 'Noto Serif KR', serif; }
       .small { font-size: 15px; }
       .label { font-size: 14px; font-weight: 700; letter-spacing: .06em; }
@@ -35,13 +35,13 @@
   <text x="635" y="257" font-size="18" font-weight="700">물리적 환경</text>
   <text x="635" y="282" class="small" fill="#68695e">로봇 · 기기 · 센서가 있는 공간</text>
 
-  <rect x="54" y="374" width="1012" height="330" rx="25" fill="#f9f6ef" stroke="#b9b9a8" stroke-width="2"/>
-  <rect x="78" y="357" width="202" height="34" rx="17" fill="#f7f3ea" stroke="#b9b9a8"/>
-  <text x="179" y="380" text-anchor="middle" class="label" fill="#536347">AI 에이전트 시스템</text>
+  <rect x="54" y="354" width="1012" height="350" rx="25" fill="#e9ede3" stroke="#536347" stroke-width="3.5"/>
+  <text x="82" y="408" class="serif" font-size="35" font-weight="700" fill="#32452c">AI 에이전트</text>
+  <text x="749" y="404" font-size="16" fill="#536347">센서 + 제어센터 + 이펙터 전체</text>
 
-  <rect x="790" y="116" width="132" height="28" rx="14" fill="#f1ecdf" stroke="#ddd2b9"/>
-  <text x="856" y="135" text-anchor="middle" class="label" fill="#8b713d">사용자 목표</text>
-  <path d="M856 145 V157" fill="none" stroke="#a88443" stroke-width="2.5" marker-end="url(#arrow-olive)"/>
+  <rect x="488" y="346" width="144" height="29" rx="14" fill="#f1ecdf" stroke="#a88443" stroke-width="1.5"/>
+  <text x="560" y="367" text-anchor="middle" class="label" fill="#735c2e">사용자 목표</text>
+  <path d="M560 376 V428" fill="none" stroke="#a88443" stroke-width="2.5" marker-end="url(#arrow-olive)"/>
 
   <path d="M 360 305 C 245 333, 142 342, 205 433" fill="none" stroke="#536347" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-olive)"/>
   <rect x="78" y="323" width="115" height="28" rx="14" fill="#f7f3ea"/>
