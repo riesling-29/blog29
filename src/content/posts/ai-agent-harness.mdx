@@ -126,38 +126,6 @@ LLM은 입력된 토큰을 바탕으로 다음 출력을 만듭니다. Attention
 
 ## 이 블로그 글은 이렇게 쓰였습니다
 
-이번 글의 작성과 공개에는 두 가지 작업 경로가 사용되었습니다.
+![Local LLM과 Hermes로 초안을 정리하고, Codex에서 GitHub 저장소를 수정해 Vercel로 공개하는 작업 흐름. Codex와 Vercel의 최초 연결, Pull Request 미리보기, main 병합과 운영 배포 단계를 표시합니다.](/posts/ai-agent-harness/writing-workflow.svg)
 
-1. **Local LLM + Hermes**  
-   로컬에서 실행하는 LLM을 Hermes를 통해 사용해 글의 초안을 만들고 내용을 정리합니다. 모델과 에이전트 실행 환경이 개인 컴퓨터 안에서 연결되는 흐름입니다.
-
-2. **GPT/Codex + GitHub + Vercel**  
-   Codex가 GitHub 저장소의 원고를 수정하고, Vercel이 변경 사항을 블로그로 배포합니다. 여기서 GPT는 글과 코드를 다루는 모델을, Codex는 GitHub 저장소를 읽고 수정하는 코딩 에이전트 환경을 가리킵니다.
-
-### 처음 한 번 연결하기
-
-**1. Codex에 GitHub 저장소 연결하기**
-
-1. [Codex](https://chatgpt.com/codex)에 ChatGPT 계정으로 로그인한 뒤 GitHub 연결을 시작합니다.
-2. GitHub로 이동하면 Codex 앱 설치와 권한 부여를 진행합니다. 저장소를 고르는 화면에서는 필요한 저장소만 선택하는 방식이 적절합니다. 조직 저장소라면 조직 관리자의 승인이 필요할 수 있습니다.
-3. Codex로 돌아와 연결할 저장소를 선택하고 작업 환경을 만듭니다. 저장소에 별도 빌드나 검사 명령이 있다면 환경에 설정합니다.
-
-일반 ChatGPT의 GitHub 연결 앱은 저장소 내용을 검색하고 분석하는 읽기 전용 연결입니다. 파일을 수정하거나 변경 사항을 GitHub에 올리는 작업은 Codex에서 진행합니다. 연결 가능한 기능은 ChatGPT 요금제와 화면에 따라 다를 수 있으므로 [GitHub 연결 안내](https://help.openai.com/en/articles/11145903-connecting-github-to-chatgpt)와 [Codex Cloud 빠른 시작](https://developers.openai.com/codex/cloud)을 함께 확인하면 됩니다.
-
-**2. Vercel에 같은 GitHub 저장소 연결하기**
-
-1. Vercel 대시보드에서 **New Project**를 선택하고 GitHub 저장소를 가져옵니다. 이미 Vercel 프로젝트가 있다면 **Project Settings → Git**에서 연결된 저장소를 확인합니다.
-2. Vercel의 GitHub 앱이 저장소에 접근하도록 승인합니다. Codex와 Vercel은 별개의 앱이므로 각각 저장소 접근 권한을 받아야 합니다.
-3. 프로젝트의 프레임워크와 Root Directory를 확인하고, 필요한 환경 변수와 빌드 설정을 지정한 뒤 첫 배포를 완료합니다.
-4. **Production Branch**가 실제 공개 브랜치와 맞는지 확인합니다. 이 블로그에서는 `main`이 공개 브랜치입니다.
-
-Vercel은 연결된 Git 저장소의 변경을 빌드합니다. 기본 설정에서는 일반 브랜치의 변경 사항에 미리보기 배포를 만들고, Production Branch에 반영된 변경 사항을 운영 사이트에 배포합니다. 브랜치 설정이나 빌드가 실패하면 배포가 완료되지 않을 수 있습니다. 자세한 설정은 [Vercel Git 배포 안내](https://vercel.com/docs/git)와 [GitHub 연동 문서](https://vercel.com/docs/git/vercel-for-github)를 참고할 수 있습니다.
-
-### 글을 수정하고 공개하기
-
-1. Codex에 저장소와 수정할 파일 경로, 원하는 변경 사항을 구체적으로 알려줍니다. 예를 들어 “`src/content/posts/ai-agent-harness.mdx`의 해당 절만 수정하고, 다른 파일은 바꾸지 말아 주세요”처럼 범위를 지정합니다.
-2. Codex가 제안한 변경 요약과 diff를 확인합니다. 문장, 링크, 그림 경로와 함께 의도하지 않은 파일 변경이 없는지 살펴봅니다.
-3. 공개 전에 확인하려면 별도 브랜치에서 작업한 뒤 Pull Request를 엽니다. Vercel이 만든 미리보기 주소에서 글과 그림을 확인하고, 문제가 없으면 Pull Request를 `main`에 병합합니다.
-4. `main`에 반영되면 Vercel이 운영 배포를 시작합니다. Vercel 대시보드에서 상태가 성공인지 확인한 다음 실제 블로그 주소를 열어 최종 결과를 확인합니다.
-
-수정 내용을 바로 `main`에 올리는 방식도 가능하지만, 그 경우 운영 배포가 곧바로 시작될 수 있습니다. 미리보기에서 먼저 확인하는 흐름은 공개 사이트에 반영하기 전에 결과를 검토할 시간을 줍니다.
+[ChatGPT GitHub 연결 안내](https://help.openai.com/en/articles/11145903-connecting-github-to-chatgpt) · [Codex Cloud 빠른 시작](https://developers.openai.com/codex/cloud) · [Vercel Git 배포 안내](https://vercel.com/docs/git)
