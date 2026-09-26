@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 760" role="img" aria-labelledby="title desc">
+  <title id="title">AI 에이전트의 감지·판단·행동 구조</title>
+  <desc id="desc">사용자 목표가 환경에 들어가고, 센서가 정보를 받아 제어센터가 판단하고 도구 호출을 조정합니다. 이펙터가 행동을 실행하고, 결과가 환경과 제어센터로 돌아오는 순환 구조입니다.</desc>
+  <defs>
+    <marker id="arrow-olive" viewBox="0 0 10 10" refX="8.2" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#536347"/></marker>
+    <marker id="arrow-terracotta" viewBox="0 0 10 10" refX="8.2" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9d503d"/></marker>
+    <style>
+      text { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; fill: #292b25; }
+      .serif { font-family: Georgia, 'Noto Serif KR', serif; }
+      .small { font-size: 15px; }
+      .label { font-size: 14px; font-weight: 700; letter-spacing: .06em; }
+      .node-title { font-size: 23px; font-weight: 700; }
+      .body { font-size: 16px; }
+    </style>
+  </defs>
+  <rect width="1120" height="760" rx="28" fill="#f7f3ea"/>
+  <text x="72" y="58" class="label" fill="#536347">AI AGENT · SYSTEM MAP</text>
+  <text x="72" y="101" class="serif" font-size="32" font-weight="700">환경을 읽고, 판단하고, 행동합니다</text>
+  <text x="72" y="132" font-size="16" fill="#68695e">관측 정보와 실행 결과를 주고받으며 목표를 향해 작업을 이어갑니다.</text>
+
+  <rect x="190" y="160" width="740" height="175" rx="22" fill="#fffdf8" stroke="#d9d2c4" stroke-width="2"/>
+  <rect x="220" y="180" width="98" height="28" rx="14" fill="#e9ecdf"/>
+  <text x="269" y="199" text-anchor="middle" class="label" fill="#536347">환경</text>
+  <text x="340" y="199" font-size="15" fill="#68695e">작업이 일어나는 바깥 맥락</text>
+
+  <rect x="225" y="222" width="315" height="83" rx="15" fill="#eef0e7" stroke="#d8ddce"/>
+  <circle cx="254" cy="263" r="14" fill="#536347"/>
+  <path d="M248 263h12M254 257v12" stroke="#fffdf8" stroke-width="2" stroke-linecap="round"/>
+  <text x="280" y="257" font-size="18" font-weight="700">디지털 환경</text>
+  <text x="280" y="282" class="small" fill="#68695e">파일 · 터미널 · API · 웹 서비스</text>
+
+  <rect x="580" y="222" width="315" height="83" rx="15" fill="#f3e9e2" stroke="#e3d2c7"/>
+  <circle cx="609" cy="263" r="14" fill="#9d503d"/>
+  <path d="M602 265l7-9 7 9M609 256v14" fill="none" stroke="#fffdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="635" y="257" font-size="18" font-weight="700">물리적 환경</text>
+  <text x="635" y="282" class="small" fill="#68695e">로봇 · 기기 · 센서가 있는 공간</text>
+
+  <rect x="54" y="374" width="1012" height="330" rx="25" fill="#f9f6ef" stroke="#b9b9a8" stroke-width="2"/>
+  <rect x="78" y="357" width="202" height="34" rx="17" fill="#f7f3ea" stroke="#b9b9a8"/>
+  <text x="179" y="380" text-anchor="middle" class="label" fill="#536347">AI 에이전트 시스템</text>
+
+  <rect x="790" y="116" width="132" height="28" rx="14" fill="#f1ecdf" stroke="#ddd2b9"/>
+  <text x="856" y="135" text-anchor="middle" class="label" fill="#8b713d">사용자 목표</text>
+  <path d="M856 145 V157" fill="none" stroke="#a88443" stroke-width="2.5" marker-end="url(#arrow-olive)"/>
+
+  <path d="M 360 305 C 245 333, 142 342, 205 433" fill="none" stroke="#536347" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-olive)"/>
+  <rect x="78" y="323" width="115" height="28" rx="14" fill="#f7f3ea"/>
+  <text x="135" y="342" text-anchor="middle" class="label" fill="#536347">관측 정보</text>
+  <path d="M 891 433 C 1000 358, 1000 338, 758 305" fill="none" stroke="#9d503d" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-terracotta)"/>
+  <rect x="917" y="323" width="86" height="28" rx="14" fill="#f7f3ea"/>
+  <text x="960" y="342" text-anchor="middle" class="label" fill="#9d503d">행동</text>
+
+  <rect x="92" y="433" width="268" height="190" rx="19" fill="#eef0e7" stroke="#cbd2bf" stroke-width="2"/>
+  <circle cx="123" cy="467" r="17" fill="#536347"/>
+  <text x="123" y="473" text-anchor="middle" font-size="14" font-weight="700" fill="#fffdf8">01</text>
+  <text x="151" y="475" class="node-title">센서</text>
+  <text x="116" y="520" class="body" font-weight="700">요청 · 파일 · 실행 결과</text>
+  <text x="116" y="551" class="small" fill="#68695e">환경에서 관측 정보를 받아</text>
+  <text x="116" y="575" class="small" fill="#68695e">제어센터에 전달합니다.</text>
+
+  <rect x="426" y="433" width="268" height="190" rx="19" fill="#f1ecdf" stroke="#ddd2b9" stroke-width="2"/>
+  <circle cx="457" cy="467" r="17" fill="#a88443"/>
+  <text x="457" y="473" text-anchor="middle" font-size="14" font-weight="700" fill="#fffdf8">02</text>
+  <text x="485" y="475" class="node-title">제어센터</text>
+  <text x="450" y="520" class="body" font-weight="700">모델 · 계획 · 메모리</text>
+  <text x="450" y="551" class="small" fill="#68695e">다음 행동을 판단하고</text>
+  <text x="450" y="575" class="small" fill="#68695e">도구 호출을 조정합니다.</text>
+
+  <rect x="760" y="433" width="268" height="190" rx="19" fill="#f3e9e2" stroke="#e3d2c7" stroke-width="2"/>
+  <circle cx="791" cy="467" r="17" fill="#9d503d"/>
+  <text x="791" y="473" text-anchor="middle" font-size="14" font-weight="700" fill="#fffdf8">03</text>
+  <text x="819" y="475" class="node-title">이펙터</text>
+  <text x="784" y="520" class="body" font-weight="700">도구 · API · 기기</text>
+  <text x="784" y="551" class="small" fill="#68695e">허용된 동작을 실행해</text>
+  <text x="784" y="575" class="small" fill="#68695e">환경에 결과를 돌려줍니다.</text>
+
+  <path d="M 360 530 H 417" fill="none" stroke="#536347" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-olive)"/>
+  <text x="389" y="514" text-anchor="middle" class="label" fill="#536347">전달</text>
+  <path d="M 694 530 H 751" fill="none" stroke="#536347" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-olive)"/>
+  <text x="723" y="514" text-anchor="middle" class="label" fill="#536347">호출</text>
+  <path d="M 760 592 C 708 673, 567 676, 560 631" fill="none" stroke="#a88443" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow-olive)"/>
+  <rect x="614" y="646" width="122" height="25" rx="12" fill="#f9f6ef"/>
+  <text x="675" y="664" text-anchor="middle" font-size="13" font-weight="700" fill="#8b713d">실행 결과</text>
+
+  <text x="560" y="733" text-anchor="middle" font-size="14" fill="#68695e">개념 참고: World Economic Forum, Navigating the AI Frontier (2024)</text>
+</svg>
