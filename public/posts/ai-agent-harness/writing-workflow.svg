@@ -21,7 +21,7 @@
   </defs>
   <rect width="1200" height="1600" rx="24" fill="#f5f2ea"/>
   <text x="48" y="67" class="title ink" font-size="34" font-weight="700">이 블로그 글은 이렇게 쓰였습니다</text>
-  <text x="50" y="102" class="muted" font-size="18">초안 작성 경로와 GitHub → Vercel 공개 과정을 한눈에 정리했습니다</text>
+  <text x="50" y="102" class="muted" font-size="18">작성자가 이 글의 초안·수정·공개에 사용한 경로입니다</text>
 
   <rect x="42" y="125" width="545" height="125" rx="16" fill="#e9eadf" stroke="#c9cdbb" stroke-width="1.5"/>
   <circle cx="76" cy="161" r="17" fill="#536144"/>
