@@ -14,6 +14,41 @@ Attention과 KV Cache를 학습한 뒤에는 다음 질문이 자연스럽게 �
 
 답은 모델과 그 주변 프로그램이 주고받는 과정에 있습니다. LLM은 매 단계에서 현재 입력과 함께 전달된 도구 설명을 바탕으로 다음 출력을 생성합니다. 일반적인 질문에는 답변 문장을 만들고, 도구가 필요하다고 판단하면 사용할 도구의 이름과 인자를 담은 구조화된 호출을 출력합니다. 여기까지가 모델의 출력입니다. 이 호출 자체가 명령을 실행하는 것은 아닙니다. 하네스가 호출 형식과 권한을 확인한 뒤 해당 도구를 실행하고, 파일 내용이나 명령 결과를 다음 입력에 포함해 모델을 다시 호출합니다. 모델은 결과를 바탕으로 답변을 마치거나 다른 도구 호출을 이어 갑니다. 따라서 “모델이 행동한다”는 말은 실행할 행동을 선택해 요청을 출력한다는 뜻이며, 파일 수정이나 명령 실행처럼 환경을 실제로 바꾸는 일은 연결된 도구와 실행기가 맡습니다. 이런 호출·실행·결과 반영이 반복되어 목표를 수행하는 시스템을 AI 에이전트라고 설명할 수 있습니다.
 
+
+### Tool Calling은 어떤 형식으로 오갈까요?
+
+도구를 호출하는 공통 개념은 있지만, 모든 모델과 제품이 쓰는 단일한 표준 메시지 형식은 없습니다. 보통은 도구 설명과 입력 스키마를 모델에 제공하고, 모델이 도구 이름과 인자를 담은 호출을 출력합니다. 실행기가 호출을 수행한 뒤에는 같은 호출 ID를 가리키는 결과를 돌려줍니다. 아래는 같은 `run_command` 요청을 OpenAI와 Claude의 공개 API 형식으로 나타낸 예입니다.
+
+| 단계 | OpenAI Responses API | Claude Messages API |
+| --- | --- | --- |
+| 모델의 도구 호출 | `type: "function_call"`, `call_id`, `name`, JSON 문자열인 `arguments` | `type: "tool_use"`, `id`, `name`, 객체인 `input` |
+| 실행 결과 전달 | `type: "function_call_output"`, 원래 `call_id`, `output` | `type: "tool_result"`, 원래 호출의 `tool_use_id`, `content` |
+
+OpenAI 형식은 다음처럼 표현됩니다.
+
+```json
+{"type":"function_call","call_id":"call_123","name":"run_command","arguments":"{\"command\":\"npm test\"}"}
+{"type":"function_call_output","call_id":"call_123","output":"All tests passed"}
+```
+
+Claude Messages API에서는 호출과 결과가 다음과 같은 콘텐츠 블록으로 오갑니다.
+
+```json
+{"type":"tool_use","id":"toolu_123","name":"run_command","input":{"command":"npm test"}}
+{"type":"tool_result","tool_use_id":"toolu_123","content":"All tests passed"}
+```
+
+필드 모양은 다르지만, 두 예 모두 **모델이 호출을 제안하고, 애플리케이션이 실행한 다음, 결과를 해당 호출에 연결해 모델에 돌려주는 구조**입니다. OpenAI 문서도 이 과정을 모델 응답, 애플리케이션의 도구 실행, 결과 제출, 후속 모델 응답으로 설명합니다. Claude의 공개 API 문서에서는 `tool_use`와 `tool_result` 블록으로 같은 왕복을 나타냅니다. [OpenAI Function Calling](https://platform.openai.com/docs/guides/function-calling) · [Claude tool use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)
+
+Hermes도 하나의 고정된 외부 형식만 쓰는 것은 아닙니다. 제공자별 형식에 맞춰 호출을 변환하며, 실행 기록(trajectory)에는 도구 호출과 결과를 `<tool_call>` 및 `<tool_response>` 태그로 감싼 정규화 표현을 저장할 수 있습니다.
+
+```text
+<tool_call>{"name":"terminal","arguments":{"command":"npm test"}}</tool_call>
+<tool_response>{"output":"All tests passed","exit_code":0}</tool_response>
+```
+
+이 Hermes 예시는 실행 기록에서 읽기 쉽게 정리한 표현이며, 모든 제공자와 제품이 실제 통신에서 그대로 사용하는 표준 wire format이라는 뜻은 아닙니다. 또한 Claude 예시는 공개 Claude API의 tool-use 형식입니다. Claude Code 내부의 메시지 봉투가 이 예와 바이트 단위로 같다고 공개 문서가 보장하지는 않습니다. [Hermes provider 통합 문서](https://hermes-agent.nousresearch.com/docs/agents/providers/) · [Hermes trajectory 형식](https://hermes-agent.nousresearch.com/docs/agents/trajectory/)
+
 에이전트의 범위는 자료마다 다릅니다. WEF가 2024년 6월 중국 다롄에서 개최한 Annual Meeting of the New Champions의 ‘What Can AI Assistants Do?’ 세션은 AI 에이전트의 활용과 인간·기계의 관계를 논의한 패널 토론이었습니다. [WEF가 이 세션을 정리한 기사](https://www.weforum.org/stories/technological-innovation/what-is-an-ai-agent-experts-explain/)에서도 전문가들은 서로 다른 측면을 강조합니다. Vanderbilt University의 Xi Kang은 일반 사용자도 접근할 수 있는 AI 기반 예측·의사결정 지원까지 폭넓게 봅니다. Neusoft의 Liu Jiren은 환경을 감지하고 자율적으로 판단·행동하는 점을 중요하게 봅니다. Moonhub의 Nancy Xu는 LLM에 행위 능력을 더하는 흐름으로 설명하며, 개인의 디지털 동반자나 기업의 디지털 직원에 비유합니다. causaLens의 Darko Matovski는 업무에 따라 자율성과 인간의 통제 사이 경계를 정하고, 사람이 에이전트의 작업 흐름을 감독할 지점을 고려해야 한다고 봅니다. 이 설명들은 하나의 엄밀한 정의에 합의했다기보다, 의사결정 지원부터 환경을 감지해 자율적으로 행동하는 시스템까지 ‘에이전트’라는 말이 넓게 쓰이고 있음을 보여줍니다. 어떤 시스템을 에이전트라고 부를지는 자율성, 실제 행동, 사람의 감독을 어디까지 포함하느냐에 따라 달라집니다. [WEF의 전문가 패널 기사](https://www.weforum.org/stories/technological-innovation/what-is-an-ai-agent-experts-explain/)
 
 ## Attention에서 에이전트로
