@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600" role="img" aria-labelledby="title desc">
+  <title id="title">이 블로그 글은 이렇게 쓰였습니다</title>
+  <desc id="desc">초안 작성에는 Local LLM과 Hermes를, 저장소 편집에는 GPT와 Codex를 사용하고, GitHub와 Vercel을 연결해 미리보기, 검토, main 병합, 운영 배포를 진행하는 절차를 보여 주는 흐름도입니다.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 10 6 1 11" fill="none" stroke="#536144" stroke-width="2"/></marker>
+    <marker id="arrow-rust" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 10 6 1 11" fill="none" stroke="#a45d43" stroke-width="2"/></marker>
+    <marker id="arrow-start" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto"><path d="M11 1 2 6 11 11" fill="none" stroke="#536144" stroke-width="2"/></marker>
+    <style>
+      text { font-family: 'Noto Sans KR', Arial, sans-serif; }
+      .title { font-family: Georgia, 'Noto Serif KR', serif; }
+      .ink { fill: #292b25; }
+      .muted { fill: #686b60; }
+      .olive { fill: #536144; }
+      .rust { fill: #9a5139; }
+      .card { fill: #fffdf7; stroke: #d7d2c4; stroke-width: 2; }
+      .flowcard { fill: #fffdf7; stroke: #c9cdbb; stroke-width: 2; }
+      .cardhead { font-size: 22px; font-weight: 700; }
+      .body { font-size: 17px; }
+      .small { font-size: 15px; }
+    </style>
+  </defs>
+  <rect width="1200" height="1600" rx="24" fill="#f5f2ea"/>
+  <text x="48" y="67" class="title ink" font-size="34" font-weight="700">이 블로그 글은 이렇게 쓰였습니다</text>
+  <text x="50" y="102" class="muted" font-size="18">초안 작성 경로와 GitHub → Vercel 공개 과정을 한눈에 정리했습니다</text>
+
+  <rect x="42" y="125" width="545" height="125" rx="16" fill="#e9eadf" stroke="#c9cdbb" stroke-width="1.5"/>
+  <circle cx="76" cy="161" r="17" fill="#536144"/>
+  <text x="76" y="167" fill="#fffdf7" font-size="16" font-weight="700" text-anchor="middle">1</text>
+  <text x="106" y="168" class="cardhead ink">Local LLM + Hermes</text>
+  <text x="70" y="207" class="body ink">로컬 모델로 초안을 만들고 내용을 정리합니다.</text>
+  <text x="70" y="232" class="small muted">개인 컴퓨터에서 모델과 에이전트 환경을 사용</text>
+
+  <rect x="613" y="125" width="545" height="125" rx="16" fill="#eee5d8" stroke="#dcc8b5" stroke-width="1.5"/>
+  <circle cx="647" cy="161" r="17" fill="#a45d43"/>
+  <text x="647" y="167" fill="#fffdf7" font-size="16" font-weight="700" text-anchor="middle">2</text>
+  <text x="677" y="168" class="cardhead ink">GPT / Codex + GitHub + Vercel</text>
+  <text x="641" y="207" class="body ink">저장소의 원고를 고쳐 블로그에 공개합니다.</text>
+  <text x="641" y="232" class="small muted">이 아래 흐름도는 두 번째 경로를 설명합니다</text>
+
+  <rect x="42" y="270" width="1116" height="84" rx="14" fill="#f1e5da" stroke="#dfc5b3" stroke-width="1.5"/>
+  <rect x="58" y="289" width="112" height="43" rx="9" fill="#a45d43"/>
+  <text x="114" y="316" fill="#fffdf7" font-size="16" font-weight="700" text-anchor="middle">권한 구분</text>
+  <text x="190" y="305" class="body ink" font-weight="700">일반 ChatGPT GitHub 연결</text>
+  <text x="190" y="331" class="small muted">저장소 읽기·검색</text>
+  <path d="M525 312H580" stroke="#a45d43" stroke-width="2" marker-end="url(#arrow-rust)"/>
+  <text x="604" y="305" class="body ink" font-weight="700">파일 수정·변경 반영</text>
+  <text x="604" y="331" class="small muted">Codex에서 수행</text>
+  <text x="899" y="317" class="small rust" font-weight="700">앱은 서로 다른 권한으로 연결됩니다</text>
+
+  <rect x="42" y="376" width="1116" height="341" rx="19" fill="#efeee6" stroke="#d8d5c9" stroke-width="1.5"/>
+  <text x="66" y="418" class="title ink" font-size="25" font-weight="700">최초 한 번 연결하기</text>
+  <text x="66" y="446" class="small muted">Codex 앱과 Vercel 앱이 같은 GitHub 저장소에 각각 접근할 수 있도록 설정합니다.</text>
+
+  <rect x="58" y="472" width="340" height="196" rx="15" class="card"/>
+  <rect x="58" y="472" width="340" height="9" rx="4" fill="#536144"/>
+  <text x="82" y="519" class="cardhead ink">Codex ↔ GitHub</text>
+  <text x="82" y="557" class="body ink">① Codex에 로그인하고 GitHub 연결</text>
+  <text x="82" y="588" class="body ink">② GitHub에서 Codex 앱 승인</text>
+  <text x="82" y="619" class="body ink">③ 필요한 저장소만 선택</text>
+  <text x="82" y="647" class="small muted">조직 저장소는 관리자 승인이 필요할 수 있음</text>
+
+  <rect x="430" y="472" width="340" height="196" rx="15" fill="#f7f6ef" stroke="#9ba48b" stroke-width="2"/>
+  <rect x="430" y="472" width="340" height="9" rx="4" fill="#727d5c"/>
+  <text x="454" y="519" class="cardhead ink">GitHub 저장소</text>
+  <text x="454" y="557" class="body ink">원고 파일 · 그림 · 변경 이력</text>
+  <text x="454" y="588" class="body ink">Codex 작업 브랜치와 Pull Request</text>
+  <text x="454" y="619" class="body ink">공개 브랜치: <tspan font-weight="700">main</tspan></text>
+  <text x="454" y="647" class="small muted">공개 원고의 기준이 되는 저장 위치</text>
+
+  <rect x="802" y="472" width="340" height="196" rx="15" class="card"/>
+  <rect x="802" y="472" width="340" height="9" rx="4" fill="#a45d43"/>
+  <text x="826" y="519" class="cardhead ink">Vercel ↔ 같은 저장소</text>
+  <text x="826" y="557" class="body ink">① New Project 또는 Settings → Git</text>
+  <text x="826" y="588" class="body ink">② Vercel 앱의 접근 승인</text>
+  <text x="826" y="619" class="body ink">③ 저장소 연결 · Production Branch</text>
+  <text x="826" y="647" class="small rust" font-weight="700">Production Branch = main</text>
+
+  <path d="M430 564H407" stroke="#536144" stroke-width="2.5" marker-start="url(#arrow-start)" marker-end="url(#arrow)"/>
+  <text x="418" y="548" class="small muted" text-anchor="middle">권한</text>
+  <path d="M770 564H779" stroke="#a45d43" stroke-width="2.5" marker-end="url(#arrow-rust)"/>
+  <text x="774" y="548" class="small rust" text-anchor="middle">push</text>
+
+  <rect x="42" y="741" width="1116" height="681" rx="19" fill="#f0eee5" stroke="#d8d5c9" stroke-width="1.5"/>
+  <text x="66" y="784" class="title ink" font-size="25" font-weight="700">글을 수정하고 공개하기</text>
+  <text x="66" y="812" class="small muted">Pull Request 경로는 운영 반영 전에 미리보기를 확인할 수 있습니다. 화살표 순서대로 따라갑니다.</text>
+
+  <g>
+    <rect x="58" y="842" width="340" height="150" rx="15" class="flowcard"/>
+    <circle cx="91" cy="878" r="20" fill="#536144"/><text x="91" y="884" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">1</text>
+    <text x="123" y="885" class="cardhead ink">수정 요청</text>
+    <text x="82" y="927" class="body ink">저장소 · 파일 경로 · 수정 범위</text>
+    <text x="82" y="957" class="small muted">例: 특정 MDX 절만 고치기</text>
+
+    <rect x="430" y="842" width="340" height="150" rx="15" class="flowcard"/>
+    <circle cx="463" cy="878" r="20" fill="#536144"/><text x="463" y="884" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">2</text>
+    <text x="495" y="885" class="cardhead ink">Codex가 수정</text>
+    <text x="454" y="927" class="body ink">작업 브랜치에서 파일 편집</text>
+    <text x="454" y="957" class="small muted">변경 요약과 diff 생성</text>
+
+    <rect x="802" y="842" width="340" height="150" rx="15" class="flowcard"/>
+    <circle cx="835" cy="878" r="20" fill="#536144"/><text x="835" y="884" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">3</text>
+    <text x="867" y="885" class="cardhead ink">diff 검토 · PR 열기</text>
+    <text x="826" y="927" class="body ink">의도한 파일만 바뀌었는지 확인</text>
+    <text x="826" y="957" class="small muted">검토 가능한 Pull Request 생성</text>
+
+    <path d="M398 917H420" stroke="#536144" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M770 917H792" stroke="#536144" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M972 992V1024" stroke="#536144" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="802" y="1032" width="340" height="150" rx="15" fill="#f2e8df" stroke="#d8bba8" stroke-width="2"/>
+    <circle cx="835" cy="1068" r="20" fill="#a45d43"/><text x="835" y="1074" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">4</text>
+    <text x="867" y="1075" class="cardhead ink">Vercel Preview</text>
+    <text x="826" y="1117" class="body ink">Pull Request용 미리보기 주소 생성</text>
+    <text x="826" y="1147" class="small muted">운영 사이트와 분리된 확인용 배포</text>
+
+    <rect x="430" y="1032" width="340" height="150" rx="15" class="flowcard"/>
+    <circle cx="463" cy="1068" r="20" fill="#536144"/><text x="463" y="1074" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">5</text>
+    <text x="495" y="1075" class="cardhead ink">Preview 확인</text>
+    <text x="454" y="1117" class="body ink">본문 · 그림 · 레이아웃 점검</text>
+    <text x="454" y="1147" class="small muted">문제가 있으면 Codex에 수정 요청</text>
+
+    <rect x="58" y="1032" width="340" height="150" rx="15" fill="#f7f6ef" stroke="#9ba48b" stroke-width="2"/>
+    <circle cx="91" cy="1068" r="20" fill="#536144"/><text x="91" y="1074" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">6</text>
+    <text x="123" y="1075" class="cardhead ink">PR을 main에 병합</text>
+    <text x="82" y="1117" class="body ink">미리보기와 변경 내용을 확인한 뒤</text>
+    <text x="82" y="1147" class="small muted">검토된 변경을 공개 브랜치에 반영</text>
+
+    <path d="M802 1107H780" stroke="#a45d43" stroke-width="3" marker-end="url(#arrow-rust)"/>
+    <path d="M430 1107H408" stroke="#536144" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M228 1182V1214" stroke="#536144" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="58" y="1222" width="340" height="150" rx="15" fill="#f2e8df" stroke="#d8bba8" stroke-width="2"/>
+    <circle cx="91" cy="1258" r="20" fill="#a45d43"/><text x="91" y="1264" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">7</text>
+    <text x="123" y="1265" class="cardhead ink">Vercel 운영 빌드</text>
+    <text x="82" y="1307" class="body ink">main 반영을 감지해 배포 시작</text>
+    <text x="82" y="1337" class="small muted">빌드 성공 후 운영 사이트에 반영</text>
+
+    <rect x="430" y="1222" width="340" height="150" rx="15" class="flowcard"/>
+    <circle cx="463" cy="1258" r="20" fill="#536144"/><text x="463" y="1264" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">8</text>
+    <text x="495" y="1265" class="cardhead ink">배포 상태 확인</text>
+    <text x="454" y="1307" class="body ink">Vercel Deployments에서 Ready 확인</text>
+    <text x="454" y="1337" class="small muted">실패하면 빌드 로그를 확인</text>
+
+    <rect x="802" y="1222" width="340" height="150" rx="15" fill="#e9eadf" stroke="#c9cdbb" stroke-width="2"/>
+    <circle cx="835" cy="1258" r="20" fill="#536144"/><text x="835" y="1264" fill="#fffdf7" font-size="17" font-weight="700" text-anchor="middle">9</text>
+    <text x="867" y="1265" class="cardhead ink">블로그에서 확인</text>
+    <text x="826" y="1307" class="body ink">운영 주소에서 글과 그림 확인</text>
+    <text x="826" y="1337" class="small muted">이제 방문자에게 공개됩니다</text>
+
+    <path d="M398 1297H420" stroke="#a45d43" stroke-width="3" marker-end="url(#arrow-rust)"/>
+    <path d="M770 1297H792" stroke="#536144" stroke-width="3" marker-end="url(#arrow)"/>
+  </g>
+
+  <rect x="42" y="1444" width="1116" height="112" rx="15" fill="#f1e5da" stroke="#d8b49e" stroke-width="1.5"/>
+  <text x="68" y="1484" class="rust" font-size="19" font-weight="700">바로 main에 반영하는 경우</text>
+  <text x="68" y="1522" class="body ink">PR 미리보기를 건너뛰고 운영 빌드가 시작됩니다. 공개 전 확인이 필요하면 PR 경로를 사용합니다.</text>
+</svg>
