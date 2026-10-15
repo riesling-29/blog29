@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" width="900" height="400" font-family="'NanumGothic','Gothic A1','Noto Sans CJK KR',sans-serif">
+  <rect width="900" height="400" fill="#f8fafc" rx="16"/>
+  <text x="450" y="38" text-anchor="middle" font-size="20" font-weight="bold" fill="#0f172a">Agent를 고칠 때, 어디에 고칠 것인가</text>
+  <text x="450" y="62" text-anchor="middle" font-size="13" fill="#64748b">위로 갈수록 강제력이 강함 · 순서는 Lauren Tan 발표 기준, 검증을 바닥에 둔 배치는 저자 정리</text>
+  <g font-size="15">
+    <rect x="150" y="80" width="600" height="52" rx="10" fill="#1e3a8a"/>
+    <text x="175" y="112" fill="#fff" font-weight="bold">1. 코드베이스·아키텍처</text><text x="725" y="112" text-anchor="end" fill="#bfdbfe" font-size="13">나쁜 패턴을 아예 불가능하게</text>
+    <rect x="190" y="142" width="520" height="52" rx="10" fill="#2563eb"/>
+    <text x="215" y="174" fill="#fff" font-weight="bold">2. 정적 분석</text><text x="685" y="174" text-anchor="end" fill="#dbeafe" font-size="13">Lint · 타입 · 컴파일러 · CI</text>
+    <rect x="230" y="204" width="440" height="52" rx="10" fill="#60a5fa"/>
+    <text x="255" y="236" fill="#0f172a" font-weight="bold">3. Rules · 리뷰 봇 · Skills</text><text x="645" y="236" text-anchor="end" fill="#1e3a8a" font-size="13">가이드 (가끔 무시됨)</text>
+    <rect x="270" y="266" width="360" height="52" rx="10" fill="#bfdbfe"/>
+    <text x="295" y="298" fill="#0f172a" font-weight="bold">4. 스타일 가이드</text><text x="605" y="298" text-anchor="end" fill="#1e3a8a" font-size="13">사람이 리뷰로만 강제</text>
+  </g>
+  <rect x="150" y="334" width="600" height="44" rx="10" fill="#fef3c7" stroke="#d97706"/>
+  <text x="450" y="362" text-anchor="middle" font-size="14" fill="#78350f" font-weight="bold">바닥: 검증(Verification) — Agent가 직접 실행하고, 관찰하고, 증거를 남긴다</text>
+  <text x="80" y="110" text-anchor="middle" font-size="12" fill="#64748b">강함</text>
+  <line x1="80" y1="120" x2="80" y2="285" stroke="#94a3b8" stroke-width="2"/>
+  <text x="80" y="302" text-anchor="middle" font-size="12" fill="#64748b">약함</text>
+</svg>
