@@ -20,18 +20,19 @@
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --background: #20261f;
-  --foreground: #f4efe5;
-  --muted: #b8bead;
-  --accent: #bdcca0;
-  --accent-hover: #d8e7bf;
-  --surface: #293026;
-  --paper: #2b3329;
-  --line: #41483e;
-  --selection: #49513d;
-  --terracotta: #e9a58e;
-  --wine: #e2a6b4;
-  --control-line: #7d8b70;
+  /* Bottle green, warm ivory and restrained antique gold. */
+  --background: #071a14;
+  --foreground: #e9e5d8;
+  --muted: #a7b5a9;
+  --accent: #c3ad79;
+  --accent-hover: #decca0;
+  --surface: #0e251c;
+  --paper: #122e23;
+  --line: #294537;
+  --selection: #38533e;
+  --terracotta: #c6a181;
+  --wine: #acbba2;
+  --control-line: #5f7e6d;
 }
 @theme inline {
   --color-background: var(--background);
@@ -501,7 +502,9 @@ main h1 {
   letter-spacing: 0.04em;
 }
 [data-theme="dark"] .note-foot {
-  color: var(--background);
+  background: var(--surface);
+  color: var(--accent);
+  border-top: 1px solid var(--line);
 }
 .section-heading {
   display: flex;
