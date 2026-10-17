@@ -1,18 +1,55 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
-
+const menu = [
+  { href: "/topics", label: "주제별 탐색" },
+  { href: "/blog", label: "글" },
+  { href: "/seminars", label: "세미나" },
+  { href: "/about", label: "소개" },
+];
 export function SiteHeader() {
+  const path = usePathname();
   return (
     <header className="site-header">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-5 gap-y-3 px-5 py-5 sm:px-8 sm:py-6">
-        <Link href="/" className="brand" aria-label="Blog29 홈">Blog<span className="brand-mark">29.</span></Link>
-        <div className="flex items-center gap-4 sm:gap-8">
-          <nav aria-label="주요 메뉴">
-            <ul className="flex gap-4 text-sm text-muted sm:gap-6">
-              <li><Link href="/blog" className="hover:text-accent">모든 글</Link></li>
-              <li><Link href="/about" className="hover:text-accent">소개</Link></li>
-            </ul>
-          </nav>
+      <div className="header-inner page-width">
+        <Link href="/" className="brand" aria-label="Blog29 홈">
+          Blog<span className="brand-mark">29.</span>
+        </Link>
+        <nav aria-label="주요 메뉴">
+          <ul>
+            {menu.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  aria-current={path.startsWith(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className="header-tools">
+          <Link
+            className="search-link"
+            href="/archive"
+            aria-current={path === "/archive" ? "page" : undefined}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="17"
+              height="17"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <circle cx="10" cy="10" r="6.5" />
+              <path d="m15 15 5 5" />
+            </svg>
+            <span>검색</span>
+          </Link>
           <ThemeToggle />
         </div>
       </div>
