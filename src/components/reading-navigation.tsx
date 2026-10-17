@@ -197,7 +197,7 @@ export function ReadingHistoryProvider({ children }: { children: ReactNode }) {
             ? sourceLink
             : heading;
           if (focusTarget) {
-            if (!focusTarget.hasAttribute("tabindex"))
+            if (focusTarget === heading && !focusTarget.hasAttribute("tabindex"))
               focusTarget.setAttribute("tabindex", "-1");
             focusTarget.focus({ preventScroll: true });
           }
