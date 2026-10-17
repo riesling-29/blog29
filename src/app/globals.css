@@ -20,19 +20,19 @@
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  /* Bottle green, warm ivory and restrained antique gold. */
-  --background: #071a14;
-  --foreground: #e9e5d8;
-  --muted: #a7b5a9;
-  --accent: #c3ad79;
-  --accent-hover: #decca0;
-  --surface: #0e251c;
-  --paper: #122e23;
-  --line: #294537;
-  --selection: #38533e;
-  --terracotta: #c6a181;
-  --wine: #acbba2;
-  --control-line: #5f7e6d;
+  /* Near-black green, softened ivory and low-key antique gold. */
+  --background: #050907;
+  --foreground: #d7d9ce;
+  --muted: #8e9c91;
+  --accent: #b5a16f;
+  --accent-hover: #ccbb91;
+  --surface: #0a100d;
+  --paper: #0d1510;
+  --line: #203329;
+  --selection: #273a2e;
+  --terracotta: #b7997c;
+  --wine: #9eaf98;
+  --control-line: #50685a;
 }
 @theme inline {
   --color-background: var(--background);
@@ -118,6 +118,10 @@ main h1 {
 .theme-switch button[aria-pressed="true"] {
   background: var(--foreground);
   color: var(--background);
+}
+[data-theme="dark"] .theme-switch button[aria-pressed="true"] {
+  background: var(--selection);
+  color: var(--foreground);
 }
 .theme-switch button:hover:not([aria-pressed="true"]) {
   background: var(--surface);
@@ -884,7 +888,12 @@ summary:focus-visible {
   background: var(--accent-hover);
 }
 [data-theme="dark"] .solid-button {
-  color: var(--background);
+  background: var(--surface);
+  color: var(--accent);
+  border-color: var(--control-line);
+}
+[data-theme="dark"] .solid-button:hover {
+  background: var(--selection);
 }
 .outline-button {
   border: 1px solid var(--control-line);
