@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
 import type { SeminarSlide } from "@/lib/seminars";
+import { fitPresentation } from "@/lib/presentation-fit";
 import "./seminar-reader.css";
 
 function slideFromHash(slides: SeminarSlide[]) {
@@ -15,6 +16,9 @@ export function SeminarReader({ slides, title }: { slides: SeminarSlide[]; title
   const root = useRef<HTMLDivElement>(null);
   const exitButton = useRef<HTMLButtonElement>(null);
   const restoreReader = useRef<number | undefined>(undefined);
+  const stage = useRef<HTMLDivElement>(null);
+  const frame = useRef<HTMLDivElement>(null);
+  const presentNotes = useRef<HTMLDetailsElement>(null);
   const notesCount = slides.filter(slide => slide.notesHtml).length;
 
   function move(next: number) {
@@ -49,7 +53,15 @@ export function SeminarReader({ slides, title }: { slides: SeminarSlide[]; title
     exitButton.current?.focus();
     function keyboard(event: KeyboardEvent) {
       const target = event.target instanceof HTMLElement ? event.target : undefined;
-      if (event.key === "Escape") { event.preventDefault(); restoreReader.current = slideFromHash(slides); setPresenting(false); return; }
+      if (event.key === "Escape") {
+        event.preventDefault();
+        if (presentNotes.current?.open) {
+          presentNotes.current.open = false;
+          presentNotes.current.querySelector("summary")?.focus();
+          return;
+        }
+        restoreReader.current = slideFromHash(slides); setPresenting(false); return;
+      }
       if (event.key === "Tab") {
         const elements = Array.from(root.current?.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),select,summary,[tabindex="0"]') ?? []).filter(e => e.getClientRects().length);
         const first = elements[0], last = elements.at(-1);
@@ -57,7 +69,7 @@ export function SeminarReader({ slides, title }: { slides: SeminarSlide[]; title
         if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
         return;
       }
-      if (target?.closest('input,textarea,select,[contenteditable="true"]')) return;
+      if (target?.closest('input,textarea,select,[contenteditable="true"],.seminar-present-notes[open]')) return;
       const forward = ["ArrowRight", "PageDown"].includes(event.key) || (event.key === " " && !target?.closest("button,a,summary"));
       const backward = ["ArrowLeft", "PageUp"].includes(event.key);
       if (!forward && !backward && event.key !== "Home" && event.key !== "End") return;
@@ -71,9 +83,35 @@ export function SeminarReader({ slides, title }: { slides: SeminarSlide[]; title
     return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", keyboard); };
   }, [presenting, slides]);
 
-  useEffect(() => {
-    if (presenting) root.current?.querySelector(".seminar-pages")?.scrollTo({ top: 0, behavior: "instant" });
-  }, [index, presenting]);
+  useLayoutEffect(() => {
+    if (!presenting) return;
+    const viewport = stage.current, canvas = frame.current;
+    const content = root.current?.querySelector<HTMLElement>(`.seminar-page[data-seminar-slide="${slides[index].id}"] .seminar-page-fit`);
+    if (!viewport || !canvas || !content) return;
+    let cancelled = false;
+    function fit() {
+      if (cancelled || !viewport || !canvas || !content) return;
+      const size = fitPresentation(
+        { width: viewport.clientWidth, height: viewport.clientHeight },
+        { width: Math.max(content.offsetWidth, content.scrollWidth), height: Math.max(content.offsetHeight, content.scrollHeight) },
+      );
+      canvas.style.setProperty("--slide-width", `${size.width}px`);
+      canvas.style.setProperty("--slide-height", `${size.height}px`);
+      canvas.style.setProperty("--slide-scale", String(size.canvasScale));
+      canvas.style.setProperty("--content-scale", String(size.contentScale));
+      canvas.style.setProperty("--content-left", `${size.contentLeft}px`);
+      canvas.style.setProperty("--content-top", `${size.contentTop}px`);
+    }
+    const observer = new ResizeObserver(fit);
+    observer.observe(viewport);
+    observer.observe(content);
+    // Expanded explanations and late font loads must also remain within the slide.
+    const mutation = new MutationObserver(fit);
+    mutation.observe(content, { attributes: true, attributeFilter: ["open"], subtree: true });
+    document.fonts.ready.then(fit);
+    fit();
+    return () => { cancelled = true; observer.disconnect(); mutation.disconnect(); };
+  }, [index, presenting, slides]);
 
   function followSection(event: MouseEvent<HTMLDivElement>) {
     if (!presenting || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -97,12 +135,17 @@ export function SeminarReader({ slides, title }: { slides: SeminarSlide[]; title
       <span role="status" aria-live="polite">{index + 1} / {slides.length}</span>
       <button type="button" disabled={index === slides.length - 1} onClick={() => move(index + 1)} aria-label="다음 자료">다음 →</button>
     </div>}
-    <div className="seminar-pages">{slides.map((slide, i) => <section className="seminar-page" key={slide.id} hidden={presenting && i !== index} data-seminar-slide={slide.id}>
+    <div ref={stage} className="seminar-stage"><div ref={frame} className="seminar-stage-frame"><div className="seminar-pages">{slides.map((slide, i) => <section className="seminar-page" key={slide.id} hidden={presenting && i !== index} data-seminar-slide={slide.id}>
+      <div className="seminar-page-fit">
       <header className="seminar-page-heading"><p><span>{String(slide.number).padStart(2, "0")}</span> {slide.section}</p><h2 id={slide.id} tabIndex={-1} data-reading-heading data-heading-title={slide.title}>{slide.title}</h2></header>
       <div className="seminar-slide-content" dangerouslySetInnerHTML={{ __html: slide.html }} />
       {slide.sources.length > 0 && <div className="seminar-sources"><span>근거</span>{slide.sources.map(source => <a key={source.url} href={source.url}>{source.name}</a>)}</div>}
+      </div>
       {slide.notesHtml && <details className="seminar-speaker-notes"><summary>발표자 노트</summary><div dangerouslySetInnerHTML={{ __html: slide.notesHtml }} /></details>}
-    </section>)}</div>
-    {presenting && <p className="seminar-present-hint">← → 자료 이동 · Esc 읽기로 돌아가기</p>}
+      <footer className="seminar-slide-footer" aria-hidden="true"><span>{title}</span><span>{i + 1} / {slides.length}</span></footer>
+    </section>)}</div></div></div>
+    {presenting && <div className="seminar-present-bottom"><p className="seminar-present-hint">← → 자료 이동 · Esc 읽기로 돌아가기</p>
+      {slides[index].notesHtml && <details ref={presentNotes} className="seminar-present-notes"><summary>발표자 노트</summary><div dangerouslySetInnerHTML={{ __html: slides[index].notesHtml }} /></details>}
+    </div>}
   </div>;
 }

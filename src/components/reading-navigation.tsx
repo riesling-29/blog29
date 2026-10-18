@@ -53,11 +53,16 @@ function routeKey(url: string) {
 }
 
 function activeHeading() {
+  const presented = document.querySelector<HTMLElement>(
+    '.seminar-reader--presenting .seminar-page:not([hidden]) [data-reading-heading]',
+  );
+  if (presented) return presented;
   const headings = Array.from(
     document.querySelectorAll<HTMLElement>("[data-reading-heading]"),
   );
   let current: HTMLElement | undefined;
   for (const heading of headings) {
+    if (!heading.getClientRects().length) continue;
     if (heading.getBoundingClientRect().top > 150) break;
     current = heading;
   }
