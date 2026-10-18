@@ -82,3 +82,37 @@ Light: limestone ivory, olive, terracotta. Dark: near-black green, softened ivor
 restrained brass. Brand direction: precision in information, elegance in presentation;
 no literal architectural or military ornaments. Original article bodies and slides
 remain unchanged. Production release is separate from the existing draft preview.
+
+## 2026-10-18 — One fixed map beside the article
+
+The contextual rail now contains a single stable domain → question → resource map.
+Every public resource appears once at its primary-topic address, including operating
+notes. Secondary topic membership does not duplicate its position. Selecting another
+article changes highlights, not domain or resource ordering. Registered outgoing and
+incoming relationships are highlighted; incoming explanations are attributed to their
+source rather than presented as the selected article's own recommendation.
+
+Hover or keyboard focus reveals the full title, address and relationship explanation
+in a small inspector within the same panel. One connection line appears only for the
+inspected related resource. Real anchors preserve keyboard activation, browser back
+and opening a new tab. On touch, the first tap previews and the second tap or the full
+title opens the article. Preview-only taps are excluded from reading-history capture.
+The map has collapse/expand controls. Expanded mode traps Tab, closes on Escape or the
+backdrop and restores focus. On narrow screens the map opens from a native disclosure.
+The document TOC is also a disclosure, separate from resource navigation.
+
+The homepage starts with the archive title and resources rather than a slogan.
+Paragraphs, figures, tables and code now share the left reading edge. Wide Markdown
+tables are wrapped in a focusable, locally scrollable region. This corrects the old
+centered narrow prose / full-width table mismatch without hiding oversized content.
+
+The representative ai-agent-harness article was edited for repetition: 16,744 → 14,020
+source characters (16.3% reduction). Section titles, code examples and figures remain;
+its edit date is 2026-10-18. Other article bodies have not yet been tightened. This is
+an editorial pass on existing material, not a fresh verification of external claims.
+
+Validation includes one map address per public resource, stable placement under every
+selection, incoming cross-topic relations, reciprocal-link deduplication and fallback
+placement of new notes. Browser visual, touch and scroll testing remains blocked by
+the previously declined browser access; build and generated HTML checks do not replace
+those checks. The original production deployment remains separate from this preview.

@@ -48,7 +48,7 @@ registerHooks({
   },
 });
 
-const { getResources, getRelationsFrom, validateCatalog } = await import(
+const { getResources, getRelationsFrom, validateCatalog, topics, operationsTopic } = await import(
   "../src/lib/catalog.ts"
 );
 const { getHeadings, remarkHeadingIds } = await import(
@@ -63,6 +63,26 @@ const { default: sitemap } = await import("../src/app/sitemap.ts");
 const errors = validateCatalog();
 assert.deepEqual(errors, [], errors.join("\n"));
 const resources = getResources();
+const { buildKnowledgeMap, mapConnections } = await import("../src/lib/knowledge-map.ts");
+const mapData = buildKnowledgeMap([...topics, operationsTopic], resources, resources.flatMap(r => getRelationsFrom(r.id)));
+const mapArticles = mapData.domains.flatMap(d => d.groups.flatMap(g => g.articles));
+assert.deepEqual(mapArticles.map(a => a.id).sort(), resources.map(r => r.id).sort(), "Every public resource has exactly one map address, including cross-topic resources.");
+for (const article of mapArticles) {
+  assert.equal(article.topicId, resources.find(r => r.id === article.id).primaryTopic);
+}
+const fixedLayout = JSON.stringify(mapData.domains);
+for (const resource of resources) {
+  const connections = mapConnections(mapData, resource.id);
+  assert.equal(new Set(connections.map(c => c.id)).size, connections.length, "Reciprocal links appear once.");
+  assert(!connections.some(c => c.id === resource.id), "No self relations.");
+  for (const connection of connections) assert(mapArticles.some(a => a.id === connection.id), "Highlighted target must have a visible map address.");
+  assert.equal(JSON.stringify(mapData.domains), fixedLayout, "Changing the selected article must never move map nodes.");
+}
+const harnessConnections = mapConnections(mapData, "ai-agent-harness");
+assert.equal(harnessConnections.find(c => c.id === "saif-2026")?.incoming, true, "Cross-topic incoming references are discoverable.");
+assert.equal(mapConnections(mapData, "agent-harness-build-or-reuse-2026").find(c => c.id === "ai-agent-harness")?.incoming, false, "Use the selected article's explanation when both directions exist.");
+const mapWithExtra = buildKnowledgeMap([...topics, operationsTopic], [...resources, { ...resources[0], id: "future-note", href: "/blog/future-note", primaryTopic: "ai-agents", topics: ["ai-agents"] }], []);
+assert(mapWithExtra.domains.find(d => d.id === "ai-agents").groups.some(g => g.articles.some(a => a.id === "future-note")), "New public resources without a question assignment must not disappear.");
 const publicPosts = getAllPostsMetadata({ includeDrafts: false });
 assert.deepEqual(
   resources

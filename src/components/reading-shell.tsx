@@ -98,10 +98,10 @@ export function ReadingShell({
         </div>
         <aside className="reading-side reading-side-toc">
           {topic && <SurroundingMap topic={topic} resource={resource} />}
-          <div className="reader-outline"><h2 className="reading-side-label">이 글의 목차</h2>
+          <details className="reader-outline"><summary>이 글의 목차</summary>
             <HeadingNavigation headings={headings} />
             <a href="#reading-title" className="reading-top-link">처음으로 ↑</a>
-          </div>
+          </details>
         </aside>
       </div>
     </main>

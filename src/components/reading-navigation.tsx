@@ -226,7 +226,8 @@ export function ReadingHistoryProvider({ children }: { children: ReactNode }) {
       if (
         !anchor ||
         anchor.hasAttribute("download") ||
-        anchor.hasAttribute("data-reading-return")
+        anchor.hasAttribute("data-reading-return") ||
+        anchor.dataset.readingPreview === "true"
       )
         return;
       if (anchor.target && anchor.target !== "_self") return;

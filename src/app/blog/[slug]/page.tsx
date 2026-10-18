@@ -71,6 +71,11 @@ export default async function PostPage({ params }: PageProps) {
   const topic = getTopic(resource.primaryTopic);
   const relations = getRelationsFrom(resource.id);
   const components: MDXComponents = {
+    table: ({ children, ...props }) => (
+      <div className="reading-table-scroll" role="region" aria-label="표 (넓은 표는 가로로 이동)" tabIndex={0}>
+        <table {...props}>{children}</table>
+      </div>
+    ),
     a: ContextualLink,
     h1: headingComponent("h1"),
     h2: headingComponent("h2"),
