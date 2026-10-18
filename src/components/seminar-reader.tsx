@@ -5,7 +5,7 @@ import type { SeminarSlide } from '@/lib/seminars';
 import { SeminarPresentation } from './seminar-presentation';
 import './seminar-reader.css';
 
-export function SeminarReader({ slides, title }: { slides: SeminarSlide[]; title: string }) {
+export function SeminarReader({ slides, title, documentId }: { documentId: string; slides: SeminarSlide[]; title: string }) {
   const [presenting, setPresenting] = useState(false);
   const [startSource, setStartSource] = useState(0);
   const exitButton = useRef<HTMLButtonElement>(null);
@@ -60,6 +60,6 @@ export function SeminarReader({ slides, title }: { slides: SeminarSlide[]; title
       {slide.sources.length > 0 && <div className="seminar-sources"><span>근거</span>{slide.sources.map(source => <a key={source.url} href={source.url}>{source.name}</a>)}</div>}
       {slide.notesHtml && <details className="seminar-speaker-notes"><summary>발표자 노트</summary><div dangerouslySetInnerHTML={{__html:slide.notesHtml}} /></details>}
     </section>)}</div>
-    {presenting && <SeminarPresentation slides={slides} title={title} initialSourceIndex={startSource} onSourceChange={selectSource} onExit={end} />}
+    {presenting && <SeminarPresentation documentId={documentId} slides={slides} title={title} initialSourceIndex={startSource} onSourceChange={selectSource} onExit={end} />}
   </div>;
 }

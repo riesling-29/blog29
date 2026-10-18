@@ -51,3 +51,68 @@
 .presentation-popup :is(ul,ol) { padding-left:1.3rem; }
 .presentation-measure { position:fixed; left:-10000px; top:0; width:var(--master-width); height:var(--master-height); visibility:hidden; pointer-events:none; }
 @media(max-width:700px) { .presentation-bottom { height:80px; gap:.3rem; flex-wrap:wrap; align-content:center; } .presentation-bottom > p { flex-basis:100%; font-size:.6rem; } }
+
+/* Editorial compositions: stable type and anchors, distinct content arrangements. */
+.seminar-presentation .master-body .editorial-page { display:flow-root; margin:0; }
+.seminar-presentation .master-body .editorial-page > :last-child { margin-bottom:0; }
+.seminar-presentation .master-body .editorial-page[data-layout=cover] { padding-top:64px; max-width:1020px; }
+.seminar-presentation .master-body .editorial-page[data-layout=cover] > :first-child { border-left:3px solid var(--accent); padding-left:24px; margin-bottom:32px; }
+.seminar-presentation .master-body .editorial-page[data-layout=cover] :is(.cover-topics,.meta,.cover-parts,.hero-actions,.cover-legend) { margin-top:24px; }
+.seminar-presentation .master-body .editorial-annotated { display:grid; grid-template-columns:minmax(0,1.8fr) minmax(0,1fr); gap:28px; align-items:start; }
+.seminar-presentation .master-body .editorial-aside { border-left:1px solid var(--line); padding-left:22px; font-size:var(--master-tableSize); line-height:26px; }
+.seminar-presentation .master-body .editorial-aside :is(.caveat,.presentation-explanation,.body-copy) { margin:0 0 16px; padding:0; border:0; background:none; }
+.seminar-presentation .master-body .editorial-aside h3 { margin-bottom:12px; }
+.seminar-presentation .master-body .editorial-aside .source a { display:block; margin-top:6px; }
+.seminar-presentation .master-body :is(.glance,.iso,.product,.wrap,.g2,.timeline,.pc,.cover-parts) { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.seminar-presentation .master-body :is(.glance,.iso,.product,.wrap,.g2,.timeline,.pc) { margin:0 0 16px; }
+.seminar-presentation .master-body [data-editorial-columns="1"] { display:grid; grid-template-columns:minmax(0,1fr); gap:20px; }
+.seminar-presentation .master-body [data-editorial-columns="2"] { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.seminar-presentation .master-body .title-row { margin:0 0 10px; }
+.seminar-presentation .master-body :is(.tag,.big,.lane-title,.fact > b,.ref-head) { display:block; font-weight:650; }
+.seminar-presentation .master-body .big { margin:8px 0 16px; }
+.seminar-presentation .master-body .tag { color:var(--accent); }
+.seminar-presentation .master-body :is(.step,.one,.quote-line,.trend,.ref,.fact) { padding:4px 0; }
+.seminar-presentation .master-body :is(.glance,.g3) :is(ul,p) { margin-bottom:12px; }
+.seminar-presentation .master-body :is(.glance,.g3) li { margin-bottom:6px; }
+.seminar-presentation .master-body .facts { display:grid; gap:8px; }
+.seminar-presentation .master-body .fact { display:grid; grid-template-columns:140px 1fr; gap:16px; }
+.seminar-presentation .master-body .checklist { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.seminar-presentation .master-body .checklist p { margin:0; }
+.seminar-presentation .master-body .checklist :is(b,span) { display:block; }
+.seminar-presentation .master-body .ref a { font-size:var(--master-captionSize); line-height:22px; overflow-wrap:anywhere; }
+.seminar-presentation .master-body .refs.compact { gap:12px 24px; }
+.seminar-presentation .master-body .timeline { grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.seminar-presentation .master-body .tl { border-top:2px solid var(--accent); padding:12px 0 0; }
+.seminar-presentation .master-body .tl .date { font-size:var(--master-captionSize); line-height:22px; margin-bottom:10px; }
+.seminar-presentation .master-body .tl p { margin:8px 0; }
+.seminar-presentation .master-body .iso .box-row { display:flex; gap:8px; padding:8px 0; }
+.seminar-presentation .master-body .box-inner { flex:1; border:1px solid var(--control-line); padding:8px; text-align:center; }
+.seminar-presentation .master-body .agent-system { display:grid; grid-template-columns:200px minmax(0,1fr) 200px; gap:16px; align-items:center; margin-bottom:16px; }
+.seminar-presentation .master-body .agent-system :is(.system-goal,.system-environment,.system-boundary) { margin:0; }
+.seminar-presentation .master-body .system-loop { grid-template-columns:1fr 172px 1fr; gap:12px; align-items:center; }
+.seminar-presentation .master-body :is(.system-model,.system-harness) :is(b,span) { display:block; }
+.seminar-presentation .master-body .system-tool-line { display:grid; grid-template-columns:1fr 1.2fr 1fr; gap:10px; align-items:center; margin:12px 0 0; }
+.seminar-presentation .master-body .system-tool-line > span { font-size:var(--master-captionSize); line-height:22px; }
+.seminar-presentation .master-body .system-tool-line small { display:block; }
+.seminar-presentation .master-body .recap-qkv { display:grid; grid-template-columns:28px 1fr; gap:4px 12px; margin-bottom:12px; }
+.seminar-presentation .master-body .recap-cache { display:grid; grid-template-columns:1fr 24px 1fr; gap:10px; align-items:center; margin:12px 0; }
+.seminar-presentation .master-body .recap-cache :is(b,span) { display:block; }
+.seminar-presentation .master-body .recap-cache > div { padding:12px; border:1px solid var(--line); }
+.seminar-presentation .master-body .recap-cache-note { font-size:var(--master-captionSize); line-height:22px; }
+.seminar-presentation .master-body .mini-summary { display:grid; grid-template-columns:140px 1fr; gap:8px 20px; margin-bottom:16px; }
+.seminar-presentation .master-body .mini-summary p { margin:0; }
+.seminar-presentation .master-body .writing-stage { display:grid; grid-template-columns:180px 1fr; gap:24px; margin-bottom:12px; }
+.seminar-presentation .master-body .writing-stage p { margin:0; }
+.seminar-presentation .master-body .section-route { display:grid; grid-template-columns:130px 1fr; gap:16px; padding:8px 0; }
+.seminar-presentation .master-body .section-route small { display:block; }
+.seminar-presentation .master-body .editorial-page[data-layout=reference] :is(.refs,.sources-list) { font-size:var(--master-tableSize); line-height:26px; }
+.seminar-presentation .master-body .editorial-page[data-layout=reference] .sources-list li { margin-bottom:14px; }
+.seminar-presentation .master-body [data-editorial-fragment=true] { display:block; }
+.seminar-presentation .master-body table[data-editorial-fragment=true] { display:table; }
+.seminar-presentation .master-body .editorial-continuation .editorial-aside { border:0; padding:0; }
+/* Keep the full goal → model/harness → environment diagram comfortably on one page. */
+.seminar-presentation .master-body .agent-system { grid-template-columns:180px minmax(0,1fr) 180px; gap:12px; }
+.seminar-presentation .master-body .agent-system .system-boundary { padding:10px; }
+.seminar-presentation .master-body .agent-system .system-loop { gap:8px; margin:8px 0; }
+.seminar-presentation .master-body .agent-system :is(.system-model,.system-harness) { padding:8px; }
+.seminar-presentation .master-body .agent-system .system-tool-line { gap:8px; margin-top:8px; }

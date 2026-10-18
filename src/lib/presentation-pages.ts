@@ -1,123 +1,134 @@
 import type { SeminarSlide } from './seminars';
+import { composeSeminarSection, preservedText, type EditorialLayout } from './presentation-editorial.ts';
 
 export type PresentationPage = {
   sourceIndex: number;
   sourceId: string;
   title: string;
   section: string;
-  layout: 'cover' | 'text' | 'comparison' | 'diagram';
+  layout: EditorialLayout;
   html: string;
   part: number;
   parts: number;
 };
+type Fits = (node: HTMLElement) => boolean;
+const accessories = '.title-row,.product-head,.ev,.source,.note,.code-note,.basis,.iso-caption,.recap-scope,.recap-repeat,.code-label,.lead,.definition,.sr-only,[hidden],[aria-hidden="true"],[data-presentation-repeat]';
+const diagrams = '.agent-system,.recap-flow,.mathline,.vs,.system-loop,.recap-cache';
+const cards = '.card,.lane,.trend,.tl,.pc-box,.section-route,.presentation-explanation,.signal,.caveat';
 
-type Fits = (node: Node) => boolean;
-const gridClasses = ['two', 'two-col', 'vs', 'g3', 'refs', 'recap-details', 'recap-flow', 'system-loop', 'mathline', 'glossary', 'trends-2x2'];
-
-/** Keep all source text. Repeated table headers are excluded from this comparison. */
-function sourceText(node: Node) {
-  const copy = node.cloneNode(true) as HTMLElement;
-  copy.querySelectorAll?.('[data-presentation-repeat]').forEach(n => n.remove());
-  return (copy.textContent ?? '').replace(/\s+/g, '');
+/** Visible substance, not just a badge, arrow, hidden caption or repeated context. */
+export function hasPresentationContent(root: HTMLElement) {
+  if(root.dataset.layout==='cover')return !!preservedText(root);
+  const copy=root.cloneNode(true) as HTMLElement;
+  copy.querySelectorAll(accessories+',h3,h4,h5,h6').forEach(el=>el.remove());
+  const value=(copy.textContent ?? '').replace(/\s+/g,'');
+  return /[\p{L}\p{N}]/u.test(value) && (value.length>=16 || !!copy.querySelector('table,pre,img,svg'));
 }
 
-function serialize(node: Node) {
-  const holder = document.createElement('div');
-  holder.append(node.cloneNode(true));
-  return holder.innerHTML;
+function wrapLike(parent: HTMLElement, children: Element[], repeat = false) {
+  const copy=parent.cloneNode(false) as HTMLElement;
+  copy.removeAttribute('data-editorial-columns');
+  copy.dataset.editorialFragment='true';
+  if(repeat)copy.dataset.presentationRepeat='true';
+  copy.append(...children.map(child=>child.cloneNode(true)));
+  return copy;
 }
 
-/** Split at existing semantic blocks first; split text only if a block cannot fit alone. */
-function fragments(node: Node, fits: Fits): Node[] {
-  if (fits(node)) return [node.cloneNode(true)];
-  if (node.nodeType === Node.TEXT_NODE) {
-    const chars = Array.from(node.textContent ?? '');
-    const pieces: Node[] = [];
-    let start = 0;
-    while (start < chars.length) {
-      let lo = 1, hi = chars.length - start, best = 0;
-      while (lo <= hi) {
-        const middle = Math.floor((lo + hi) / 2);
-        if (fits(document.createTextNode(chars.slice(start, start + middle).join('')))) { best = middle; lo = middle + 1; }
-        else hi = middle - 1;
-      }
-      if (!best) throw new Error('고정 글자 크기에서 한 글자도 배치할 수 없는 요소가 있습니다.');
-      // Prefer a sentence, line or word boundary without discarding its whitespace.
-      if (start + best < chars.length) {
-        for (let i = best - 1; i >= Math.floor(best * .6); i--) {
-          if (/[\s.!?。！？;；]/.test(chars[start + i])) { best = i + 1; break; }
-        }
-      }
-      pieces.push(document.createTextNode(chars.slice(start, start + best).join('')));
-      start += best;
-    }
-    return pieces;
+/** Only complete semantic units are breakable. Inline text, code and diagrams never split. */
+function semanticUnits(node: HTMLElement): HTMLElement[] {
+  if(node.matches(diagrams+',pre,p,'+cards) || !node.children.length)return [node.cloneNode(true) as HTMLElement];
+  if(node.tagName==='TABLE') {
+    const table=node as HTMLTableElement;
+    if(table.tFoot)return [node.cloneNode(true) as HTMLElement];
+    const rows=Array.from(table.tBodies).flatMap(body=>Array.from(body.rows));
+    if(!rows.length)return [node.cloneNode(true) as HTMLElement];
+    return rows.map((row,i)=>{
+      const part=table.cloneNode(false) as HTMLTableElement;
+      if(table.caption && !i)part.append(table.caption.cloneNode(true));
+      if(table.tHead) {const head=table.tHead.cloneNode(true) as HTMLElement;if(i)head.dataset.presentationRepeat='true';part.append(head);}
+      const body=document.createElement('tbody');body.append(row.cloneNode(true));part.append(body);return part;
+    });
   }
-  if (!(node instanceof HTMLElement)) throw new Error('발표 양식에 배치할 수 없는 요소입니다.');
-  if (node.tagName === 'TABLE') {
-    const tableParts = fragmentTable(node as HTMLTableElement, fits);
-    if (tableParts) return tableParts;
-  }
-  const shell = node.cloneNode(false) as HTMLElement;
-  if (gridClasses.some(c => shell.classList.contains(c)) || ['TR', 'TBODY', 'THEAD'].includes(shell.tagName)) shell.dataset.presentationFragment = 'true';
-  const children = Array.from(node.childNodes).filter(n => n.nodeType !== Node.COMMENT_NODE);
-  const listStart = Number(node.getAttribute('start') ?? 1);
-  if (!children.length) throw new Error(`배치 영역보다 큰 ${node.tagName} 요소를 별도 장으로 편집해야 합니다.`);
-  function wrap(parts: Node[], childIndex = 0) {
-    const result = shell.cloneNode(false) as HTMLElement;
-    if (result.tagName === 'OL') {
-      const preceding = children.slice(0, childIndex).filter(n => n instanceof HTMLElement && n.tagName === 'LI').length;
-      result.setAttribute('start', String(listStart + preceding));
-    }
-    result.append(...parts.map(p => p.cloneNode(true)));
+  // Mixed inline text (for example the separator between source links) is indivisible.
+  if(Array.from(node.childNodes).some(child=>child.nodeType===Node.TEXT_NODE && (child.textContent??'').trim()))return [node.cloneNode(true) as HTMLElement];
+  const children=Array.from(node.children) as HTMLElement[];
+  // Headings stay with the explanation. A list item and a definition pair stay intact.
+  if(node.matches('li,section') && node.querySelector('h3,h4,h5,h6'))return [node.cloneNode(true) as HTMLElement];
+  if(node.tagName==='DL' || node.matches('.mini-summary')) {
+    const result:HTMLElement[]=[];
+    for(let i=0;i<children.length;i+=2)result.push(wrapLike(node,children.slice(i,i+2)));
     return result;
   }
-  const output: Node[] = [];
-  let current: Node[] = [], firstChild = 0;
-  for (const [childIndex, child] of children.entries()) {
-    const pieces = fragments(child, piece => fits(wrap([piece], childIndex)));
-    for (const piece of pieces) {
-      if (current.length && !fits(wrap([...current, piece], firstChild))) {
-        output.push(wrap(current, firstChild)); current = []; firstChild = childIndex;
-      }
-      if (!current.length) firstChild = childIndex;
-      current.push(piece);
+  if(node.matches('ul,ol'))return children.map((child,i)=>{
+    const part=wrapLike(node,[child]);if(node.tagName==='OL')part.setAttribute('start',String(Number(node.getAttribute('start')??1)+i));return part;
+  });
+  // Inline-only wrappers are not editing boundaries.
+  if(!children.some(child=>child.matches('div,section,aside,p,ul,ol,dl,table,pre')))return [node.cloneNode(true) as HTMLElement];
+  const output:HTMLElement[]=[];
+  for(let i=0;i<children.length;i++) {
+    const child=children[i];
+    if(child.matches('h3,h4,h5,h6,.code-label') && children[i+1]) {
+      output.push(wrapLike(node,[child,children[++i]]));continue;
     }
+    for(const unit of semanticUnits(child))output.push(wrapLike(node,[unit]));
   }
-  if (current.length) output.push(wrap(current, firstChild));
-  if (sourceText(node) !== output.map(sourceText).join('')) throw new Error('자료를 나누는 중 본문 보존 검사가 실패했습니다.');
   return output;
 }
 
-/** Repeat column headings so a continued comparison remains understandable. */
-function fragmentTable(table: HTMLTableElement, fits: Fits): Node[] | undefined {
-  const rows = Array.from(table.tBodies).flatMap(body => Array.from(body.rows));
-  if (!rows.length) return;
-  function wrap(parts: HTMLTableRowElement[], repeat: boolean) {
-    const result = table.cloneNode(false) as HTMLTableElement;
-    if (table.caption && !repeat) result.append(table.caption.cloneNode(true));
-    if (table.tHead) {
-      const head = table.tHead.cloneNode(true) as HTMLElement;
-      if (repeat) head.dataset.presentationRepeat = 'true';
-      result.append(head);
-    }
-    const body = document.createElement('tbody');
-    body.append(...parts.map(row => row.cloneNode(true))); result.append(body);
-    return result;
+
+function joinAdjacent(parent: HTMLElement) {
+  let previous: HTMLElement | undefined;
+  for(const node of Array.from(parent.children) as HTMLElement[]) {
+    if(previous && previous.dataset.editorialOrigin && previous.dataset.editorialOrigin===node.dataset.editorialOrigin) {
+      if(node.tagName==='TABLE') {
+        const left=previous as HTMLTableElement,right=node as HTMLTableElement;
+        if(left.tBodies[0] && right.tBodies[0])left.tBodies[0].append(...Array.from(right.tBodies[0].children));
+      } else previous.append(...Array.from(node.childNodes));
+      node.remove();
+    } else previous=node;
   }
-  const output: Node[] = [];
-  let current: HTMLTableRowElement[] = [];
-  for (const row of rows) {
-    if (!fits(wrap([row], output.length > 0))) return; // Generic semantic fragments handle an unusually tall row.
-    if (current.length && !fits(wrap([...current, row], output.length > 0))) {
-      output.push(wrap(current, output.length > 0)); current = [];
-    }
-    current.push(row);
+  for(const child of Array.from(parent.children) as HTMLElement[])joinAdjacent(child);
+}
+
+/** Balance complete units across pages; reject orphan-only candidates before measuring. */
+export function fitEditorialPage(page: HTMLElement, fits: Fits): HTMLElement[] {
+  if(hasPresentationContent(page) && fits(page))return [page];
+  // An annotation rail can become a complete explanation page if the main content needs more space.
+  const work=page.cloneNode(true) as HTMLElement;
+  work.classList.remove('editorial-annotated');
+  work.querySelectorAll('.editorial-main,.editorial-aside').forEach(el=>el.replaceWith(...Array.from(el.children)));
+  if(hasPresentationContent(work) && fits(work))return [work];
+  // Fragments with the same source identity can rejoin (table rows/list items),
+  // without duplicating their column headings or nesting one grid per item.
+  [work,...Array.from(work.querySelectorAll<HTMLElement>('*'))].forEach((node,i)=>{node.dataset.editorialOrigin=String(i);});
+  const units=semanticUnits(work);
+  const n=units.length;
+  if(!n)throw new Error('빈 발표 페이지는 생성할 수 없습니다.');
+  function assemble(start: number, end: number) {
+    const output=document.createElement('div');output.className='editorial-page editorial-continuation';output.dataset.layout=page.dataset.layout;
+    // Unwrap only the duplicated page shell, retaining every content/diagram wrapper.
+    for(const unit of units.slice(start,end))output.append(...Array.from(unit.childNodes).map(child=>child.cloneNode(true)));
+    joinAdjacent(output);
+    return output;
   }
-  if (current.length) output.push(wrap(current, output.length > 0));
-  if (table.tFoot) return; // Keep uncommon table footers in the generic lossless path.
-  if (sourceText(table) !== output.map(sourceText).join('')) throw new Error('비교표의 내용 보존 검사가 실패했습니다.');
-  return output;
+  const cache=new Map<string,HTMLElement>();
+  const cost=Array<number>(n+1).fill(Infinity), next=Array<number>(n+1).fill(-1);cost[n]=0;
+  for(let start=n-1;start>=0;start--) {
+    for(let end=start+1;end<=n;end++) {
+      if(!Number.isFinite(cost[end]))continue;
+      const candidate=assemble(start,end);
+      if(!hasPresentationContent(candidate)||!fits(candidate))continue;
+      // First minimize page count, then penalize thin leftovers. No token-level splitting.
+      const length=preservedText(candidate).length;
+      const score=10000+1000/Math.max(1,length)+cost[end];
+      if(score<cost[start]) {cost[start]=score;next[start]=end;cache.set(`${start}:${end}`,candidate);}
+    }
+  }
+  if(next[0]<0)throw new Error('원문 묶음을 고정 발표 영역에 배치할 수 없습니다. 이 항목은 읽기 화면에서 확인할 수 있습니다.');
+  const result:HTMLElement[]=[];
+  for(let start=0;start<n;) {const end=next[start];result.push(cache.get(`${start}:${end}`)!);start=end;}
+  if(result.map(preservedText).join('')!==preservedText(page))throw new Error('발표 구성의 원문 보존 검사가 실패했습니다.');
+  return result;
 }
 
 export async function buildPresentationPages(
@@ -125,40 +136,20 @@ export async function buildPresentationPages(
   measure: HTMLElement,
   titleMeasure: HTMLElement,
   cancelled: () => boolean,
+  documentId: string,
 ): Promise<PresentationPage[]> {
-  const pages: PresentationPage[] = [];
-  for (const [sourceIndex, slide] of slides.entries()) {
-    if (cancelled()) return [];
-    titleMeasure.textContent = slide.title;
-    if (titleMeasure.scrollHeight > titleMeasure.clientHeight + 1) throw new Error(`제목을 2줄 이내로 편집해야 합니다: ${slide.title}`);
-    const root = document.createElement('div');
-    root.innerHTML = slide.html;
-    // Reading IDs stay canonical; presentation duplicates never compete for those IDs.
-    root.querySelectorAll<HTMLElement>('[id]').forEach(el => { el.dataset.originalId = el.id; el.removeAttribute('id'); });
-    root.querySelectorAll('[aria-labelledby]').forEach(el => el.removeAttribute('aria-labelledby'));
-    root.querySelectorAll('details').forEach(details => {
-      const section = document.createElement('section');
-      section.className = 'presentation-explanation';
-      for (const child of Array.from(details.childNodes)) {
-        if (child instanceof HTMLElement && child.tagName === 'SUMMARY') {
-          const heading = document.createElement('h3');
-          heading.append(...Array.from(child.childNodes).map(node => node.cloneNode(true)));
-          section.append(heading);
-        } else section.append(child.cloneNode(true));
-      }
-      details.replaceWith(section);
-    });
-    const layout = sourceIndex === 0 ? 'cover' : root.querySelector('.agent-system,.recap-flow,.mathline,.layer-stack,.box-outer,.pc-box') ? 'diagram' : root.querySelector('table,.two,.two-col,.vs,.g3') ? 'comparison' : 'text';
-    function fits(node: Node) {
+  const pages:PresentationPage[]=[];
+  for(const [sourceIndex,slide] of slides.entries()) {
+    if(cancelled())return [];
+    titleMeasure.textContent=slide.title;
+    if(titleMeasure.scrollHeight>titleMeasure.clientHeight+1)throw new Error(`제목 배치 확인이 필요합니다: ${slide.title}`);
+    function fits(node: HTMLElement) {
       measure.replaceChildren(node.cloneNode(true));
-      return measure.scrollHeight <= measure.clientHeight + .5 && measure.scrollWidth <= measure.clientWidth + .5;
+      return measure.scrollHeight<=measure.clientHeight+.5 && measure.scrollWidth<=measure.clientWidth+.5;
     }
-    const parts = fragments(root, fits);
-    const meaningful = parts.filter(part => (part.textContent ?? '').trim() || (part instanceof Element && part.querySelector('img,svg,hr')));
-    if (sourceText(root) !== meaningful.map(sourceText).join('')) throw new Error(`본문 보존 검사가 실패했습니다: ${slide.title}`);
-    meaningful.forEach((part, i) => pages.push({ sourceIndex, sourceId: slide.id, title: slide.title, section: slide.section, layout, html: serialize(part), part: i + 1, parts: meaningful.length }));
-    if (sourceIndex % 3 === 0) await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+    const parts=composeSeminarSection(slide,documentId,sourceIndex).flatMap(page=>fitEditorialPage(page,fits));
+    parts.forEach((part,i)=>pages.push({sourceIndex,sourceId:slide.id,title:slide.title,section:slide.section,layout:part.dataset.layout as EditorialLayout,html:part.outerHTML,part:i+1,parts:parts.length}));
+    if(sourceIndex%3===0)await new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));
   }
-  measure.replaceChildren();
-  return pages;
+  measure.replaceChildren();return pages;
 }

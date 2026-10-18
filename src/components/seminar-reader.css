@@ -52,6 +52,84 @@
 .seminar-speaker-notes summary { cursor:pointer; min-height:36px; color:var(--accent); }
 .seminar-speaker-notes > div { margin-top:.7rem; }
 .seminar-speaker-notes :is(ul,ol) { padding-left:1.2rem; }
+/* Source components retain their relationships in the reader. These low-specificity
+   primitives also support presentation groups; the presentation master owns sizing. */
+:where(.seminar-slide-content) :is(.title-row,.product-head,.ev-row,.meta,.hero-actions) { display:flex; align-items:center; flex-wrap:wrap; gap:.5em 1em; }
+:where(.seminar-slide-content) :is(.glance,.iso,.product,.wrap,.g2,.timeline,.checklist) { display:grid; gap:1em; align-items:start; }
+:where(.seminar-slide-content) :is(.glance,.product,.wrap,.g2,.checklist) { grid-template-columns:repeat(2,minmax(0,1fr)); }
+:where(.seminar-slide-content) .iso { grid-template-columns:repeat(3,minmax(0,1fr)); }
+:where(.seminar-slide-content) .timeline { grid-template-columns:repeat(4,minmax(0,1fr)); }
+:where(.seminar-slide-content) :is(.facts,.pc,.checklist.compact,.refs.compact) { display:grid; grid-template-columns:minmax(0,1fr); gap:.65em; }
+:where(.seminar-slide-content) .fact { display:grid; grid-template-columns:6em minmax(0,1fr); gap:.6em; padding:.45em 0; border-bottom:1px solid var(--line); }
+:where(.seminar-slide-content) :is(.fact > b,.tag,.date,.trend > .n) { color:var(--accent); font-weight:650; }
+:where(.seminar-slide-content) .tag { display:block; }
+:where(.seminar-slide-content) .big { font-weight:650; }
+:where(.seminar-slide-content) .box-row { display:flex; flex-wrap:wrap; gap:.45em; }
+:where(.seminar-slide-content) .box-inner { flex:1 1 5em; padding:.5em; border:1px solid var(--control-line); border-radius:3px; text-align:center; background:var(--paper); }
+:where(.seminar-slide-content) .box-inner.soft { border-style:dashed; }
+:where(.seminar-slide-content) .box-inner.guard { border-color:var(--accent); }
+:where(.seminar-slide-content) .box-inner.shared { border-color:var(--terracotta); }
+:where(.seminar-slide-content) .tl { border-top:2px solid var(--accent); padding:.65em 0 0; }
+:where(.seminar-slide-content) .tl.dashed { border-top-style:dashed; }
+:where(.seminar-slide-content) .tl > b { display:block; }
+:where(.seminar-slide-content) .trend { display:grid; grid-template-columns:2em minmax(0,1fr); gap:.65em; }
+:where(.seminar-slide-content) .step { display:grid; grid-template-columns:2em minmax(0,1fr); gap:.5em; }
+:where(.seminar-slide-content) .step > i { font-family:var(--font-geist-mono),monospace; font-style:normal; color:var(--accent); }
+:where(.seminar-slide-content) .step.end { border-bottom-style:dashed; }
+:where(.seminar-slide-content) .step.gate > i { color:var(--terracotta); }
+:where(.seminar-slide-content) :is(.checklist b,.checklist span,.refs > p > span,.system-model > b,.system-model > span,.system-harness > b,.system-harness > span,.system-tool-line small,.mathline strong,.mathline span,.steps > li > b,.steps > li > span) { display:block; }
+:where(.seminar-slide-content) .checklist > div { border-bottom:1px solid var(--line); }
+:where(.seminar-slide-content) .recap-qkv { display:grid; grid-template-columns:1.8em minmax(0,1fr); gap:.3em .65em; }
+:where(.seminar-slide-content) .recap-qkv > b { color:var(--accent); }
+:where(.seminar-slide-content) .recap-cache { display:grid; grid-template-columns:minmax(0,1fr) 1em minmax(0,1fr); gap:.5em; align-items:center; }
+:where(.seminar-slide-content) .recap-cache > div { padding:.65em; background:var(--surface); border-top:2px solid var(--accent); }
+:where(.seminar-slide-content) .recap-cache > div:last-child { border-color:var(--terracotta); }
+:where(.seminar-slide-content) .recap-cache :is(b,span) { display:block; }
+:where(.seminar-slide-content) .recap-plus { text-align:center; }
+:where(.seminar-slide-content) .mini-summary { display:grid; grid-template-columns:6em minmax(0,1fr); gap:.65em 1em; align-items:baseline; }
+:where(.seminar-slide-content) .mini-summary > b { color:var(--accent); }
+:where(.seminar-slide-content) .mini-summary > p { margin:0; }
+:where(.seminar-slide-content) .section-route { display:grid; grid-template-columns:6em minmax(0,1fr); gap:.8em; }
+:where(.seminar-slide-content) .section-route small { display:block; color:var(--muted); }
+:where(.seminar-slide-content) :is(.line-list,.sources-list) > li > strong { display:block; }
+:where(.seminar-slide-content) .source a + a { margin-left:.7em; }
+
+/* Reading layouts are responsive; they never reflow the fixed presentation canvas. */
+.seminar-pages .seminar-slide-content .vs { grid-template-columns:minmax(0,1fr) 1.5rem minmax(0,1fr); align-items:stretch; gap:.7rem; }
+.seminar-pages .seminar-slide-content .vs > .arrow { display:grid; place-items:center; }
+.seminar-pages .seminar-slide-content .glance > .card { margin:0; }
+.seminar-pages .seminar-slide-content .glance :is(.pro,.con) { border-top:1px solid var(--line); padding-top:.65rem; }
+.seminar-pages .seminar-slide-content .iso { grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr)); }
+.seminar-pages .seminar-slide-content .timeline { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.seminar-pages .seminar-slide-content .system-loop { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(0,1fr); }
+.seminar-pages .seminar-slide-content :is(.system-model,.system-harness) { text-align:center; }
+.seminar-pages .seminar-slide-content .system-tool-line { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr); text-align:center; }
+.seminar-pages .seminar-slide-content .system-tool-line small { color:var(--muted); }
+.seminar-pages .seminar-slide-content .mathline { display:grid; grid-template-columns:minmax(0,1fr) 1.2rem minmax(0,1fr) 1.2rem minmax(0,1fr); text-align:center; border-block:1px solid var(--line); padding:1rem 0; }
+.seminar-pages .seminar-slide-content .mathline strong { font-size:1.25rem; }
+.seminar-pages .seminar-slide-content .writing-stage { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:1rem; }
+.seminar-pages .seminar-slide-content .writing-stage p { margin:0; }
+.seminar-pages .seminar-slide-content .refs > p { margin:0; padding-bottom:.75rem; border-bottom:1px solid var(--line); }
+.seminar-pages .seminar-slide-content .cover-parts > div { display:flex; align-items:baseline; gap:.5rem; margin-right:.65rem; }
+.seminar-pages .seminar-slide-content :is(.meta,.hero-actions) { margin:1rem 0; font-size:.85rem; }
+.seminar-pages .seminar-slide-content .recap-details > section { border-top:1px solid var(--line); }
+.seminar-pages .seminar-slide-content .recap-flow { display:grid; grid-template-columns:minmax(0,1fr) 1rem minmax(0,1.1fr) 1rem minmax(0,1.35fr) 1rem minmax(0,1fr); gap:.35rem; }
+.seminar-pages .seminar-slide-content .recap-stage { align-self:stretch; text-align:center; display:flex; flex-direction:column; justify-content:center; padding:.65rem; }
+@media(max-width:700px) {
+  .seminar-pages .seminar-slide-content :is(.glance,.product,.wrap,.g2,.checklist,.vs,.system-loop,.system-tool-line) { grid-template-columns:minmax(0,1fr); }
+  .seminar-pages .seminar-slide-content .vs > .arrow { justify-self:center; transform:rotate(90deg); }
+  .seminar-pages .seminar-slide-content :is(.mini-summary,.writing-stage,.section-route) { grid-template-columns:minmax(0,1fr); gap:.3rem; }
+  .seminar-pages .seminar-slide-content .mini-summary > p { margin-bottom:.8rem; }
+  .seminar-pages .seminar-slide-content .fact { grid-template-columns:5.5em minmax(0,1fr); }
+  .seminar-pages .seminar-slide-content .mathline { gap:.3rem; }
+  .seminar-pages .seminar-slide-content .mathline strong { font-size:1rem; }
+  .seminar-pages .seminar-slide-content .recap-flow { grid-template-columns:minmax(0,1fr); }
+  .seminar-pages .seminar-slide-content .recap-arrow { justify-self:center; transform:rotate(90deg); }
+}
+@media(max-width:420px) {
+  .seminar-pages .seminar-slide-content .timeline { grid-template-columns:minmax(0,1fr); }
+  .seminar-pages .seminar-slide-content .recap-cache { grid-template-columns:minmax(0,1fr); }
+}
 .seminar-reader--presenting { position:fixed; inset:0; z-index:100; margin:0; padding:.6rem clamp(.6rem,2vw,2rem); background:var(--background); display:flex; flex-direction:column; overflow:hidden; }
 .seminar-reader--presenting .seminar-reader-toolbar { flex-shrink:0; }
 .seminar-present-title { flex:1; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-size:.8rem; color:var(--muted); }
