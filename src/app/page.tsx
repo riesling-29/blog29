@@ -1,34 +1,16 @@
 import Link from "next/link";
-import { PostCard } from "@/components/post-card";
-import { getAllPostsMetadata } from "@/lib/posts";
-
+import type { Metadata } from "next";
+import { getResources } from "@/lib/catalog";
+import { ResourceCard } from "@/components/resource-card";
+import { TopicCards } from "@/components/topic-cards";
+import { TopicCorridor } from "@/components/knowledge-navigation";
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 export default function Home() {
-  const posts = getAllPostsMetadata();
-  const featured = posts.find(post => post.data.featured) ?? posts[0];
-  const recentPosts = posts.filter(post => post.slug !== featured?.slug).slice(0, 4);
-  return (
-    <main>
-      <section className="hero mx-auto max-w-6xl px-5 sm:px-8">
-        <div className="mb-8 flex items-center justify-between gap-4 border-b border-line pb-4">
-          <p className="eyebrow">NOTES & OBSERVATIONS</p>
-          <span className="font-mono text-xs text-muted">by riesling29</span>
-        </div>
-        <div className="grid gap-8 lg:grid-cols-[1.6fr_1fr] lg:items-end">
-          <h1 className="hero-title">생각을 기록하고,<br /><span className="text-accent">다시 들여다봅니다.</span></h1>
-          <div className="lg:pb-2 lg:pl-8">
-            <p className="max-w-md leading-8 text-muted">기술과 연구, 문화와 일상 사이에서 발견한 질문들.<br />지나가는 생각에 근거를 더해 차곡차곡 남깁니다.</p>
-            <Link href="/blog" className="mt-6 inline-flex items-center gap-6 border-b border-accent pb-2 text-sm text-accent">기록 둘러보기 <span aria-hidden="true">→</span></Link>
-          </div>
-        </div>
-      </section>
-      {featured && <section className="mx-auto max-w-6xl px-5 pb-16 sm:px-8 sm:pb-20" aria-label="선택한 기록"><PostCard post={featured} featured /></section>}
-      <section className="mx-auto max-w-6xl px-5 pb-20 sm:px-8 sm:pb-28">
-        <div className="mb-8 flex items-end justify-between gap-6">
-          <div><p className="eyebrow">THE JOURNAL</p><h2 className="editorial-title mt-3 text-3xl">최근 기록</h2></div>
-          <Link href="/blog" className="text-sm text-muted hover:text-accent">모든 글 →</Link>
-        </div>
-        {recentPosts.length ? <div className="grid gap-x-8 gap-y-4 md:grid-cols-2">{recentPosts.map(post => <PostCard key={post.slug} post={post} />)}</div> : <p className="border-t border-line py-10 text-muted">다음 기록을 준비하고 있습니다.</p>}
-      </section>
-    </main>
-  );
+  const resources = getResources().filter(r => r.primaryTopic !== "operations");
+  return <main className="page-width index-page corridor-home">
+    <header className="archive-heading"><h1>글·세미나</h1><span>{resources.length}개 기록</span></header>
+    <TopicCorridor />
+    <section aria-labelledby="explore-title"><div className="section-heading"><h2 id="explore-title">주제</h2><Link className="text-link" href="/archive">전체 자료 검색 →</Link></div><TopicCards /></section>
+    <section className="home-recent" aria-labelledby="recent-title"><div className="section-heading"><h2 id="recent-title">최근 기록</h2><span className="eyebrow">글과 세미나</span></div>{resources.slice(0, 5).map(r => <ResourceCard key={r.id} resource={r} compact />)}</section>
+  </main>;
 }

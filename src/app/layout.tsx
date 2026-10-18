@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/config/site";
+import { ReadingHistoryProvider } from "@/components/reading-navigation";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -57,17 +58,26 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `(function(){var t;try{t=localStorage.getItem('blog29-theme')}catch(e){}document.documentElement.dataset.theme=t==='light'||t==='dark'?t:window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'})()` }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var t;try{t=localStorage.getItem('blog29-theme')}catch(e){}document.documentElement.dataset.theme=t==='light'||t==='dark'?t:window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'})()`,
+          }}
+        />
       </head>
       <body className="min-h-full">
-        <a href="#main-content" className="skip-link">본문 바로가기</a>
-        <div className="flex min-h-screen flex-col">
-          <SiteHeader />
-          <div id="main-content" className="flex-1" tabIndex={-1}>{children}</div>
-          <SiteFooter />
-        </div>
+        <a href="#main-content" className="skip-link">
+          본문 바로가기
+        </a>
+        <ReadingHistoryProvider>
+          <div className="flex min-h-screen flex-col">
+            <SiteHeader />
+            <div id="main-content" className="flex-1" tabIndex={-1}>
+              {children}
+            </div>
+            <SiteFooter />
+          </div>
+        </ReadingHistoryProvider>
       </body>
     </html>
   );
 }
-

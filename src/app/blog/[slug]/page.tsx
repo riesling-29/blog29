@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { createElement, type ComponentProps } from "react";
+import type { MDXComponents } from "mdx/types";
 import { getAllPostsMetadata, getPostContent } from "@/lib/posts";
+import { getRelationsFrom, getResource, getTopic } from "@/lib/catalog";
+import { ReadingShell, RelatedResources } from "@/components/reading-shell";
+import { ContextualLink } from "@/components/contextual-link";
 import { formatDate } from "@/utils/formatDate";
 
 interface PageProps {
@@ -10,20 +16,27 @@ interface PageProps {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllPostsMetadata().map((post) => ({ slug: post.slug }));
+  return getAllPostsMetadata({ includeDrafts: false }).map((post) => ({
+    slug: post.slug,
+  }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = getAllPostsMetadata().find((item) => item.slug === slug);
-
-  if (!post) {
-    return { title: "글을 찾을 수 없음" };
-  }
-
+  const post = getAllPostsMetadata({ includeDrafts: false }).find(
+    (item) => item.slug === slug,
+  );
+  if (!post)
+    return {
+      title: "글을 찾을 수 없음",
+      robots: { index: false, follow: false },
+    };
   return {
     title: post.data.title,
     description: post.data.excerpt,
+    alternates: { canonical: `/blog/${slug}` },
     openGraph: {
       type: "article",
       url: `/blog/${slug}`,
@@ -37,50 +50,102 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
+function headingComponent(tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
+  return function ReadingHeading({
+    children,
+    id,
+    ...props
+  }: ComponentProps<"h2">) {
+    return createElement(
+      tag,
+      { ...props, id, tabIndex: -1, "data-reading-heading": true },
+      children,
+    );
+  };
+}
+
 export default async function PostPage({ params }: PageProps) {
   const { slug } = await params;
-  const { data, content } = await getPostContent(slug);
+  const resource = getResource(slug);
+  if (!resource || resource.format !== "article") notFound();
+  const topic = getTopic(resource.primaryTopic);
+  const relations = getRelationsFrom(resource.id);
+  const components: MDXComponents = {
+    table: ({ children, ...props }) => (
+      <div className="reading-table-scroll" role="region" aria-label="표 (넓은 표는 가로로 이동)" tabIndex={0}>
+        <table {...props}>{children}</table>
+      </div>
+    ),
+    a: ContextualLink,
+    h1: headingComponent("h1"),
+    h2: headingComponent("h2"),
+    h3: headingComponent("h3"),
+    h4: headingComponent("h4"),
+    h5: headingComponent("h5"),
+    h6: headingComponent("h6"),
+    RelatedSection: ({ section }: { section: string }) => (
+      <RelatedResources
+        relations={relations.filter(
+          (relation) => relation.sourceSection === section,
+        )}
+      />
+    ),
+  };
+  const { data, content, headings } = await getPostContent(slug, {
+    components,
+    relationSections: relations.flatMap((relation) =>
+      relation.sourceSection ? [relation.sourceSection] : [],
+    ),
+  });
 
   return (
-    <main className="mx-auto max-w-4xl px-5 py-12 sm:px-8 sm:py-20">
-      <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-muted transition hover:text-accent">
-        <span aria-hidden>←</span> 모든 글
-      </Link>
-
-      <article className="mt-10">
-        <header className="border-b border-line pb-10">
-          <div className="flex flex-wrap items-center gap-3 text-sm">
-            <span className="rounded-full border border-line bg-surface px-3 py-1 text-accent">
-              {data.category}
-            </span>
-            <time dateTime={data.date} className="text-muted">
-              {formatDate(data.date)}
-            </time>
-            {data.updated && <span className="text-muted">수정 {formatDate(data.updated)}</span>}
+    <ReadingShell resource={resource} headings={headings}>
+      <article>
+        <header className="reading-article-header">
+          <div className="reading-article-meta">
+            <Link href={`/topics/${resource.primaryTopic}`}>
+              {topic?.label}
+            </Link>
+            <span>{resource.readingPurpose || "글"}</span>
+            <span>약 {resource.readingMinutes}분</span>
           </div>
-          <h1 className="mt-7 text-4xl font-bold leading-tight tracking-[-0.035em] text-ink sm:text-6xl">
+          <h1 id="reading-title" tabIndex={-1}>
             {data.title}
           </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">{data.excerpt}</p>
-          <div className="mt-7 flex flex-wrap gap-2">
-            {data.tags.map((tag) => (
-              <span key={tag} className="font-mono text-xs text-muted">
-                #{tag}
+          <p className="reading-deck">{data.excerpt}</p>
+          <div className="reading-article-dates">
+            <time dateTime={data.date}>{formatDate(data.date)}</time>
+            {data.updated && data.updated !== data.date && (
+              <span>
+                수정{" "}
+                <time dateTime={data.updated}>{formatDate(data.updated)}</time>
               </span>
+            )}
+          </div>
+          <div className="reading-tags" aria-label="태그">
+            {data.tags.map((tag) => (
+              <Link key={tag} href={`/archive?q=${encodeURIComponent(tag)}`}>
+                {tag}
+              </Link>
             ))}
           </div>
         </header>
 
-        <div className="prose-blog">{content}</div>
+        <div className="prose-blog reading-prose">{content}</div>
 
-        <footer className="mt-16 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-muted">riesling29 · Notes & Observations</p>
-          <Link href="/blog" className="text-sm font-semibold text-accent transition hover:text-accent-hover">
-            다음 기록 찾기 →
-          </Link>
+        <footer className="reading-article-footer">
+          <RelatedResources
+            relations={relations.filter((relation) => !relation.sourceSection)}
+            label="같은 주제로 함께 보기"
+          />
+          <div className="reading-footer-links">
+            <Link href={`/topics/${resource.primaryTopic}`}>
+              {topic?.label} 자료로 돌아가기 ←
+            </Link>
+            <Link href="/archive">전체 자료 탐색 →</Link>
+          </div>
         </footer>
       </article>
-    </main>
+    </ReadingShell>
   );
 }
-

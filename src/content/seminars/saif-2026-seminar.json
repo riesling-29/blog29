@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "id": "saif-2026-seminar",
+  "sourceRepository": "riesling-29/Seminars",
+  "sourceCommit": "18a5f476fd77cf8136ebb321e59cd94419b24c39",
+  "sourceFile": "saif-2026-seminar/index.html",
+  "sourceSha256": "3e872d820939a8269990060e1938833b06edf46e79e1fc77bf8d626d9259afb6",
+  "dependencies": {},
+  "slides": [
+    {
+      "id": "slide-01",
+      "number": 1,
+      "title": "세계를 이해하고 일을 수행하는 AI",
+      "section": "SAMSUNG AI FORUM 2026 · 독립 해설",
+      "html": "<p class=\"lead\">에이전트가 답변을 넘어 실제 업무와 물리 세계로 들어갈 때, 무엇을 만들고 무엇을 확인해야 할까?\n</p>\n<div class=\"meta\"><span>행사 2026.09.30 · 서울</span><span>일반 독자를 위한 한국어 웹 세미나</span><span>정리 2026.10.02</span>\n</div>\n<div class=\"hero-actions\"><a class=\"primary\" href=\"#slide-02\">세미나 시작하기</a><span class=\"subtle\">읽기 · 발표 · 원영상 탐색</span>\n</div>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-02",
+      "number": 2,
+      "title": "이 세미나의 범위와 근거",
+      "section": "먼저 읽기",
+      "html": "<p class=\"lead\">공식 프로그램과 뉴스룸을 바탕으로 전체 지도를 그리고, 내용을 확인할 수 있는 공개 자막 구간을 깊게 읽었다.\n</p>\n<div class=\"two-col\">\n<div>\n<ul class=\"line-list\">\n<li><strong>내용을 자세히 다룬 범위</strong>\n<p>공동 기조강연 네 편과 패널, Track 1의 영어 강연, Track 2의 Dell 강연. 공개 다시보기의 시간표시 영어 자동자막을 근거로 요약했다.\n</p>\n</li>\n<li><strong>전체 프로그램에서 위치를 소개한 범위</strong>\n<p>한국어 강연 중 자동자막이 불완전한 구간은 공식 제목·소개와 뉴스룸에 확인된 내용만 다룬다.\n</p>\n</li>\n</ul>\n</div>\n<div>\n<ul class=\"line-list\">\n<li><strong>발표자의 주장과 해설을 구분</strong>\n<p>성과 수치와 사례는 발표자·기업이 보고한 내용이다. 여러 발표를 연결한 결론과 적용 질문은 이 세미나의 해설이다.\n</p>\n</li>\n<li><strong>영상과 슬라이드 확인의 한계</strong>\n<p>영상 전체 재생과 원본 슬라이드 덱은 확인하지 못했다. 삼성 DS 사례는 공식 뉴스룸의 공개 발표 사진으로 보완했다. 모든 성과를 독립 검증한 자료는 아니다.\n</p>\n</li>\n</ul>\n</div>\n</div>\n<div class=\"caveat\"><strong>읽을 때 주의할 점</strong><br>자동자막은 이름과 숫자를 잘못 적을 수 있다. 원자료와 맞지 않거나 한국어 문맥이 소실된 부분은 임의로 복원하지 않았다. 원영상 링크의 시간은 행사 시각이 아닌 영상 재생 위치다.\n</div>\n<p class=\"source\">근거 · <a href=\"https://saif2026.com/\" rel=\"noopener noreferrer\">최신 공식 프로그램</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o\" rel=\"noopener noreferrer\">공식 다시보기 · Keynote + Track 1</a><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4\" rel=\"noopener noreferrer\">공식 다시보기 · Keynote + Track 2</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-03",
+      "number": 3,
+      "title": "포럼을 읽는 네 가지 질문",
+      "section": "전체 지도",
+      "html": "<p class=\"lead\">주제는 ‘Agentic Shift’였다. 이 세미나는 기술 이름보다 발표들이 던진 질문을 따라간다.\n</p>\n<div class=\"section-route\"><b>01 / 업무</b>\n<div><a href=\"#slide-05\">AI가 일을 끝냈다는 증거는 무엇인가?</a><small>Richard Ho · David Green</small>\n</div>\n</div>\n<div class=\"section-route\"><b>02 / 세계</b>\n<div><a href=\"#slide-11\">공간을 이해하고 움직이려면 무엇이 필요한가?</a><small>Ranjay Krishna · 패널 · Physical AI</small>\n</div>\n</div>\n<div class=\"section-route\"><b>03 / 기억</b>\n<div><a href=\"#slide-13\">경험을 쌓으면서 효율적으로 작동할 수 있는가?</a><small>김윤형 · 지속학습·메모리 연구</small>\n</div>\n</div>\n<div class=\"section-route\"><b>04 / 조직</b>\n<div><a href=\"#slide-21\">기업의 데이터와 일하는 방식은 어떻게 바뀌는가?</a><small>AX Innovation · Dell 사례</small>\n</div>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">오전은 공동 기조강연과 패널, 오후는 AI Technology와 AX Innovation 두 트랙으로 나뉘었다. 두 영상의 오전 부분은 같은 행사다. 각 영상을 별개의 기조강연으로 중복 집계하지 않는다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://saif2026.com/\" rel=\"noopener noreferrer\">공식 프로그램</a><a href=\"https://news.samsung.com/kr/삼성전자-에이전틱-시프트-주제로-삼성-ai-포럼-2026-개최\" rel=\"noopener noreferrer\">행사 뉴스룸</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-04",
+      "number": 4,
+      "title": "먼저 알아둘 다섯 단어",
+      "section": "기초 개념 · 해설",
+      "html": "<dl class=\"glossary\"><dt>에이전트</dt><dd>목표를 받고 도구를 사용하며 중간 결과에 따라 다음 행동을 조정하는 AI 시스템</dd><dt>워크플로</dt><dd>입력부터 검토·완료까지 이어지는 일의 순서와 책임 분담</dd><dt>하네스</dt><dd>모델 주변에서 도구, 실행 환경, 기억, 검증과 중단 조건을 다루는 구조</dd><dt>멀티모달</dt><dd>글뿐 아니라 이미지·영상·소리 등 여러 형태의 정보를 다루는 방식</dd><dt>AX</dt><dd>AI를 활용해 업무와 조직 운영을 바꾸는 전환. 이 행사에서는 산업 적용 트랙의 이름이다</dd>\n</dl>\n<div class=\"signal\">\n<p class=\"label\">해설\n</p>\n<p><strong>좋은 모델을 고르는 질문에 더해, 그 모델이 어떤 환경에서 무엇을 할 수 있게 할지 묻는다.</strong>\n</p>\n</div>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=893s\" rel=\"noopener noreferrer\">Ho · 에이전트와 업무 구조 14:53</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=5900s\" rel=\"noopener noreferrer\">Green · 통제 구조 1:38:20</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-05",
+      "number": 5,
+      "title": "에이전트의 작업 반복",
+      "section": "기조강연 · RICHARD HO / OPENAI",
+      "html": "<p class=\"lead\">목표를 이해하고, 도구로 시도하고, 결과를 확인한 뒤 다음 행동을 고른다.\n</p>\n<ol class=\"steps\">\n<li>\n<h4>목표와 완료 조건\n</h4>\n<p>사람이 문제, 사용할 자료·도구, 허용 범위, 성공을 판단할 기준을 정한다.\n</p>\n</li>\n<li>\n<h4>실행과 관찰\n</h4>\n<p>에이전트가 여러 단계를 수행하고 중간 결과를 읽는다. 오류나 부족한 점이 있으면 계획을 바꾼다.\n</p>\n</li>\n<li>\n<h4>검증과 인수\n</h4>\n<p>테스트나 측정으로 결과를 확인한다. 중요한 결정은 사람에게 넘기고 승인된 결과물을 남긴다.\n</p>\n</li>\n</ol>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">발표의 소프트웨어 예시는 로그 조사, 관련 코드 탐색, 수정, 테스트 재실행으로 이어진다. 텍스트가 그럴듯한지만 보는 것보다 완료 판단이 구체적이다. 다른 업무에서도 같은 구조를 쓸 수 있지만, 검증 방법은 업무마다 달라야 한다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=893s\" rel=\"noopener noreferrer\">Ho · 정의 14:53</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=1120s\" rel=\"noopener noreferrer\">회귀 오류 해결 예시 18:40</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-06",
+      "number": 6,
+      "title": "성과의 단위는 확인된 결과물",
+      "section": "기조강연 · RICHARD HO / OPENAI",
+      "html": "<p class=\"lead\">실행량이 늘수록 좋은 문제를 고르고 결과를 검토하는 일이 더 중요해진다.\n</p>\n<div class=\"two-col\">\n<div>\n<ul class=\"line-list\">\n<li><strong>활동을 보여주는 지표</strong>\n<p>토큰 사용량, 실행 시간, 생성한 코드·문서의 양. 얼마나 많이 시도했는지 설명하는 데 도움이 된다.\n</p>\n</li>\n<li><strong>완료를 보여주는 증거</strong>\n<p>통과한 테스트, 수용된 문서, 재현 가능한 실험 결과, 실제 문제 해결. 업무 목적에 맞는 별도 확인이 필요하다.\n</p>\n</li>\n</ul>\n</div>\n<div>\n<ul class=\"line-list\">\n<li><strong>사람에게 남는 병목</strong>\n<p>질문과 실험 설계, 입력 준비, 장비 접근, 결과 검토, 다음 우선순위 결정.\n</p>\n</li>\n<li><strong>실행마다 필요한 경계</strong>\n<p>가치 있는 질문, 멈출 조건, 나중에 확인할 기록. 오래 실행했다는 사실만으로 업무 가치가 정해지지 않는다.\n</p>\n</li>\n</ul>\n</div>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">검증의 형태는 영역에 따라 다르다. 소프트웨어에는 테스트가, 수학에는 정확한 가정과 증명이, 실험에는 측정이 필요하다. AI가 만든 설명을 다른 AI가 다시 읽는 것만으로 충분한지 역시 별도로 판단해야 한다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=1227s\" rel=\"noopener noreferrer\">Ho · 활동량과 결과 20:27</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=1688s\" rel=\"noopener noreferrer\">새로운 병목과 검증 28:08</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-07",
+      "number": 7,
+      "title": "큰 성능 수치를 읽는 법",
+      "section": "사례 해설 · 측정 범위",
+      "html": "<p class=\"lead\">발표의 인상적인 숫자는 무엇을 재고, 무엇과 비교했는지 함께 읽어야 한다.\n</p>\n<div class=\"two-col\">\n<div>\n<p class=\"col-title\">발표에서 다룬 사례\n</p>\n<ul class=\"line-list\">\n<li><strong>특정 커널의 약 287배 개선</strong>\n<p>Ho는 초기 구현에서 크게 개선한 DeepSeek MLA 커널 사례를 설명했다. 커널은 모델 전체 작업 중 특정 계산 부분이다.\n</p>\n</li>\n<li><strong>자동 코드 변환과 운영 완료</strong>\n<p>Green의 NOL Universe 사례에서는 핵심 변환 약 10시간과 테스트·수정·배포 약 6주가 구분된다.\n</p>\n</li>\n</ul>\n</div>\n<div>\n<p class=\"col-title\">독자가 함께 확인할 조건\n</p>\n<ul class=\"line-list\">\n<li><strong>측정 대상과 출발점</strong>\n<p>커널인지 전체 서비스인지, 초기 구현인지 최적화된 비교 대상인지 확인한다.\n</p>\n</li>\n<li><strong>끝까지 들어간 시간과 비용</strong>\n<p>검토, 오류 수정, 승인, 배포와 운영을 포함한 전체 업무를 본다. 기업 사례는 다른 조직에 그대로 적용되는 보장값이 아니다.\n</p>\n</li>\n</ul>\n</div>\n</div>\n<div class=\"caveat\"><strong>읽을 때 주의할 점</strong><br>287배를 AI 모델 전체나 조직 생산성의 287배로 바꾸면 의미가 달라진다. 이 수치들은 발표자 보고 사례이며 이 세미나가 재현한 실험 결과가 아니다.\n</div>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=3040s\" rel=\"noopener noreferrer\">Ho · 커널 사례 50:40</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=5533s\" rel=\"noopener noreferrer\">Green · NOL 사례 1:32:13</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-08",
+      "number": 8,
+      "title": "AI가 바꾸는 업무의 순서",
+      "section": "기조강연 · DAVID GREEN / AWS",
+      "html": "<p class=\"lead\">기존 절차에 AI를 붙이면 시작할 수 있다. 더 큰 변화에는 역할과 검토 흐름의 재설계가 따른다.\n</p>\n<ol class=\"steps\">\n<li>\n<h4>역량과 한계 익히기\n</h4>\n<p>실제 반복 업무를 직접 해보며 어디서 도움이 되고 어디서 실패하는지 관찰한다.\n</p>\n</li>\n<li>\n<h4>낡은 가정 다시 보기\n</h4>\n<p>사람이 순서대로 처리해야 했던 단계와 중복 절차가 여전히 필요한지 검토한다.\n</p>\n</li>\n<li>\n<h4>도구와 책임 다시 배치\n</h4>\n<p>병렬 실행을 활용하되, 결과 인수와 운영 책임을 맡을 사람과 검증 절차를 남긴다.\n</p>\n</li>\n</ol>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">Green은 개인의 번역 도구가 정보 수집·분류·검색 작업으로 발전한 예를 들었다. 자신의 기대 결과에 맞는 평가를 만들고, 필요한 품질을 충족하는 작은 모델을 선택하며, 규칙적으로 처리할 수 있는 검색 작업은 별도 구조로 옮겼다. 모델의 크기보다 업무에 맞는 구성이 중요하다는 사례다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=4565s\" rel=\"noopener noreferrer\">Green · 학습과 재설계 1:16:05</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=4931s\" rel=\"noopener noreferrer\">개인 워크플로 사례 1:22:11</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-09",
+      "number": 9,
+      "title": "권한과 승인은 시스템이 집행한다",
+      "section": "기조강연 · DAVID GREEN / AWS",
+      "html": "<p class=\"lead\">에이전트에게 주의사항을 말하는 것과 실제 행동을 제한하는 것은 서로 다른 설계 요소다.\n</p>\n<div class=\"two-col\">\n<div>\n<ul class=\"line-list\">\n<li><strong>누구의 권한인가</strong>\n<p>사용자 신원을 확인하고 허용된 데이터와 도구에만 접근하게 한다.\n</p>\n</li>\n<li><strong>어떤 행동까지 가능한가</strong>\n<p>승인된 행동 목록을 두고, 위험이 큰 행동은 사람이 승인하도록 연결한다.\n</p>\n</li>\n</ul>\n</div>\n<div>\n<ul class=\"line-list\">\n<li><strong>어떤 비용까지 가능한가</strong>\n<p>팀별 예산·모델 목록·사용량 제한을 에이전트 밖의 실행 경로에 둔다.\n</p>\n</li>\n<li><strong>문제가 생기면 무엇을 볼 수 있나</strong>\n<p>활동 기록과 비용을 남겨 점검하고, 중단하거나 원인을 찾을 수 있게 한다.\n</p>\n</li>\n</ul>\n</div>\n</div>\n<div class=\"signal\">\n<p class=\"label\">발표의 중심 주장\n</p>\n<p><strong>통제는 모델이 낸 문장에만 맡기지 않고, 데이터 접근과 도구 실행 경로에서 적용한다.</strong>\n</p>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">Green은 게이트웨이와 정책 기반 도구를 기업 적용 예로 들었다. 특정 제품을 사용한다는 사실만으로 안전을 보장할 수는 없다. 실제로 어떤 권한을 검사하고 어떤 행동을 차단하는지 확인해야 한다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=5730s\" rel=\"noopener noreferrer\">Green · 기업 게이트웨이 1:35:30</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=5900s\" rel=\"noopener noreferrer\">외부 통제와 정책 1:38:20</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-10",
+      "number": 10,
+      "title": "한 번의 답변 가격과 업무 총비용",
+      "section": "기조강연 · DAVID GREEN / AWS",
+      "html": "<p class=\"lead\">여러 단계가 연결된 일에서는 재시도와 실패가 최종 품질과 비용을 바꾼다.\n</p>\n<div class=\"two-col\">\n<div>\n<h4>단계가 쌓이는 예\n</h4>\n<p class=\"\">각 단계가 95% 확률로 성공하고 열 단계가 모두 성공해야 한다고 가정하면, 전체 성공 확률은 약 60%다.\n</p>\n<p class=\"subtle\">95%를 열 번 곱한 설명용 계산이다. 각 단계가 독립이라는 가정이 있으며, 실제 에이전트의 공통 성공률을 뜻하지 않는다.\n</p>\n</div>\n<div>\n<h4>비교할 단위\n</h4>\n<ul class=\"line-list\">\n<li><strong>해결한 문의 한 건의 비용</strong>\n<p>추론 비용, 도구 사용, 재시도와 사람의 확인 시간을 합쳐 본다.\n</p>\n</li>\n<li><strong>품질을 통과한 기능 한 개</strong>\n<p>생성 코드의 양보다 테스트와 검토를 거쳐 실제로 받아들인 결과를 센다.\n</p>\n</li>\n</ul>\n</div>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">낮은 단가의 모델이 실패를 더 많이 만들면 전체 업무에서는 더 비쌀 수 있다. 반대로 요구 품질을 만족하는 작은 모델이나 결정적인 규칙 기반 처리가 더 적합한 구간도 있다. 평가는 업무 단위로 해야 한다는 설명이다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=6101s\" rel=\"noopener noreferrer\">Green · 다단계 성공과 비용 1:41:41</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=6219s\" rel=\"noopener noreferrer\">결과 단위 비용 1:43:39</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-11",
+      "number": 11,
+      "title": "공간 문제에 맞는 표현",
+      "section": "기조강연 · RANJAY KRISHNA / UNIVERSITY OF WASHINGTON",
+      "html": "<p class=\"lead\">이미지를 잘 설명하는 능력과 거리·깊이·이동 경로를 정확히 판단하는 능력은 따로 확인해야 한다.\n</p>\n<div class=\"two-col\">\n<div>\n<h4>언어가 담는 것\n</h4>\n<p class=\"\">목표의 의미, 작업의 순서, 물체의 일반적인 쓰임을 정리한다. “컵을 집어 선반으로 옮긴다”처럼 행동을 설명하는 데 유용하다.\n</p>\n</div>\n<div>\n<h4>공간 표현이 담는 것\n</h4>\n<p class=\"\">픽셀 위치, 깊이, 시점, 경로와 물체 사이의 관계를 나타낸다. 말로 풀어 쓰기 어려운 기하학적 정보를 다음 판단에 전달한다.\n</p>\n</div>\n</div>\n<div class=\"signal\">\n<p class=\"label\">해설\n</p>\n<p><strong>문제에 맞는 중간 표현을 만들면, 모델이 무엇을 근거로 판단했는지 살펴볼 여지가 생긴다.</strong>\n</p>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">Krishna는 기하 도형의 보조선, 이미지 확대·자르기, 깊이 지도, 경로 그리기 같은 “스케치”를 설명했다. 일부 지각 과제에서 언어 추론을 더하는 것이 도움이 되지 않을 수 있다는 결과를, 모든 추론이 해롭다는 주장으로 넓혀 읽어서는 안 된다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=7986s\" rel=\"noopener noreferrer\">Krishna · 지각 과제 2:13:06</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=8226s\" rel=\"noopener noreferrer\">중간 공간 표현 2:17:06</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=11638s\" rel=\"noopener noreferrer\">패널 · 표현의 보완 관계 3:13:58</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-12",
+      "number": 12,
+      "title": "행동 전에 들여다볼 수 있는 계획",
+      "section": "기조강연 · MOLMOACT 연구 사례",
+      "html": "<p class=\"lead\">MolmoAct는 장면을 보고 깊이와 경로를 표현한 뒤 로봇의 동작으로 연결하는 접근을 보여준다.\n</p>\n<ol class=\"steps\">\n<li>\n<h4>장면과 지시 관찰\n</h4>\n<p>카메라 입력과 목표를 받아 물체와 공간을 파악한다.\n</p>\n</li>\n<li>\n<h4>깊이와 경로 표현\n</h4>\n<p>깊이 정보를 반영하고 이미지 위의 경유점을 만든다. 사람이 계획의 일부를 살펴보거나 조정할 수 있다.\n</p>\n</li>\n<li>\n<h4>로봇 동작 실행\n</h4>\n<p>공간 계획을 낮은 수준의 제어로 연결한다. 실제 로봇과 환경에 맞는 학습·평가가 필요하다.\n</p>\n</li>\n</ol>\n<div class=\"caveat\"><strong>읽을 때 주의할 점</strong><br>계획이 보인다는 것만으로 안전이 보장되지는 않는다. MolmoAct 2의 공개 설명은 동작 묶음 중간에 수정하지 못하는 제약과, 새로운 로봇 형식에 추가 학습이 필요한 조건을 명시한다.\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">이 사례의 의미는 로봇이 모든 집안일을 해결했다는 데 있지 않다. 언어, 지각, 공간 계획, 제어를 어떻게 연결하고 점검할지 구체적인 연구 경로를 보여준다는 점에 있다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=8924s\" rel=\"noopener noreferrer\">Krishna · MolmoAct 2:28:44</a><a href=\"https://allenai.org/blog/molmoact\" rel=\"noopener noreferrer\">Ai2 · MolmoAct</a><a href=\"https://allenai.org/blog/molmoact2\" rel=\"noopener noreferrer\">Ai2 · MolmoAct 2와 한계</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-13",
+      "number": 13,
+      "title": "경험을 쌓는 AI의 기억 문제",
+      "section": "기조강연 · 김윤형 / SAMSUNG RESEARCH · MIT",
+      "html": "<p class=\"lead\">계속 경험을 받는 에이전트는 무엇을 남기고, 어떻게 다시 꺼내며, 어느 비용으로 유지할지 결정해야 한다.\n</p>\n<div class=\"two-col\">\n<div>\n<ul class=\"line-list\">\n<li><strong>문맥을 계속 늘리는 방법</strong>\n<p>새 정보를 입력 기록 뒤에 붙일 수 있지만, 계산량과 메모리 사용이 커지는 문제가 있다.\n</p>\n</li>\n<li><strong>기억을 밖에서 관리하는 방법</strong>\n<p>요약·검색·메모리 구조로 필요한 정보를 골라 넣는다. 저장과 회수의 품질이 중요하다.\n</p>\n</li>\n</ul>\n</div>\n<div>\n<ul class=\"line-list\">\n<li><strong>모델 구조에서 다루는 방법</strong>\n<p>재귀 상태, 선형 어텐션, 혼합 구조와 학습된 압축 같은 방향을 연구한다.\n</p>\n</li>\n<li><strong>지속학습의 목표</strong>\n<p>새 경험에서 지식과 기술을 얻으면서 기존 능력도 유지한다. 긴 대화 기록을 붙이는 것보다 넓은 문제다.\n</p>\n</li>\n</ul>\n</div>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">김윤형은 데이터와 계산량뿐 아니라 모델 아키텍처가 가능한 능력과 효율을 바꾼다고 설명했다. 문맥 관리와 구조적 기억은 함께 검토할 수 있다. “무한 문맥”이라는 연구 방향을 모든 사실을 완벽하게 무제한 기억하는 제품으로 읽지는 않아야 한다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=9749s\" rel=\"noopener noreferrer\">김윤형 · 지속학습 2:42:29</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=10006s\" rel=\"noopener noreferrer\">구조와 압축 2:46:46</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-14",
+      "number": 14,
+      "title": "기기 안에서 작동하는 AI의 제약",
+      "section": "기조강연 · 김윤형 / SAMSUNG RESEARCH · MIT",
+      "html": "<p class=\"lead\">스마트폰과 로봇 같은 기기는 클라우드 서버와 다른 계산 환경을 갖는다.\n</p>\n<div class=\"two-col\">\n<div>\n<p class=\"col-title\">기기 안에서 처리하려는 이유\n</p>\n<ul class=\"line-list\">\n<li><strong>빠른 반응과 연결이 끊긴 상황</strong>\n<p>왕복 통신 지연을 줄이고 일부 기능을 오프라인에서도 수행할 수 있다.\n</p>\n</li>\n<li><strong>민감한 입력과 지속적인 상호작용</strong>\n<p>개인정보 처리 위치와 항상 켜진 기능의 비용을 함께 고려한다.\n</p>\n</li>\n</ul>\n</div>\n<div>\n<p class=\"col-title\">설계에서 고려할 제약\n</p>\n<ul class=\"line-list\">\n<li><strong>메모리 용량</strong>\n<p>연산량뿐 아니라 모델과 상태를 저장할 DRAM 용량이 중요한 한계가 된다.\n</p>\n</li>\n<li><strong>한 번에 한 작업을 처리하는 환경</strong>\n<p>대량 요청의 처리량을 높이는 클라우드 설계를 그대로 옮기기 어렵다. 가중치 공유 등 다른 구조를 검토한다.\n</p>\n</li>\n</ul>\n</div>\n</div>\n<div class=\"caveat\"><strong>읽을 때 주의할 점</strong><br>이 발표는 기기 효율을 높이는 연구 방향을 설명한다. 특정 대형 모델이 곧 휴대폰에서 같은 능력으로 동작한다는 출시 약속으로 읽어서는 안 된다.\n</div>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=10395s\" rel=\"noopener noreferrer\">김윤형 · 온디바이스 이유 2:53:15</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=10559s\" rel=\"noopener noreferrer\">메모리·구조 제약 2:55:59</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-15",
+      "number": 15,
+      "title": "물리 세계에서는 실패의 비용이 다르다",
+      "section": "공동 패널 · KRISHNA · 김윤형",
+      "html": "<p class=\"lead\">로봇이 판단하는 동안에도 주변은 움직인다. 실수는 물건과 사람에 영향을 줄 수 있다.\n</p>\n<div class=\"two-col\">\n<div>\n<ul class=\"line-list\">\n<li><strong>연속적인 입력</strong>\n<p>카메라와 센서 정보가 계속 들어온다. 대화 한 번의 기록보다 기억과 반응의 시간 구조가 복잡하다.\n</p>\n</li>\n<li><strong>즉각적인 반응</strong>\n<p>큰 계획을 세우는 능력과 빠르게 피하고 멈추는 능력의 역할을 나누는 방향이 논의됐다.\n</p>\n</li>\n</ul>\n</div>\n<div>\n<ul class=\"line-list\">\n<li><strong>안전한 학습의 어려움</strong>\n<p>실제 세계에서 많은 시행착오를 반복하는 데 비용과 위험이 따른다.\n</p>\n</li>\n<li><strong>시뮬레이션의 틈</strong>\n<p>모델이 시뮬레이터의 허점을 이용해 높은 점수를 받을 수 있다. 좋은 점수만으로 현실에서의 능력을 확정하기 어렵다.\n</p>\n</li>\n</ul>\n</div>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">패널은 큰 모델의 고수준 계획과 작은 정책의 빠른 반응을 연결하는 계층적 방향을 논의했다. 삼성의 완성된 상용 아키텍처를 발표한 것으로 읽지 않아야 한다. 언어적 계획과 공간 표현도 서로 보완하는 역할로 설명했다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=10966s\" rel=\"noopener noreferrer\">패널 · 현실의 제약 3:02:46</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=11969s\" rel=\"noopener noreferrer\">시뮬레이션 허점 3:19:29</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=12232s\" rel=\"noopener noreferrer\">계층적 연구 방향 3:23:52</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-16",
+      "number": 16,
+      "title": "행동의 결과를 예측하는 세계 모델",
+      "section": "TRACK 1 · TIMOTHY HOSPEDALES / SAMSUNG RESEARCH",
+      "html": "<p class=\"lead\">현재 상태에서 어떤 행동을 했을 때 다음 상태가 어떻게 바뀔지 예측하면, 실행 전에 대안을 비교할 수 있다.\n</p>\n<div class=\"two-col\">\n<div>\n<h4>긴 계획의 어려움\n</h4>\n<p class=\"\">작은 동작을 수천 번 예측해 먼 미래를 계획하면 계산이 느려지고 오차가 쌓인다. 예측한 중간 상태가 현실에서 가능한지도 문제다.\n</p>\n</div>\n<div>\n<h4>Metro-WM의 접근\n</h4>\n<p class=\"\">실제로 관찰한 상태들을 그래프로 연결한다. 목표로 가는 경로에서 도달 가능한 중간 상태를 고르고, 짧은 구간의 행동 계획을 이어 붙인다.\n</p>\n</div>\n</div>\n<div class=\"signal\">\n<p class=\"label\">발표와 Q&A의 중심\n</p>\n<p><strong>세계 모델의 평가는 예측 영상의 그럴듯함에 더해, 실제 과업을 수행하는 데 도움이 되는지까지 포함한다.</strong>\n</p>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">관찰만으로 다음 장면을 맞히는 모델과, 행동이라는 개입의 결과를 예측하는 모델은 구분할 필요가 있다. 실패한 행동의 기록도 전이 규칙을 배우는 데 도움이 될 수 있다. 다만 세계 모델도 잘못 예측할 수 있으며, Metro-WM은 긴 계획의 일부 문제를 다루는 연구다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=22464s\" rel=\"noopener noreferrer\">Hospedales · 정의 6:14:24</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=22937s\" rel=\"noopener noreferrer\">Metro-WM 6:22:17</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=23437s\" rel=\"noopener noreferrer\">평가 기준 Q&A 6:30:37</a><a href=\"https://arxiv.org/abs/2609.31868\" rel=\"noopener noreferrer\">Metro-WM 논문</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-17",
+      "number": 17,
+      "title": "로봇 데모와 신뢰할 수 있는 제품",
+      "section": "TRACK 1 · KRIS HAUSER / SAMSUNG RX",
+      "html": "<p class=\"lead\">몇 가지 동작의 성공에서 반복해서 맡길 수 있는 제품으로 가려면, 실패 복구와 비용까지 해결해야 한다.\n</p>\n<div class=\"two-col\">\n<div>\n<ul class=\"line-list\">\n<li><strong>물리적 정밀도와 고장</strong>\n<p>작은 위치 오차, 센서·모터 문제, 하드웨어 변화가 전체 행동에 영향을 줄 수 있다.\n</p>\n</li>\n<li><strong>실패를 배우는 데이터</strong>\n<p>사람의 시범은 성공 장면에 치우치기 쉽다. 실패 뒤에 어떻게 회복할지 보여주는 경험도 필요하다.\n</p>\n</li>\n</ul>\n</div>\n<div>\n<ul class=\"line-list\">\n<li><strong>정해진 범위에서 높은 신뢰도</strong>\n<p>할 수 있는 일을 넓히는 것과 함께, 어디에서 어느 정도로 믿을 수 있는지 측정한다.\n</p>\n</li>\n<li><strong>사용 환경에 맞추는 비용</strong>\n<p>하드웨어 가격뿐 아니라 과업별 엔지니어링, 데이터 수집과 학습 비용을 줄여야 확산할 수 있다.\n</p>\n</li>\n</ul>\n</div>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">Hauser는 고객이 자신의 환경과 선호에 맞게 로봇을 가르칠 수 있는 방향을 설명했다. 몇 개의 알려진 일을 다양한 환경에서 믿을 만하게 수행하는 능력을 우선한다는 답변도 했다. 일반 가정용 로봇의 출시 일정이나 완성된 범용 능력에 대한 발표로 읽지 않아야 한다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=23998s\" rel=\"noopener noreferrer\">Hauser · 제품의 한계 6:39:58</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=24666s\" rel=\"noopener noreferrer\">범위와 신뢰도 6:51:06</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=24947s\" rel=\"noopener noreferrer\">일반화 Q&A 6:55:47</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-18",
+      "number": 18,
+      "title": "기억은 쌓는 것만큼 고치는 것이 중요하다",
+      "section": "TRACK 1 · JUAN CARLOS NIEBLES / SAMSUNG RESEARCH",
+      "html": "<p class=\"lead\">일정과 선호가 바뀌었는데 옛 기억을 그대로 두면, 검색 결과가 서로 충돌할 수 있다.\n</p>\n<ol class=\"steps\">\n<li>\n<h4>새 사실 반영\n</h4>\n<p>추가할 정보와 바뀐 정보를 구분한다. 새 사실을 단순히 뒤에 붙이는 것만으로는 충돌이 남을 수 있다.\n</p>\n</li>\n<li>\n<h4>기존 사실 보존\n</h4>\n<p>변경과 관계없는 사실까지 지우거나 왜곡하지 않았는지 확인한다.\n</p>\n</li>\n<li>\n<h4>근거와 일치 확인\n</h4>\n<p>사용자가 말하지 않은 내용이나 추측이 사실로 저장되지 않게 점검한다.\n</p>\n</li>\n</ol>\n<div class=\"signal\">\n<p class=\"label\">연구 사례\n</p>\n<p><strong>TrustMem은 기억의 수정 과정 자체를 검사하는 방법을 연구한다.</strong>\n</p>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">Niebles는 기억 오류를 정보 왜곡, 필요한 정보의 누락, 근거 없는 정보의 추가로 설명했다. TrustMem의 검증기는 새 내용을 잘 반영했는지, 유지할 내용을 보존했는지, 출처에 충실한지를 살핀다. “더 많이 기억한다”와 “더 정확하게 기억을 관리한다”는 다른 목표다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=27229s\" rel=\"noopener noreferrer\">Niebles · 변경되는 기억 7:33:49</a><a href=\"https://arxiv.org/abs/2606.25161\" rel=\"noopener noreferrer\">TrustMem 논문</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-19",
+      "number": 19,
+      "title": "정보를 읽는 방식과 새 능력을 배우는 방식",
+      "section": "TRACK 1 · JUAN CARLOS NIEBLES / SAMSUNG RESEARCH",
+      "html": "<div class=\"two-col\">\n<div>\n<p class=\"col-title\">DOC2ATOM · 지식 접근 비용\n</p>\n<h4>관련 지식만 작은 조각으로 선택\n</h4>\n<p class=\"\">문서의 지식을 의미 단위로 나누고 작은 모델 조정값으로 변환한다. 질문에 관련된 조각을 찾아 조합해, 긴 텍스트를 매번 넣는 부담을 줄이려는 접근이다.\n</p>\n</div>\n<div>\n<p class=\"col-title\">NB-LORA · 기존 능력 보존\n</p>\n<h4>새 학습이 옛 능력을 덜 건드리게\n</h4>\n<p class=\"\">새 작업을 학습할 때 기존 추론 능력에 주는 영향을 제한하는 방식으로 모델을 조정한다. 새 성능과 기존 성능을 함께 평가한다.\n</p>\n</div>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">외부 기억은 비교적 쉽게 수정·삭제할 수 있고, 모델 매개변수에 반영한 기억은 조회 비용을 줄이는 데 활용할 수 있다. Niebles는 자주 바뀌는 사실과 안정적인 지식에 서로 다른 저장 방식이 적합할 수 있다고 설명했다. 이 연구들은 모든 정보를 영구히 보존하는 완성된 평생학습의 증거가 아니다.\n</p>\n</div>\n</details>\n<div class=\"caveat\"><strong>읽을 때 주의할 점</strong><br>여기서 소개한 논문은 공개 연구 자료다. 특정 삼성 제품의 탑재 여부나 모든 작업에서의 성능을 보장하지 않는다.\n</div>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=27499s\" rel=\"noopener noreferrer\">Doc2Atom 7:38:19</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=27808s\" rel=\"noopener noreferrer\">NB-LoRA 7:43:28</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=28303s\" rel=\"noopener noreferrer\">기억 구분 Q&A 7:51:43</a><a href=\"https://arxiv.org/abs/2606.12400\" rel=\"noopener noreferrer\">Doc2Atom 논문</a><a href=\"https://arxiv.org/abs/2609.25618\" rel=\"noopener noreferrer\">NB-LoRA 논문</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-20",
+      "number": 20,
+      "title": "효율적 기기와 스스로 개선하는 AI",
+      "section": "TRACK 1 · 공식 프로그램 기준 소개",
+      "html": "<p class=\"lead\">한국어 자동자막의 공백이 있는 강연은 공식 소개에서 확인되는 주제까지 구분해 읽는다.\n</p>\n<ul class=\"line-list\">\n<li><strong>황인철 · Toward Human-Level Efficiency in AI</strong>\n<p>기기와 자원의 제약 속에서 효율적인 AI를 설계하는 문제를 다룬 공식 세션이다.\n</p>\n</li>\n<li><strong>이윤수 · On-Device AI Platform of Samsung</strong>\n<p>공식 소개는 Personal Data Engine(PDE), AI 모델, 에이전트를 온디바이스 AI 플랫폼의 구성 요소로 제시한다.\n</p>\n</li>\n<li><strong>이강욱 · Self-evolving AI: AI That Learns and Improves Itself</strong>\n<p>축적되는 사용 경험을 바탕으로 개선하는 AI와 그 적용 방향을 주제로 소개됐다.\n</p>\n</li>\n</ul>\n<div class=\"caveat\"><strong>읽을 때 주의할 점</strong><br>이 장은 세 강연의 상세 발언·시연을 복원한 요약이 아니다. 단편적인 자동자막으로 성능, 프라이버시 보장, 제품 제공 일정이나 구현 구조를 추정하지 않았다.\n</div>\n<p class=\"source\">근거 · <a href=\"https://saif2026.com/\" rel=\"noopener noreferrer\">최신 공식 프로그램과 발표 소개</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=18685s\" rel=\"noopener noreferrer\">Efficient AI 탐색 · 5:11:25</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=25810s\" rel=\"noopener noreferrer\">Self-evolving AI 세션 시작 7:10:10</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-21",
+      "number": 21,
+      "title": "AI가 움직일 수 있는 업무 기반",
+      "section": "TRACK 2 · AJAZ MUNSIFF / DELL TECHNOLOGIES",
+      "html": "<p class=\"lead\">Dell의 사례는 회사의 복잡한 업무를 정리하고 공통 기반을 마련하는 일에서 출발한다.\n</p>\n<ol class=\"steps\">\n<li>\n<h4>단순화\n</h4>\n<p>중복 절차와 복잡성을 줄인다. 불필요한 단계까지 빠르게 실행하는 상황을 피한다.\n</p>\n</li>\n<li>\n<h4>표준화\n</h4>\n<p>사업부별로 흩어진 플랫폼과 업무 방식을 공통 기반에 모은다.\n</p>\n</li>\n<li>\n<h4>자동화\n</h4>\n<p>정리한 업무 위에 자동화와 에이전트를 적용한다. 사업 부서와 IT가 함께 방향과 책임을 정한다.\n</p>\n</li>\n</ol>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">발표자는 AI-native처럼 사고하고 운영하는 방향으로 변화 중이라고 설명했다. 완성된 상태를 선언한 것으로 읽을 필요는 없다. 전체 목표는 매출이 늘 때 운영비도 같은 속도로 증가하는 구조를 바꾸는 데 있었고, 모델 자체 개발보다 외부 모델과 기업 데이터의 활용을 설명했다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=18626s\" rel=\"noopener noreferrer\">Dell · 변화의 목표 5:10:26</a><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=18726s\" rel=\"noopener noreferrer\">단순화·표준화·자동화 5:12:06</a><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=18961s\" rel=\"noopener noreferrer\">사업부와 IT 5:16:01</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-22",
+      "number": 22,
+      "title": "가치 있는 일과 준비된 데이터를 연결한다",
+      "section": "TRACK 2 · AJAZ MUNSIFF / DELL TECHNOLOGIES",
+      "html": "<p class=\"lead\">활용 아이디어가 많아도, 데이터와 실행 조건이 갖춰진 중요한 일부터 선택해야 한다.\n</p>\n<div class=\"two-col\">\n<div>\n<h4>사업가치\n</h4>\n<p class=\"\">고객 서비스, 공급망, 제품, 영업처럼 기업의 핵심 업무에서 어떤 결과를 바꿀지 정한다. 흥미로운 데모와 중요한 업무는 구분할 수 있다.\n</p>\n</div>\n<div>\n<h4>실행가능성\n</h4>\n<p class=\"\">데이터 준비도, 사람과 프로세스, 모델과 플랫폼을 함께 살핀다. 큰 가치가 예상돼도 필요한 데이터에 접근할 수 없으면 운영으로 이어지기 어렵다.\n</p>\n</div>\n</div>\n<div class=\"signal\">\n<p class=\"label\">발표의 진단\n</p>\n<p><strong>흩어진 데이터에 접근경로와 맥락을 붙이는 일이 모델 선택만큼 중요한 병목으로 제시됐다.</strong>\n</p>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">Dell은 현장에서 모은 활용 후보를 가치와 실행가능성으로 평가했다고 설명했다. 데이터가 여러 파일, 데이터베이스, SaaS, 센서에 흩어져 있으면 AI가 사용할 형태로 연결해야 한다. 데이터 플랫폼 제품 소개도 포함됐지만, 특정 제품의 효과를 독립적으로 검증한 결과로 받아들이지는 않는다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=19262s\" rel=\"noopener noreferrer\">Dell · 우선순위 선정 5:21:02</a><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=19520s\" rel=\"noopener noreferrer\">데이터 병목 5:25:20</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-23",
+      "number": 23,
+      "title": "사용량에서 사업가치까지",
+      "section": "TRACK 2 · AJAZ MUNSIFF / DELL TECHNOLOGIES",
+      "html": "<p class=\"lead\">토큰 가격이 내려가도 재시도와 실행량이 늘면 총비용은 커질 수 있다.\n</p>\n<div class=\"matrix-wrap\">\n<div class=\"seminar-table-scroll\" role=\"region\" aria-label=\"표\" tabindex=\"0\"><table class=\"matrix\"><caption class=\"sr-only\">AI 활용의 평가 관점</caption>\n<thead>\n<tr><th scope=\"col\">평가 관점</th><th scope=\"col\">확인할 질문</th>\n</tr>\n</thead>\n<tbody>\n<tr><td>사용량</td><td>누가 어떤 업무에 얼마나 쓰는가?</td>\n</tr>\n<tr><td>비용과 효율</td><td>전체 비용은 얼마이며, 반복과 낭비를 줄일 수 있는가?</td>\n</tr>\n<tr><td>품질과 위험</td><td>결과를 신뢰할 수 있고 안전하게 운용할 수 있는가?</td>\n</tr>\n<tr><td>사업가치</td><td>고객 대응과 실제 성과가 어떻게 달라졌는가?</td>\n</tr>\n</tbody>\n</table></div>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">발표자는 Dell이 이 측정 여정에서 효율 단계에 있다고 설명했다. 모든 활용처의 투자수익을 이미 입증했다는 뜻은 아니다. 규칙적인 자동화로 충분한 일까지 모두 자율 에이전트로 만들 필요가 없으며, 실행 위치도 과업과 지연·비용·보안 제약을 보고 정해야 한다고 강조했다.\n</p>\n</div>\n</details>\n<div class=\"caveat\"><strong>읽을 때 주의할 점</strong><br>클라우드와 사내 인프라를 비교할 때는 장비·운영·보안·전력·활용률도 고려해야 한다. 이 문장은 비용 판단을 돕는 해설이며, 모든 경우에 한 방식이 더 싸다는 결론은 아니다.\n</div>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=19818s\" rel=\"noopener noreferrer\">Dell · 에이전트 비용 5:30:18</a><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=20999s\" rel=\"noopener noreferrer\">자동화와 자율성 5:49:59</a><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=21480s\" rel=\"noopener noreferrer\">성과 측정 5:58:00</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-24",
+      "number": 24,
+      "title": "방어를 여러 층으로 나누는 에이전트",
+      "section": "TRACK 2 · 최상근 / ANTHROPIC · 공식 보도 기준",
+      "html": "<p class=\"lead\">공식 행사 후 보도는 에이전트의 안전한 업무 적용을 위한 세 방어층을 소개한다.\n</p>\n<ol class=\"steps\">\n<li>\n<h4>실행환경 격리\n</h4>\n<p>에이전트가 행동하는 범위를 제한한다.\n</p>\n</li>\n<li>\n<h4>외부 콘텐츠 검사\n</h4>\n<p>에이전트가 읽는 자료에 위험한 지시나 내용이 들어오는지 살핀다.\n</p>\n</li>\n<li>\n<h4>위험 행동 실행 전 검사\n</h4>\n<p>행동이 실제 시스템에 영향을 주기 전에 위험을 확인한다.\n</p>\n</li>\n</ol>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">에이전트가 읽은 외부 자료를 운영 권한이나 정책과 같은 것으로 취급하지 않는 것이 중요하다. 감독자는 전체 동작을 볼 수 있어야 하고, 중요한 경계에는 통제가 남아야 한다. 이는 공식 보도의 구조를 풀어 쓴 해설이며, 특정 구현이 공격을 완벽히 막는다는 주장은 아니다.\n</p>\n</div>\n</details>\n<div class=\"caveat\"><strong>읽을 때 주의할 점</strong><br>한국어 강연의 전체 문맥과 평가 수치는 자동자막으로 확인하지 못했다. 이 장은 공식 행사 후 보도와 초록에서 확인한 범위의 요약이다.\n</div>\n<p class=\"source\">근거 · <a href=\"https://news.samsungsemiconductor.com/kr/칩스케치-다가올-에이전틱-ai-시대-변화와-그-영향은/\" rel=\"noopener noreferrer\">삼성반도체 뉴스룸 · 행사 후 보도</a><a href=\"https://saif2026.com/\" rel=\"noopener noreferrer\">최신 프로그램</a><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=21987s\" rel=\"noopener noreferrer\">세션 탐색 · 6:06:27</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-25",
+      "number": 25,
+      "title": "부분 가속과 전체 업무의 변화",
+      "section": "TRACK 2 · 한재준 / 삼성전자 AX·PI센터 · 공식 보도·사진",
+      "html": "<p class=\"lead\">삼성 DS는 반복 업무의 자동화와 판단을 돕는 지능화를 함께 추진하는 방향을 설명했다.\n</p>\n<div class=\"two-col\">\n<div>\n<h4>공개 사진의 사례\n</h4>\n<p class=\"\">고객 불량 대응 과정 중 유사 사례 검색 90분, 유사도 분석 30분, 결과 정리 60분을 합친 180분 구간이 8.5분으로 줄었다고 표시됐다.\n</p>\n<p class=\"subtle\">삼성 사내 Cowork 적용 사례로 소개된 수치이며, 공개된 발표 사진에서 확인한 회사 측 보고다.\n</p>\n</div>\n<div>\n<h4>숫자가 가리키는 범위\n</h4>\n<p class=\"\">앞선 데이터 수집 180분은 개선 표시 범위 밖에 있다. 따라서 선택된 구간의 95.3% 단축을 고객 대응 전체의 95.3% 개선으로 읽을 수 없다.\n</p>\n</div>\n</div>\n<div class=\"signal\">\n<p class=\"label\">해설\n</p>\n<p><strong>한 단계가 빨라진 결과가 다음 단계의 결정과 실행으로 이어지는지 함께 확인한다.</strong>\n</p>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">분석 보고서 작성이 빨라져도 수집·검토·전달·승인 단계가 남을 수 있다. 이 사례는 특정 구간의 개선과 전체 흐름을 구분하는 데 유용하다. 사진 속 이름만으로 삼성 사내 Cowork를 외부의 특정 제품과 동일시하지 않는다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://news.samsungsemiconductor.com/kr/칩스케치-다가올-에이전틱-ai-시대-변화와-그-영향은/\" rel=\"noopener noreferrer\">삼성반도체 뉴스룸 · 행사 후 보도</a><a href=\"https://news.samsungsemiconductor.com/kr/wp-content/uploads/slider/cache/a3cb32c5855b75f62e12abeb47587a66/16-1.jpg\" rel=\"noopener noreferrer\">공식 발표 사진 · 180분 구간</a><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=25544s\" rel=\"noopener noreferrer\">세션 탐색 · 7:05:44</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-26",
+      "number": 26,
+      "title": "발표들을 함께 읽으면 보이는 조건",
+      "section": "종합 해설 · 발표자의 공동 선언이 아님",
+      "html": "<p class=\"lead\">언어 에이전트, 개인화 모델, 로봇의 구현 방식은 다르다. 실제로 맡길 수 있는 일을 만든다는 관점에서는 연결된다.\n</p>\n<div class=\"matrix-wrap\">\n<div class=\"seminar-table-scroll\" role=\"region\" aria-label=\"표\" tabindex=\"0\"><table class=\"matrix\"><caption class=\"sr-only\">발표 주제와 적용 시 확인할 조건</caption>\n<thead>\n<tr><th scope=\"col\">주제</th><th scope=\"col\">핵심 조건</th><th scope=\"col\">확인할 증거</th>\n</tr>\n</thead>\n<tbody>\n<tr><td>업무 에이전트</td><td>완료 기준과 외부 통제</td><td>수용한 결과물, 검토·재작업 기록</td>\n</tr>\n<tr><td>물리 AI</td><td>공간 표현과 반응·신뢰도</td><td>현실 환경의 과업 성공과 실패 복구</td>\n</tr>\n<tr><td>지속학습·개인화</td><td>기억 수정과 기존 능력 보존</td><td>새 정보의 정확도, 과거 능력의 회귀 평가</td>\n</tr>\n<tr><td>기업 AX</td><td>데이터 연결과 업무 재설계</td><td>전체 처리 시간, 품질, 비용과 사업 결과</td>\n</tr>\n</tbody>\n</table></div>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">이 표는 여러 발표를 연결한 독립 해설이다. 서로 다른 기술의 성능을 같은 척도로 순위 매기려는 비교표가 아니다. 다만 “무엇을 할 수 있는가”라는 질문에 “어디까지 맡길 수 있으며 어떻게 확인하는가”를 함께 붙일 수 있다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=1688s\" rel=\"noopener noreferrer\">Ho · 검증 28:08</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=24666s\" rel=\"noopener noreferrer\">Hauser · 신뢰도 6:51:06</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=27229s\" rel=\"noopener noreferrer\">Niebles · 기억 7:33:49</a><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=21480s\" rel=\"noopener noreferrer\">Dell · 성과 측정 5:58:00</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-27",
+      "number": 27,
+      "title": "작은 실험을 설계하는 질문",
+      "section": "적용 연습 · 세미나 해설",
+      "html": "<p class=\"lead\">반복되는 업무 하나를 골라, 도입 전후를 비교할 수 있는 실험으로 좁혀 본다.\n</p>\n<div class=\"two-col\">\n<div>\n<ul class=\"line-list\">\n<li><strong>어떤 결과를 받을 것인가</strong>\n<p>대상 업무와 책임자, 받아들일 결과물, 품질 기준을 정한다.\n</p>\n</li>\n<li><strong>무엇을 사용할 수 있는가</strong>\n<p>데이터, 도구, 행동 권한과 사람의 승인 지점을 정한다.\n</p>\n</li>\n<li><strong>언제 멈출 것인가</strong>\n<p>시간·비용 한도, 중단 조건, 실패 시 넘길 대상을 정한다.\n</p>\n</li>\n</ul>\n</div>\n<div>\n<ul class=\"line-list\">\n<li><strong>무엇과 비교할 것인가</strong>\n<p>AI 없이 하던 방식의 전체 시간과 품질을 먼저 기록한다.\n</p>\n</li>\n<li><strong>무엇을 측정할 것인가</strong>\n<p>전체 처리 시간, 결과 품질, 사람의 검토·재작업, 수용한 결과 한 건의 비용을 함께 본다.\n</p>\n</li>\n<li><strong>어떤 기록을 남길 것인가</strong>\n<p>입력과 실행 이력, 검증 결과, 실패 사례를 남겨 다음 실험을 바꾼다.\n</p>\n</li>\n</ul>\n</div>\n</div>\n<details class=\"detail\" open><summary>조금 더 읽기</summary>\n<div>\n<p class=\"\">Ho가 제안한 제한된 업무 파일럿과 Green·Dell의 결과 단위 평가를 일반적인 연습 틀로 옮긴 것이다. 특정 조직에서 바로 성과가 난다는 보장은 없다. 첫 실험에서 경계를 좁히는 것은 실패 원인을 설명하고 비교하기 쉽게 하기 위해서다.\n</p>\n</div>\n</details>\n<p class=\"source\">근거 · <a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=3670s\" rel=\"noopener noreferrer\">Ho · 업무 파일럿 1:01:10</a><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o&amp;t=6219s\" rel=\"noopener noreferrer\">Green · 결과 단위 평가 1:43:39</a><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4&amp;t=20480s\" rel=\"noopener noreferrer\">Dell · 업무부터 결정 5:41:20</a>\n</p>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-28",
+      "number": 28,
+      "title": "함께 생각해 볼 질문",
+      "section": "토론 · 정리",
+      "html": "<ol class=\"note-list\">\n<li>우리가 AI에게 맡기려는 일은 한 번의 답변인가, 여러 단계의 완료 결과인가?\n</li>\n<li>그 결과가 맞는지 모델 밖에서 확인할 방법이 있는가?\n</li>\n<li>한 단계가 빨라지면 다음 단계는 그 결과를 받아 처리할 수 있는가?\n</li>\n<li>새 경험을 배울 때 어떤 기억과 기존 능력을 지켜야 하는가?\n</li>\n<li>현실의 실패를 허용할 수 없는 상황에서는 어떤 경계를 둘 것인가?\n</li>\n</ol>\n<div class=\"ending\">\n<p>에이전틱 AI를 이해하는 좋은 출발점은<br>맡길 일과 확인할 증거를 함께 정하는 것이다.\n</p><small>SAIF 2026 공개 자료를 연결한 이 세미나의 해석</small>\n</div>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-29",
+      "number": 29,
+      "title": "원영상으로 다시 읽기",
+      "section": "출처 · 공식 행사 자료",
+      "html": "<ol class=\"sources-list\">\n<li><strong><a href=\"https://saif2026.com/\" rel=\"noopener noreferrer\">SAIF 2026 최신 공식 프로그램</a></strong><small>행사일 2026.09.30 KST, 발표자·세션 제목·소개 확인</small>\n</li>\n<li><strong><a href=\"https://www.youtube.com/watch?v=Velq-bBfX-o\" rel=\"noopener noreferrer\">공식 다시보기 · Keynote + Track 1. AI Technology</a></strong><small>Samsung Developer · 7시간 56분 50초. 오전 기조강연·패널과 오후 기술 트랙</small>\n</li>\n<li><strong><a href=\"https://www.youtube.com/watch?v=6qISsYkakK4\" rel=\"noopener noreferrer\">공식 다시보기 · Keynote + Track 2. AX Innovation</a></strong><small>Samsung Developer · 7시간 58분 05초. 동일한 오전 프로그램과 오후 산업 적용 트랙</small>\n</li>\n<li><strong><a href=\"https://news.samsung.com/kr/삼성전자-에이전틱-시프트-주제로-삼성-ai-포럼-2026-개최\" rel=\"noopener noreferrer\">삼성전자 뉴스룸 · 행사 개최 보도</a></strong><small>행사 개요와 주요 주제</small>\n</li>\n<li><strong><a href=\"https://news.samsungsemiconductor.com/kr/칩스케치-다가올-에이전틱-ai-시대-변화와-그-영향은/\" rel=\"noopener noreferrer\">삼성반도체 뉴스룸 · 행사 후 보도</a></strong><small>AX 발표 핵심과 삼성 DS 공개 발표 사진</small>\n</li>\n</ol>\n<div class=\"caveat\"><strong>읽을 때 주의할 점</strong><br>시간 링크는 영상을 찾아 읽기 위한 위치다. 일부 한국어 세션의 링크는 세션 시작점을 가리키며 세부 문장 각각의 발화 시각을 보증하지 않는다. 두 영상의 오전 내용은 중복된다.\n</div>",
+      "notesHtml": "",
+      "sources": []
+    },
+    {
+      "id": "slide-30",
+      "number": 30,
+      "title": "연구 자료와 해석의 경계",
+      "section": "출처 · 보충 읽기",
+      "html": "<ul class=\"sources-list\">\n<li><strong><a href=\"https://allenai.org/blog/molmoact\" rel=\"noopener noreferrer\">MolmoAct</a> · <a href=\"https://allenai.org/blog/molmoact2\" rel=\"noopener noreferrer\">MolmoAct 2</a></strong><small>Ai2의 공간 계획·행동 모델 설명과 실제 지원 범위·한계</small>\n</li>\n<li><strong><a href=\"https://arxiv.org/abs/2609.31868\" rel=\"noopener noreferrer\">Metro-WM</a></strong><small>실제로 관찰한 상태를 중간 목표로 사용하는 긴 계획 연구</small>\n</li>\n<li><strong><a href=\"https://arxiv.org/abs/2606.25161\" rel=\"noopener noreferrer\">TrustMem</a> · <a href=\"https://arxiv.org/abs/2606.12400\" rel=\"noopener noreferrer\">Doc2Atom</a> · <a href=\"https://arxiv.org/abs/2609.25618\" rel=\"noopener noreferrer\">NB-LoRA</a></strong><small>기억 수정, 지식의 매개변수화, 기존 추론 능력 보존을 각각 다루는 연구</small>\n</li>\n</ul>\n<div class=\"body-copy\">\n<p class=\"\">논문과 공식 연구 소개는 이름과 방법, 제한 조건을 보완하는 자료다. 논문의 수치와 발표에서 언급한 수치를 서로 바꾸어 쓰지 않았다. arXiv 공개를 곧바로 동료심사 완료로 간주하지 않는다.\n</p>\n<p class=\"\">기업이 제시한 사례, 연구의 실험 결과, 앞으로의 방향은 서로 다른 수준의 근거다. 이 세미나는 그 차이를 유지하면서 일반 독자가 전체 흐름을 이해하도록 재구성했다.\n</p>\n</div>\n<div class=\"hero-actions\"><a class=\"primary\" href=\"#slide-01\">처음으로</a><a href=\"../\">다른 세미나 보기</a>\n</div>",
+      "notesHtml": "",
+      "sources": []
+    }
+  ]
+}
