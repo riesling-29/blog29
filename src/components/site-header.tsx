@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 const menu = [
   { href: "/topics", label: "주제별 탐색" },
+  { href: "/seminars", label: "세미나" },
   { href: "/about", label: "소개" },
 ];
 export function SiteHeader() {

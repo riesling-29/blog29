@@ -1,39 +1,66 @@
 # Blog29 · Seminars 통합 개편
 
-2026-10-17. 기존 글 10편과 세미나 3편을 연결하는 구현입니다. 글의 제목·발행일·본문과 기존 `/blog/<slug>` 주소는 유지합니다.
+2026-10-18. 기존 글 10편과 세미나 3편을 주제 탐색·검색·지도·읽기 화면으로 연결합니다. 기존 `/blog/<slug>` 주소와 GitHub Pages 발표 주소를 유지하며, 운영 배포와 초안 미리보기를 구분합니다.
 
-## 화면 팔레트
+## 팔레트와 화면
 
-라이트 모드는 기존 토스카나 색상을 유지합니다. 다크 모드는 사용자 피드백에 따라 검정에 가까운 녹색 배경 `#050907`, 카드 `#0D1510`, 밝기를 낮춘 아이보리 본문 `#D7D9CE`, 금빛 강조 `#B5A16F`로 조정했습니다. 보조 글자는 `#8E9C91`, 보조 강조는 차분한 브론즈·세이지로 맞춥니다. 읽기 순서 카드의 하단과 버튼·테마 선택도 밝은 면 대신 어두운 녹색 면으로 표현합니다. 색상은 `src/app/globals.css`의 테마 변수에서 관리합니다.
+라이트는 석회석 아이보리·올리브·테라코타를, 다크는 검정에 가까운 녹색 `#050907`·아이보리 `#D7D9CE`·절제된 금빛 `#B5A16F`를 사용합니다. 토큰은 `src/app/globals.css`에서 관리합니다. 건축물이나 군장식 대신 색과 정렬로 표현합니다.
+
+홈은 인트로 문구 없이 주제와 글·세미나를 보여줍니다. 상단의 주제별 탐색, 세미나, 검색에서 같은 자료로 접근합니다. 문단·그림·표·코드는 같은 왼쪽 기준선을 따르고, 넓은 표는 본문 안에서 따로 가로 스크롤합니다.
 
 ## 정보구조
 
-- `/`: 질문과 주제에서 출발하는 홈, 입문 읽기 순서, 최근 글과 세미나.
-- `/topics`, `/topics/<id>`: AI 에이전트 / 프로세스 인텔리전스 / AI 활용. 질문별 자료 묶음으로 같은 글에 여러 경로로 접근합니다.
-- `/topics/operations`: 소개와 전체 목록에서 접근하는 운영 기록.
-- `/blog`: 글 중심 목록. `/archive`는 글·세미나의 제목·요약·태그 통합 검색입니다. `q`, `topic`, `format` 쿼리로 조건을 보존합니다.
-- `/seminars`, `/seminars/<id>`: 정적 세미나 안내와 해설·발표자료 연결. 기존 GitHub Pages 발표 주소를 유지합니다.
+- `/`: 주제와 최근 글·세미나.
+- `/topics`, `/topics/<id>`: AI 에이전트 / 프로세스 인텔리전스 / AI 활용의 질문별 자료 묶음. 운영 기록도 대표 주소를 가집니다.
+- `/blog`: 글 목록. 기존 글 주소·제목·발행일을 유지합니다.
+- `/archive`: 제목·요약·태그 통합 검색. `q`, `topic`, `format` 쿼리에 조건을 보존합니다.
+- `/seminars`, `/seminars/<id>`: 세미나 목록과 전체 본문. 같은 화면에서 읽기와 발표를 전환합니다.
 
-소속 경로는 대표 주제로 고정합니다. 왼쪽은 같은 주제의 자료, 오른쪽은 현재 글의 목차입니다. 좁은 화면에서는 별도 주제·목차 펼침으로 바뀝니다. 모바일에서도 본문 관련 링크는 본문 가까이에 남습니다.
+`src/lib/catalog.ts`에서 자료·분류·관계 14개를 관리합니다. 글과 세미나는 별도 지식 체계로 분리하지 않고 형식으로 구분합니다. 공개되지 않은 글은 목록·검색·관계·사이트맵에 포함하지 않습니다.
 
-## 읽기와 관계
+## 하나의 고정 지도와 읽기 위치
 
-`src/lib/catalog.ts`에서 주제·자료·관계 14개를 관리합니다. 관계는 배경 이해 / 더 깊게 / 비교하기 / 함께 보기로 구분하고 이유를 표시합니다. 관련 블록은 해당 절 끝에 삽입되며 원문 MDX는 수정하지 않습니다.
+본문 옆에는 대주제 → 질문 → 자료의 지도 하나를 둡니다. 모든 공개 자료는 대표 주제 아래에 한 번만 나타납니다. 다른 자료를 선택해도 배치 순서는 유지하고 현재 자료와 등록된 관계만 강조합니다. 보조 주제 때문에 위치를 중복하지 않습니다.
 
-`headings.ts`는 렌더러와 목차에 같은 AST 기반 ID를 부여합니다. 제목을 바꾸면 기존 앵커에 영향이 있으므로 카탈로그 검증과 공유 링크를 함께 확인해야 합니다.
+관계는 배경 이해 / 더 깊게 / 비교하기 / 함께 보기이며 이유를 함께 표시합니다. 들어오는 관계도 표시하되 설명의 출처를 밝히고 상호 관계를 중복하지 않습니다. 관계가 없는 이웃은 같은 주제로만 표시합니다. 추천·선행 관계를 임의로 만들지 않습니다.
 
-`ReadingHistoryProvider`는 현재 탭에서 실제로 클릭한 사이트 내부 이동만 메모리에 기록합니다. 일반 뒤로 가기와 명시적 복귀는 원래 절·스크롤 위치를 복원하도록 구현했습니다. 목차 이동은 방문 이력을 추가하지 않습니다. 직접 접속·새 탭·새로고침에는 출발지를 만들어 표시하지 않습니다. 방문 정보를 서버에 전송하지 않습니다.
+마우스 올림·키보드 초점으로 전체 제목과 관계 설명을 확인합니다. 터치는 첫 탭으로 확인하고 두 번째 탭 또는 전체 제목으로 이동합니다. 확인만 하는 탭은 읽기 이력에 포함하지 않습니다. 지도 확대·축소, 확대창의 초점 제한·Esc·배경 클릭 닫기를 구현했습니다. 좁은 화면에서는 기본 펼침 요소를 사용합니다. 문서 내부 목차는 지도와 구분된 접이식 목록입니다.
 
-외부 발표 화면으로 이동한 후에는 대응 해설·세미나 안내 링크로 돌아옵니다. 도메인 사이의 정확한 스크롤 복원은 보장하지 않습니다.
+대표 주제와 첫 질문이 자료의 고정 주소를 구성하며 실제 방문 경로로 오인하지 않도록 합니다. `ReadingHistoryProvider`는 현재 탭에서 클릭한 내부 이동을 메모리에 기록하고 뒤로 가기·읽던 곳 복귀에서 원래 절과 스크롤을 복원합니다. 직접 접속·새 탭·새로고침에는 가짜 출발지를 표시하지 않습니다. 방문 정보는 서버에 보내지 않습니다.
 
-## 콘텐츠 추가
+## 세미나 본문 통합
 
-1. 기존 MDX frontmatter 규칙으로 글을 작성합니다.
-2. `catalog.ts`의 `articleClassification`에 대표 주제와 필요한 보조 주제를 지정합니다.
-3. 실제 도움이 되는 질문별 묶음과 관련 관계만 추가합니다. 연결 대상 절은 `slugHeading`과 실제 제목으로 지정합니다.
-4. `node scripts/validate-catalog.mjs` 및 빌드를 실행합니다.
+| 자료 | 본문 | 발표자 노트 |
+| --- | ---: | ---: |
+| AI 에이전트 하네스 | 35장 | 35개 |
+| 지속형 작업 에이전트 | 10장 | 10개 |
+| SAIF 2026 | 30개 섹션 | 별도 노트 없음 |
 
-공개되지 않은 글은 목록·검색·관계·사이트맵에서 제외합니다. 새 공개 글의 분류 누락, 잘못된 관계·절은 검증 오류로 처리합니다. 관련 자료가 없는 글에 임의 추천을 채우지 않습니다.
+`src/content/seminars/*.json`에 공개 원문의 스냅샷을 보관합니다. 빌드와 사이트 열람에는 원본 저장소나 외부 발표 서버가 필요하지 않습니다. 원문 전체가 정적 HTML에 렌더링되므로 본문과 절 주소에 직접 접근할 수 있습니다.
+
+하네스의 AgentSystem 도식, 지속형 에이전트의 FACT/HYPOTHESIS/UNAVAILABLE 표시, 근거 링크와 발표자 노트를 보존합니다. SAIF의 장 간 링크는 내부 절 주소로 연결합니다. 기존 발표 사이트의 스크립트와 화면 고정 스타일은 반입하지 않습니다.
+
+읽기 모드는 전체 본문과 접이식 발표자 노트를 보여줍니다. 발표 모드는 한 자료씩 크게 표시하고 이전·다음, 자료 선택, 방향키·PageUp/Down·Home/End·Space, Esc 종료를 지원합니다. 긴 자료는 발표 화면 안에서 스크롤할 수 있습니다. 종료하면 보고 있던 자료의 읽기 위치로 돌아옵니다. 원래 Slidev의 픽셀 배치나 애니메이션을 그대로 복제한 것은 아니며 기존 발표 화면 링크도 유지합니다.
+
+### 원본 변경 후 동기화
+
+현재 스냅샷의 원본 커밋은 `18a5f476fd77cf8136ebb321e59cd94419b24c39`입니다. 각 JSON에 원본 경로·커밋·SHA-256과 도식 컴포넌트 해시를 기록합니다. 원본 수정이 자동 반영되지는 않습니다.
+
+반입 도구는 원본 저장소에 설치된 Slidev 파서를 재사용합니다. 해당 저장소의 `ai-agent-harness-seminar`에서 `npm ci`를 마친 뒤 Blog29 루트에서 실행합니다.
+
+```sh
+node scripts/import-seminars.mjs ../Seminars
+node scripts/validate-seminars.mjs
+npm run build
+```
+
+새 Vue 컴포넌트·로컬 이미지·실행 가능한 HTML이 나오면 조용히 누락하는 대신 반입을 중단합니다. 해당 요소의 정적 표시 방법을 추가하고 검토한 뒤 JSON을 함께 커밋합니다. 공개 자료만 반입합니다.
+
+## 콘텐츠 편집과 추가
+
+대표 글 `ai-agent-harness`의 반복을 정리해 원문 16,744 → 14,020자로 줄였습니다(16.3%). 제목·절·코드·도식은 유지하고 편집일만 2026-10-18로 기록했습니다. 나머지 글은 아직 축약하지 않았습니다. 기존 자료를 편집·통합한 작업이며 외부 사실을 새로 검증한 것은 아닙니다.
+
+새 글은 기존 MDX frontmatter를 따르고 `catalog.ts`의 `articleClassification`에 대표 주제를 지정합니다. 실제로 도움이 되는 질문 묶음과 관계만 등록합니다. 지정 절은 `slugHeading` 및 렌더링 결과와 맞춰 검증합니다. 분류 누락이나 잘못된 자료·절 주소는 검증 오류로 처리합니다.
 
 ## 검증과 남은 확인
 
@@ -41,78 +68,20 @@
 npm ci
 npm run lint
 node scripts/validate-catalog.mjs
+node scripts/validate-seminars.mjs
 npm run build
 ```
 
-2026-10-17 실행 결과: 린트, 카탈로그 검증과 운영용 빌드가 통과했습니다. 생성된 공개 HTML 23개에서 내부 링크 905개, 절 링크 317개, 로컬 그림 9개의 목적지를 확인했고 오류가 없었습니다. 원문 MDX의 변경도 없습니다.
+CI도 위 검사를 실행합니다. 카탈로그는 공개 자료의 분류·관계·앵커를 검증합니다. 세미나 검사는 75개 자료·45개 노트, 순서·중복 ID·내부 절·근거 링크·주요 도식·근거 수준을 확인합니다. 반입 시 원본 본문 텍스트 75개와 노트 45개가 보존되는지도 별도로 비교했습니다.
 
-빌드·타입·린트와 실제 생성 HTML의 링크·앵커를 검사합니다. CI도 같은 명령을 실행합니다. 카탈로그 검증은 사이트맵 생성 시 빌드에서도 실행됩니다.
+2026-10-18 린트·카탈로그·세미나 검증과 빌드가 통과했습니다. 생성된 공개 HTML 23개의 내부 링크 1,646개·절 링크 733개·로컬 그림 9개에서 목적지 오류가 없었습니다. 세미나 75개 본문과 45개 노트가 정적 HTML에 포함되고 기존 `#overview`, `#reading` 주소도 유지되는지 확인했습니다. 고정 지도는 모든 선택 상태의 위치 일관성·들어오는 관계·중복 제거를 검사했습니다.
 
-실제 브라우저 검증은 이번 환경의 브라우저 접근 승인 차단으로 실행하지 못했습니다. 배포 전 다음 항목을 확인해야 합니다.
+실제 브라우저 시각·터치·스크롤 검증은 이전 브라우저 접근 거절로 실행하지 못했습니다. 빌드와 HTML 검사는 이를 대체하지 않습니다. 운영 반영 전 다음을 실제 화면에서 확인해야 합니다.
 
-- 320/390px 및 데스크톱에서 홈·긴 글·세미나·검색의 가로 넘침과 대비.
-- 하네스 재사용 글 → 배경 글의 지정 절 → 읽던 곳 복귀, 중첩 이동 C → B → A.
-- 검색어·주제·형식 설정 후 글에 들어갔다가 뒤로 가면 조건과 위치 복원.
-- 직접 깊은 절 URL / 새 탭에서 가짜 복귀 안내가 없는지.
-- 모바일 펼침·목차 선택·키보드 초점·다크 모드.
-- 기존 이미지, 긴 표·코드와 SAIF 긴 목차의 실제 읽기.
+- 320/390px 및 데스크톱에서 긴 표·코드·도식의 가로 넘침과 테마 대비.
+- 고정 지도의 터치 확인·이동·확대와 키보드 초점.
+- 관련 절로 이동 후 읽던 곳 복귀, 검색 조건·위치 복원, 직접 깊은 절·새 탭 진입.
+- 세미나 읽기·발표 전환, 이전·다음·자료 선택·단축키·Esc·종료 위치 복원.
+- SAIF의 긴 목차와 내부 절 링크, 발표자 노트 펼침.
 
-Search Console 계정 인증·사이트맵 제출·색인 상태 확인은 수행하지 않았습니다. 색인 완료 시점을 보장하지 않습니다.
-
-## 반영 순서
-
-Blog29의 새 세미나 상세 경로를 먼저 공개하고, Seminars의 연결 변경을 뒤이어 공개합니다. 운영 반영은 저장소의 발행 규칙에 따라 확인한 변경으로 진행합니다. 이전 경로 삭제나 데이터 이전은 없습니다. 문제가 있으면 각 저장소의 개편 커밋을 되돌려 기존 배포 경로로 재배포할 수 있습니다.
-
-## 2026-10-18 — Corridor and surrounding map
-
-The accepted direction is a shared topic/question corridor and an expanded reader,
-with a local map for other resources and a separate in-document table of contents.
-The homepage now presents topics and a mixed article/seminar list. Global navigation
-no longer separates articles and seminars; existing URLs and format filters remain.
-
-Reading breadcrumbs include the resource's first question in its primary topic.
-This is a stable editorial address, not a claim about the visitor's entry route.
-The existing reading-history mechanism still restores actual prior reading positions.
-Map nodes use public catalog relationships; fallback peers are explicitly labelled
-same-topic rather than prerequisite or recommended next reading. Unregistered
-relationships are not invented. Full titles and relation explanations are available
-in the expandable list. Mobile map and TOC use native disclosures.
-
-Light: limestone ivory, olive, terracotta. Dark: near-black green, softened ivory,
-restrained brass. Brand direction: precision in information, elegance in presentation;
-no literal architectural or military ornaments. Original article bodies and slides
-remain unchanged. Production release is separate from the existing draft preview.
-
-## 2026-10-18 — One fixed map beside the article
-
-The contextual rail now contains a single stable domain → question → resource map.
-Every public resource appears once at its primary-topic address, including operating
-notes. Secondary topic membership does not duplicate its position. Selecting another
-article changes highlights, not domain or resource ordering. Registered outgoing and
-incoming relationships are highlighted; incoming explanations are attributed to their
-source rather than presented as the selected article's own recommendation.
-
-Hover or keyboard focus reveals the full title, address and relationship explanation
-in a small inspector within the same panel. One connection line appears only for the
-inspected related resource. Real anchors preserve keyboard activation, browser back
-and opening a new tab. On touch, the first tap previews and the second tap or the full
-title opens the article. Preview-only taps are excluded from reading-history capture.
-The map has collapse/expand controls. Expanded mode traps Tab, closes on Escape or the
-backdrop and restores focus. On narrow screens the map opens from a native disclosure.
-The document TOC is also a disclosure, separate from resource navigation.
-
-The homepage starts with the archive title and resources rather than a slogan.
-Paragraphs, figures, tables and code now share the left reading edge. Wide Markdown
-tables are wrapped in a focusable, locally scrollable region. This corrects the old
-centered narrow prose / full-width table mismatch without hiding oversized content.
-
-The representative ai-agent-harness article was edited for repetition: 16,744 → 14,020
-source characters (16.3% reduction). Section titles, code examples and figures remain;
-its edit date is 2026-10-18. Other article bodies have not yet been tightened. This is
-an editorial pass on existing material, not a fresh verification of external claims.
-
-Validation includes one map address per public resource, stable placement under every
-selection, incoming cross-topic relations, reciprocal-link deduplication and fallback
-placement of new notes. Browser visual, touch and scroll testing remains blocked by
-the previously declined browser access; build and generated HTML checks do not replace
-those checks. The original production deployment remains separate from this preview.
+Search Console 계정 인증·사이트맵 제출·색인 상태 확인은 수행하지 않았으며 색인 완료 시점을 보장하지 않습니다. 기존 도메인과 경로를 유지하고, 운영 반영은 별도 명시 승인 후 진행합니다.

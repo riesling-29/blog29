@@ -17,4 +17,5 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: node scripts/validate-catalog.mjs
+      - run: node scripts/validate-seminars.mjs
       - run: npm run build
