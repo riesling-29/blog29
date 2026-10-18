@@ -8,9 +8,9 @@ import './seminar-presentation.css';
 
 const masterStyle = Object.fromEntries(Object.entries(master).map(([name,value]) => [`--master-${name}`, `${value}px`])) as CSSProperties;
 
-type Props = { slides: SeminarSlide[]; title: string; initialSourceIndex: number; onSourceChange: (index: number) => void; onExit: () => void };
+type Props = { documentId: string; slides: SeminarSlide[]; title: string; initialSourceIndex: number; onSourceChange: (index: number) => void; onExit: () => void };
 
-export function SeminarPresentation({ slides, title, initialSourceIndex, onSourceChange, onExit }: Props) {
+export function SeminarPresentation({ documentId, slides, title, initialSourceIndex, onSourceChange, onExit }: Props) {
   const [pages, setPages] = useState<PresentationPage[]>([]);
   const [pageIndex, setPageIndex] = useState(0);
   const [error, setError] = useState('');
@@ -35,7 +35,7 @@ export function SeminarPresentation({ slides, title, initialSourceIndex, onSourc
     document.fonts.ready.then(async () => {
       if (cancelled || !measure.current || !titleMeasure.current) return;
       try {
-        const result = await buildPresentationPages(slides, measure.current, titleMeasure.current, () => cancelled);
+        const result = await buildPresentationPages(slides, measure.current, titleMeasure.current, () => cancelled, documentId);
         if (cancelled) return;
         const first = Math.max(0, result.findIndex(page => page.sourceIndex === startingSource.current));
         setPages(result); setPageIndex(first);
@@ -45,7 +45,7 @@ export function SeminarPresentation({ slides, title, initialSourceIndex, onSourc
       }
     });
     return () => { cancelled = true; };
-  }, [slides, onSourceChange]);
+  }, [slides, onSourceChange, documentId]);
 
   useLayoutEffect(() => {
     const area = viewport.current, canvas = frame.current;

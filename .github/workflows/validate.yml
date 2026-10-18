@@ -20,4 +20,5 @@ jobs:
       - run: node scripts/validate-seminars.mjs
       - run: node scripts/validate-presentation.mjs
       - run: node scripts/validate-presentation-pages.mjs
+      - run: node scripts/validate-presentation-editorial.mjs
       - run: npm run build

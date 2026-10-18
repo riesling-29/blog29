@@ -45,7 +45,7 @@ export default async function SeminarDetail({ params }: Props) {
             {r.slidesUrl && <a className="text-link" href={r.slidesUrl}>기존 발표 화면 ↗</a>}
           </div>
         </header>
-        <SeminarReader slides={document.slides} title={r.title} />
+        <SeminarReader documentId={document.id} slides={document.slides} title={r.title} />
         <section className="seminar-reading">
           <p className="eyebrow">CONTINUE READING</p>
           <h2 id="reading">
