@@ -54,7 +54,7 @@ function routeKey(url: string) {
 
 function activeHeading() {
   const presented = document.querySelector<HTMLElement>(
-    '.seminar-reader--presenting .seminar-page:not([hidden]) [data-reading-heading]',
+    '.seminar-reader--presenting [data-presentation-heading]',
   );
   if (presented) return presented;
   const headings = Array.from(
@@ -76,11 +76,11 @@ function capturePosition(entry: ReadingPosition): ReadingPosition {
     title:
       document.querySelector("main h1")?.textContent?.trim() || entry.title,
     scrollY: window.scrollY,
-    sectionId: heading?.id,
+    sectionId: heading?.dataset.readingOrigin || heading?.id,
     sectionTitle:
       heading?.getAttribute("data-heading-title") ||
       heading?.textContent?.trim(),
-    sectionOffset: heading
+    sectionOffset: heading?.dataset.readingOrigin ? 0 : heading
       ? window.scrollY - (heading.getBoundingClientRect().top + window.scrollY)
       : undefined,
   };

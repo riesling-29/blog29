@@ -1,22 +1,25 @@
-/** Fit a complete slide and its content; never crop overflowing text to fake a fit. */
-export const SLIDE_WIDTH = 1280;
-export const SLIDE_HEIGHT = 720;
-export const SLIDE_INSET_X = 56;
-export const SLIDE_INSET_Y = 44;
+/** Every page has the same master. Only the complete canvas scales with the viewport. */
+export const PRESENTATION_MASTER = {
+  width: 1280,
+  height: 720,
+  left: 56,
+  right: 56,
+  sectionTop: 30,
+  titleTop: 64,
+  titleHeight: 104,
+  bodyTop: 190,
+  bodyHeight: 462,
+  footerTop: 676,
+  titleSize: 40,
+  subtitleSize: 26,
+  bodySize: 22,
+  tableSize: 18,
+  captionSize: 14,
+} as const;
+export const SLIDE_WIDTH = PRESENTATION_MASTER.width;
+export const SLIDE_HEIGHT = PRESENTATION_MASTER.height;
 
-type Size = { width: number; height: number };
-
-export function fitPresentation(viewport: Size, content: Size) {
-  const availableWidth = SLIDE_WIDTH - 2 * SLIDE_INSET_X;
-  const availableHeight = SLIDE_HEIGHT - 2 * SLIDE_INSET_Y;
+export function fitPresentation(viewport: { width: number; height: number }) {
   const canvasScale = Math.max(0, Math.min(viewport.width / SLIDE_WIDTH, viewport.height / SLIDE_HEIGHT));
-  const contentScale = Math.min(1, availableWidth / Math.max(1, content.width), availableHeight / Math.max(1, content.height));
-  return {
-    width: SLIDE_WIDTH * canvasScale,
-    height: SLIDE_HEIGHT * canvasScale,
-    canvasScale,
-    contentScale,
-    contentLeft: (SLIDE_WIDTH - content.width * contentScale) / 2,
-    contentTop: SLIDE_INSET_Y,
-  };
+  return { width: SLIDE_WIDTH * canvasScale, height: SLIDE_HEIGHT * canvasScale, canvasScale };
 }

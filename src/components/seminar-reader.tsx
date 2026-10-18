@@ -1,127 +1,52 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
-import type { SeminarSlide } from "@/lib/seminars";
-import { fitPresentation } from "@/lib/presentation-fit";
-import "./seminar-reader.css";
-
-function slideFromHash(slides: SeminarSlide[]) {
-  const match = slides.findIndex(s => `#${s.id}` === window.location.hash);
-  return match >= 0 ? match : 0;
-}
+import { useCallback, useEffect, useRef, useState } from 'react';
+import type { SeminarSlide } from '@/lib/seminars';
+import { SeminarPresentation } from './seminar-presentation';
+import './seminar-reader.css';
 
 export function SeminarReader({ slides, title }: { slides: SeminarSlide[]; title: string }) {
   const [presenting, setPresenting] = useState(false);
-  const [index, setIndex] = useState(0);
-  const root = useRef<HTMLDivElement>(null);
+  const [startSource, setStartSource] = useState(0);
   const exitButton = useRef<HTMLButtonElement>(null);
+  const selectedSource = useRef(0);
   const restoreReader = useRef<number | undefined>(undefined);
-  const stage = useRef<HTMLDivElement>(null);
-  const frame = useRef<HTMLDivElement>(null);
-  const presentNotes = useRef<HTMLDetailsElement>(null);
   const notesCount = slides.filter(slide => slide.notesHtml).length;
 
-  function move(next: number) {
-    const bounded = Math.max(0, Math.min(slides.length - 1, next));
-    setIndex(bounded);
-    window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}#${slides[bounded].id}`);
-  }
+  const selectSource = useCallback((index: number) => {
+    selectedSource.current = index;
+    window.history.replaceState(window.history.state, '', `${window.location.pathname}${window.location.search}#${slides[index].id}`);
+  }, [slides]);
   function begin() {
-    const positions = slides.map((s, i) => ({ index: i, top: document.getElementById(s.id)?.getBoundingClientRect().top ?? Infinity }));
-    const visible = positions.filter(p => p.top <= window.innerHeight * .35).at(-1);
-    move(visible?.index ?? slideFromHash(slides));
+    const positions = slides.map((slide,i) => ({ index:i, top:document.getElementById(slide.id)?.getBoundingClientRect().top ?? Infinity }));
+    const visible = positions.filter(position => position.top <= window.innerHeight * .35).at(-1);
+    const fromHash = slides.findIndex(slide => `#${slide.id}` === window.location.hash);
+    const start = visible?.index ?? Math.max(0,fromHash);
+    selectSource(start);
+    setStartSource(start);
     setPresenting(true);
   }
-  function end() { restoreReader.current = index; setPresenting(false); }
+  const end = useCallback(() => { restoreReader.current = selectedSource.current; setPresenting(false); }, []);
 
   useEffect(() => {
     if (!presenting) {
-      if (restoreReader.current !== undefined) {
-        const restoreIndex = restoreReader.current;
-        restoreReader.current = undefined;
-        const frame = requestAnimationFrame(() => {
-          const heading = document.getElementById(slides[restoreIndex].id);
-          heading?.scrollIntoView({ block: "start", behavior: "instant" });
-          heading?.focus({ preventScroll: true });
-        });
-        return () => cancelAnimationFrame(frame);
-      }
-      return;
+      if (restoreReader.current === undefined) return;
+      const restoreIndex = restoreReader.current;
+      restoreReader.current = undefined;
+      const frame = requestAnimationFrame(() => {
+        const heading = document.getElementById(slides[restoreIndex].id);
+        heading?.scrollIntoView({block:'start',behavior:'instant'});
+        heading?.focus({preventScroll:true});
+      });
+      return () => cancelAnimationFrame(frame);
     }
     const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     exitButton.current?.focus();
-    function keyboard(event: KeyboardEvent) {
-      const target = event.target instanceof HTMLElement ? event.target : undefined;
-      if (event.key === "Escape") {
-        event.preventDefault();
-        if (presentNotes.current?.open) {
-          presentNotes.current.open = false;
-          presentNotes.current.querySelector("summary")?.focus();
-          return;
-        }
-        restoreReader.current = slideFromHash(slides); setPresenting(false); return;
-      }
-      if (event.key === "Tab") {
-        const elements = Array.from(root.current?.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),select,summary,[tabindex="0"]') ?? []).filter(e => e.getClientRects().length);
-        const first = elements[0], last = elements.at(-1);
-        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
-        if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
-        return;
-      }
-      if (target?.closest('input,textarea,select,[contenteditable="true"],.seminar-present-notes[open]')) return;
-      const forward = ["ArrowRight", "PageDown"].includes(event.key) || (event.key === " " && !target?.closest("button,a,summary"));
-      const backward = ["ArrowLeft", "PageUp"].includes(event.key);
-      if (!forward && !backward && event.key !== "Home" && event.key !== "End") return;
-      event.preventDefault();
-      const current = slideFromHash(slides);
-      const next = event.key === "Home" ? 0 : event.key === "End" ? slides.length - 1 : Math.max(0, Math.min(slides.length - 1, current + (forward ? 1 : -1)));
-      setIndex(next);
-      window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}#${slides[next].id}`);
-    }
-    window.addEventListener("keydown", keyboard);
-    return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", keyboard); };
-  }, [presenting, slides]);
+    return () => { document.body.style.overflow = previous; };
+  }, [presenting,slides]);
 
-  useLayoutEffect(() => {
-    if (!presenting) return;
-    const viewport = stage.current, canvas = frame.current;
-    const content = root.current?.querySelector<HTMLElement>(`.seminar-page[data-seminar-slide="${slides[index].id}"] .seminar-page-fit`);
-    if (!viewport || !canvas || !content) return;
-    let cancelled = false;
-    function fit() {
-      if (cancelled || !viewport || !canvas || !content) return;
-      const size = fitPresentation(
-        { width: viewport.clientWidth, height: viewport.clientHeight },
-        { width: Math.max(content.offsetWidth, content.scrollWidth), height: Math.max(content.offsetHeight, content.scrollHeight) },
-      );
-      canvas.style.setProperty("--slide-width", `${size.width}px`);
-      canvas.style.setProperty("--slide-height", `${size.height}px`);
-      canvas.style.setProperty("--slide-scale", String(size.canvasScale));
-      canvas.style.setProperty("--content-scale", String(size.contentScale));
-      canvas.style.setProperty("--content-left", `${size.contentLeft}px`);
-      canvas.style.setProperty("--content-top", `${size.contentTop}px`);
-    }
-    const observer = new ResizeObserver(fit);
-    observer.observe(viewport);
-    observer.observe(content);
-    // Expanded explanations and late font loads must also remain within the slide.
-    const mutation = new MutationObserver(fit);
-    mutation.observe(content, { attributes: true, attributeFilter: ["open"], subtree: true });
-    document.fonts.ready.then(fit);
-    fit();
-    return () => { cancelled = true; observer.disconnect(); mutation.disconnect(); };
-  }, [index, presenting, slides]);
-
-  function followSection(event: MouseEvent<HTMLDivElement>) {
-    if (!presenting || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    const anchor = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
-    if (!anchor) return;
-    const next = slides.findIndex(s => `#${s.id}` === anchor.getAttribute("href"));
-    if (next >= 0) { event.preventDefault(); move(next); }
-  }
-
-  return <div ref={root} className={`seminar-reader${presenting ? " seminar-reader--presenting" : ""}`} role={presenting ? "dialog" : undefined} aria-modal={presenting || undefined} aria-label={presenting ? `${title} 발표 모드` : undefined} onClick={followSection}>
+  return <div className={`seminar-reader${presenting ? ' seminar-reader--presenting' : ''}`} role={presenting ? 'dialog' : undefined} aria-modal={presenting || undefined} aria-label={presenting ? `${title} 발표 모드` : undefined}>
     <div className="seminar-reader-toolbar">
       <div className="seminar-view-switch" role="group" aria-label="세미나 보기 방식">
         <button type="button" ref={exitButton} aria-pressed={!presenting} onClick={presenting ? end : undefined}>읽기</button>
@@ -129,23 +54,12 @@ export function SeminarReader({ slides, title }: { slides: SeminarSlide[]; title
       </div>
       {presenting ? <><span className="seminar-present-title">{title}</span><button type="button" onClick={end} className="seminar-exit">발표 종료 <span>Esc</span></button></> : <span className="seminar-slide-count">{slides.length}개 자료{notesCount > 0 && ` · 발표자 노트 ${notesCount}개`}</span>}
     </div>
-    {presenting && <div className="seminar-pager">
-      <button type="button" disabled={index === 0} onClick={() => move(index - 1)} aria-label="이전 자료">← 이전</button>
-      <label><span className="sr-only">자료 선택</span><select value={index} onChange={event => move(Number(event.target.value))}>{slides.map((s, i) => <option key={s.id} value={i}>{s.number}. {s.title}</option>)}</select></label>
-      <span role="status" aria-live="polite">{index + 1} / {slides.length}</span>
-      <button type="button" disabled={index === slides.length - 1} onClick={() => move(index + 1)} aria-label="다음 자료">다음 →</button>
-    </div>}
-    <div ref={stage} className="seminar-stage"><div ref={frame} className="seminar-stage-frame"><div className="seminar-pages">{slides.map((slide, i) => <section className="seminar-page" key={slide.id} hidden={presenting && i !== index} data-seminar-slide={slide.id}>
-      <div className="seminar-page-fit">
-      <header className="seminar-page-heading"><p><span>{String(slide.number).padStart(2, "0")}</span> {slide.section}</p><h2 id={slide.id} tabIndex={-1} data-reading-heading data-heading-title={slide.title}>{slide.title}</h2></header>
-      <div className="seminar-slide-content" dangerouslySetInnerHTML={{ __html: slide.html }} />
+    <div className="seminar-pages" hidden={presenting}>{slides.map(slide => <section className="seminar-page" key={slide.id} data-seminar-slide={slide.id}>
+      <header className="seminar-page-heading"><p><span>{String(slide.number).padStart(2,'0')}</span> {slide.section}</p><h2 id={slide.id} tabIndex={-1} data-reading-heading data-heading-title={slide.title}>{slide.title}</h2></header>
+      <div className="seminar-slide-content" dangerouslySetInnerHTML={{__html:slide.html}} />
       {slide.sources.length > 0 && <div className="seminar-sources"><span>근거</span>{slide.sources.map(source => <a key={source.url} href={source.url}>{source.name}</a>)}</div>}
-      </div>
-      {slide.notesHtml && <details className="seminar-speaker-notes"><summary>발표자 노트</summary><div dangerouslySetInnerHTML={{ __html: slide.notesHtml }} /></details>}
-      <footer className="seminar-slide-footer" aria-hidden="true"><span>{title}</span><span>{i + 1} / {slides.length}</span></footer>
-    </section>)}</div></div></div>
-    {presenting && <div className="seminar-present-bottom"><p className="seminar-present-hint">← → 자료 이동 · Esc 읽기로 돌아가기</p>
-      {slides[index].notesHtml && <details ref={presentNotes} className="seminar-present-notes"><summary>발표자 노트</summary><div dangerouslySetInnerHTML={{ __html: slides[index].notesHtml }} /></details>}
-    </div>}
+      {slide.notesHtml && <details className="seminar-speaker-notes"><summary>발표자 노트</summary><div dangerouslySetInnerHTML={{__html:slide.notesHtml}} /></details>}
+    </section>)}</div>
+    {presenting && <SeminarPresentation slides={slides} title={title} initialSourceIndex={startSource} onSourceChange={selectSource} onExit={end} />}
   </div>;
 }

@@ -1,0 +1,53 @@
+/* One master for all sources and every continuation page. Pixel values are canvas units. */
+.seminar-presentation { flex:1; min-height:0; min-width:0; display:flex; flex-direction:column; }
+.presentation-viewport { flex:1; min-height:0; min-width:0; overflow:hidden; display:grid; place-items:center; }
+.presentation-frame { position:relative; width:var(--slide-width,0px); height:var(--slide-height,0px); background:var(--paper); box-shadow:0 0 0 1px var(--line); }
+.presentation-canvas { position:absolute; left:0; top:0; width:var(--master-width); height:var(--master-height); transform:scale(var(--slide-scale,0)); transform-origin:top left; background:var(--paper); color:var(--foreground); }
+.seminar-presentation .master-section { position:absolute; top:var(--master-sectionTop); left:var(--master-left); right:var(--master-right); height:22px; margin:0; display:flex; justify-content:space-between; gap:24px; font-size:var(--master-captionSize); line-height:22px; color:var(--accent); white-space:nowrap; }
+.seminar-presentation .master-section > span:first-child { overflow:hidden; text-overflow:ellipsis; }
+.seminar-presentation .master-title { position:absolute; top:var(--master-titleTop); left:var(--master-left); right:var(--master-right); height:var(--master-titleHeight); margin:0; font-size:var(--master-titleSize); line-height:52px; font-weight:650; letter-spacing:-.035em; word-break:keep-all; overflow-wrap:anywhere; }
+.seminar-presentation .master-body { position:absolute; top:var(--master-bodyTop); left:var(--master-left); right:var(--master-right); height:var(--master-bodyHeight); display:flow-root; margin:0; padding:0; font-size:var(--master-bodySize); line-height:32px; word-break:keep-all; overflow-wrap:anywhere; }
+.seminar-presentation .master-body * { box-sizing:border-box; min-width:0; max-width:100%; }
+.seminar-presentation .master-body :is(p,ul,ol,dl,blockquote,pre,table) { margin:0 0 16px; }
+.seminar-presentation .master-body :is(h3,h4,h5,h6) { font-size:var(--master-subtitleSize); line-height:36px; font-weight:650; margin:0 0 12px; }
+.seminar-presentation .master-body :is(ul,ol) { padding-left:28px; }
+.seminar-presentation .master-body li { margin:0 0 10px; }
+.seminar-presentation .master-body :is(.lead,.cover-intro,.definition) { font-size:var(--master-bodySize); line-height:32px; }
+.seminar-presentation .master-body .muted { font-size:inherit; line-height:inherit; }
+.seminar-presentation .master-body :is(.small,.subtle,.note,.code-note,.recap-scope,.source,.basis,.iso-caption) { font-size:var(--master-captionSize); line-height:22px; color:var(--muted); }
+.seminar-presentation .master-body :is(.two,.two-col,.refs,.recap-details,.trends-2x2) { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.seminar-presentation .master-body .g3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.seminar-presentation .master-body .vs { display:grid; grid-template-columns:1fr 32px 1fr; gap:16px; align-items:center; }
+.seminar-presentation .master-body :is(.card,.lane,.signal,.caveat,.callout,.layer-stack,.box-outer,.pc-box,.system-boundary) { padding:12px; margin:0 0 16px; }
+.seminar-presentation .master-body :is(.quote-line,.layer-row,.box-row,.step,.section-route,.ref,.trend,.one) { padding:10px 0; }
+.seminar-presentation .master-body :is(.system-goal,.system-environment,.recap-stage,.writing-stage,.system-model,.system-harness) { padding:12px; }
+.seminar-presentation .master-body .system-loop { display:grid; grid-template-columns:1fr 300px 1fr; gap:16px; margin:12px 0; }
+.seminar-presentation .master-body .system-exchange { text-align:center; font-size:var(--master-captionSize); line-height:22px; }
+.seminar-presentation .master-body .recap-flow { display:grid; grid-template-columns:1fr 24px 1.4fr 24px 1.8fr 24px 1.2fr; gap:8px; margin:0 0 16px; }
+.seminar-presentation .master-body .recap-stage { text-align:center; }
+.seminar-presentation .master-body .mathline { display:grid; grid-template-columns:1fr 40px 1fr 40px 1fr; gap:12px; }
+.seminar-presentation .master-body :is(.recap-arrow,.arrow) { font-size:var(--master-bodySize); text-align:center; }
+.seminar-presentation .master-body .glossary { grid-template-columns:180px 1fr; gap:12px 20px; }
+.seminar-presentation .master-body pre { padding:12px 16px; font-size:var(--master-tableSize); line-height:26px; white-space:pre-wrap; overflow:visible; }
+.seminar-presentation .master-body code { font-size:var(--master-tableSize); line-height:26px; }
+.seminar-presentation .master-body small { font-size:var(--master-captionSize); line-height:22px; }
+.seminar-presentation .master-body .seminar-table-scroll { overflow:visible; margin:0 0 16px; }
+.seminar-presentation .master-body table { width:100%; table-layout:fixed; font-size:var(--master-tableSize); line-height:26px; }
+.seminar-presentation .master-body :is(th,td) { min-width:0; padding:8px 10px; }
+.seminar-presentation .master-body .ev { font-size:var(--master-captionSize); line-height:22px; padding:4px 6px; }
+.seminar-presentation .master-body .detail { margin:0 0 16px; padding:12px 0 0; }
+.seminar-presentation .master-body summary { font-size:var(--master-captionSize); line-height:22px; min-height:0; }
+.seminar-presentation .master-body .detail > div { padding:12px 0 0; }
+.seminar-presentation .master-body [data-presentation-fragment=true] { display:block!important; }
+.seminar-presentation .master-body :is(tr,tbody,thead)[data-presentation-fragment=true] > :is(th,td,tr) { display:block; width:100%; }
+.seminar-presentation .master-footer { position:absolute; top:var(--master-footerTop); left:var(--master-left); right:var(--master-right); border-top:1px solid var(--line); padding-top:8px; display:flex; justify-content:space-between; gap:32px; font-size:12px; line-height:18px; color:var(--muted); }
+.seminar-presentation .master-footer > span:first-child { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.presentation-loading { position:absolute; top:45%; left:56px; right:56px; font-size:22px; line-height:1.6; text-align:center; }
+.presentation-bottom { position:relative; display:flex; align-items:center; gap:1rem; flex-shrink:0; height:44px; font-size:.7rem; color:var(--muted); }
+.presentation-bottom > p { margin:0 auto 0 0; }
+.presentation-popup summary { cursor:pointer; padding:.6rem; min-height:44px; color:var(--accent); }
+.presentation-popup > div { position:absolute; z-index:2; right:0; bottom:100%; width:min(42rem,100%); max-height:60dvh; overflow:auto; overscroll-behavior:contain; background:var(--paper); border:1px solid var(--control-line); padding:1.2rem; font-size:.9rem; line-height:1.85; box-shadow:0 12px 40px #0004; }
+.presentation-popup a { color:var(--accent); text-decoration:underline; }
+.presentation-popup :is(ul,ol) { padding-left:1.3rem; }
+.presentation-measure { position:fixed; left:-10000px; top:0; width:var(--master-width); height:var(--master-height); visibility:hidden; pointer-events:none; }
+@media(max-width:700px) { .presentation-bottom { height:80px; gap:.3rem; flex-wrap:wrap; align-content:center; } .presentation-bottom > p { flex-basis:100%; font-size:.6rem; } }
