@@ -430,3 +430,13 @@
     min-height: 44px;
   }
 }
+
+/* Expanded reader: one wide article and one stable contextual rail. */
+.reading-page { max-width:1280px; }
+.reading-grid { grid-template-columns:minmax(0,1fr) 360px; gap:2.5rem; }
+.reading-side { top:1.5rem; max-height:calc(100svh - 3rem); }
+.reading-side-label { color:var(--foreground); font-size:.9rem; margin-bottom:.8rem; }
+.reading-article-header h1 { font-family:inherit; font-weight:650; font-size:clamp(1.8rem,3vw,2.7rem); }
+.reading-mobile-controls { display:none; }
+@media(max-width:1099px) and (min-width:900px) { .reading-grid { grid-template-columns:minmax(0,1fr) 310px; gap:1.5rem; } }
+@media(max-width:899px) { .reading-grid { display:block; } .reading-mobile-controls { display:grid; grid-template-columns:1fr 1fr; align-items:start; } .reading-mobile-controls details[open] { grid-column:1 / -1; } .reading-mobile-controls details > .surrounding-map { max-height:60svh; } }

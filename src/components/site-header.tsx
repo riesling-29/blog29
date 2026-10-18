@@ -4,8 +4,6 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 const menu = [
   { href: "/topics", label: "주제별 탐색" },
-  { href: "/blog", label: "글" },
-  { href: "/seminars", label: "세미나" },
   { href: "/about", label: "소개" },
 ];
 export function SiteHeader() {
@@ -48,7 +46,7 @@ export function SiteHeader() {
               <circle cx="10" cy="10" r="6.5" />
               <path d="m15 15 5 5" />
             </svg>
-            <span>검색</span>
+            <span>글·세미나 검색</span>
           </Link>
           <ThemeToggle />
         </div>

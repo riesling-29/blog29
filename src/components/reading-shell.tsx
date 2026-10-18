@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import {
   getResource,
-  getResourcesForTopic,
   getTopic,
   type Relation,
   type Resource,
@@ -13,6 +12,7 @@ import {
   ReturnToReading,
 } from "@/components/reading-navigation";
 import "./reading.css";
+import { TopicCorridor, SurroundingMap, questionFor } from "./knowledge-navigation";
 
 const relationLabels: Record<Relation["type"], string> = {
   background: "배경 이해",
@@ -20,37 +20,6 @@ const relationLabels: Record<Relation["type"], string> = {
   compare: "비교하기",
   companion: "함께 보기",
 };
-
-function TopicNeighbors({ resource }: { resource: Resource }) {
-  const topic = getTopic(resource.primaryTopic);
-  const neighbors = getResourcesForTopic(resource.primaryTopic);
-  return (
-    <nav aria-label="이 주제의 자료" className="reading-neighbors">
-      <Link
-        className="reading-topic-link"
-        href={`/topics/${resource.primaryTopic}`}
-      >
-        {topic?.label || "주제 보기"} <span aria-hidden="true">↗</span>
-      </Link>
-      <ul>
-        {neighbors.map((neighbor) => (
-          <li key={neighbor.id}>
-            <Link
-              href={neighbor.href}
-              aria-current={neighbor.id === resource.id ? "page" : undefined}
-            >
-              <span className="reading-resource-kind">
-                {neighbor.format === "seminar" ? "세미나" : "글"}
-                {neighbor.id === resource.id ? " · 현재 자료" : ""}
-              </span>
-              <span>{neighbor.title}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
-}
 
 export function RelatedResources({
   relations,
@@ -107,50 +76,32 @@ export function ReadingShell({
   children: ReactNode;
 }) {
   const topic = getTopic(resource.primaryTopic);
+  const question = questionFor(resource);
   return (
     <main className="reading-page">
-      <nav aria-label="현재 위치" className="reading-breadcrumb">
-        <ol>
-          <li>
-            <Link href="/">홈</Link>
-          </li>
-          <li>
-            <Link href={`/topics/${resource.primaryTopic}`}>
-              {topic?.label || "주제"}
-            </Link>
-          </li>
-          <li aria-current="page">{resource.title}</li>
-        </ol>
-      </nav>
+      <TopicCorridor topic={topic} resource={resource} />
+      <nav aria-label="현재 위치" className="reading-breadcrumb"><ol>
+        <li><Link href="/topics">전체 주제</Link></li>
+        <li><Link href={`/topics/${resource.primaryTopic}`}>{topic?.label || "주제"}</Link></li>
+        {question && <li><Link href={question.href}>{question.label}</Link></li>}
+        <li aria-current="page">{resource.title}</li>
+      </ol></nav>
       <div className="reading-grid">
-        <aside className="reading-side reading-side-topics">
-          <p className="reading-side-label">이 주제의 자료</p>
-          <TopicNeighbors resource={resource} />
-        </aside>
         <div className="reading-main">
+          <Link className="reader-back" href={question?.href ?? `/topics/${resource.primaryTopic}`}>← 주제 목록으로</Link>
           <ReturnToReading />
           <div className="reading-mobile-controls">
-            <details className="reading-topic-disclosure">
-              <summary>
-                주제 탐색 <span aria-hidden="true">＋</span>
-              </summary>
-              <TopicNeighbors resource={resource} />
-            </details>
-            <details className="reading-toc-disclosure">
-              <summary>
-                이 글의 목차 <span aria-hidden="true">＋</span>
-              </summary>
-              <HeadingNavigation headings={headings} label="모바일 본문 목차" />
-            </details>
+            <details><summary>주변 지도</summary>{topic && <SurroundingMap topic={topic} resource={resource} />}</details>
+            <details><summary>이 글의 목차</summary><HeadingNavigation headings={headings} label="모바일 본문 목차" /></details>
           </div>
           {children}
         </div>
         <aside className="reading-side reading-side-toc">
-          <p className="reading-side-label">이 글의 목차</p>
-          <HeadingNavigation headings={headings} />
-          <a href="#reading-title" className="reading-top-link">
-            처음으로 ↑
-          </a>
+          {topic && <SurroundingMap topic={topic} resource={resource} />}
+          <div className="reader-outline"><h2 className="reading-side-label">이 글의 목차</h2>
+            <HeadingNavigation headings={headings} />
+            <a href="#reading-title" className="reading-top-link">처음으로 ↑</a>
+          </div>
         </aside>
       </div>
     </main>

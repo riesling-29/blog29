@@ -7,6 +7,7 @@ import {
   getResource,
   getResourcesByTopic,
 } from "@/lib/catalog";
+import { TopicCorridor, SurroundingMap } from "@/components/knowledge-navigation";
 import { ResourceCard } from "@/components/resource-card";
 type Props = { params: Promise<{ id: string }> };
 export function generateStaticParams() {
@@ -29,6 +30,7 @@ export default async function TopicPage({ params }: Props) {
   const resources = getResourcesByTopic(id);
   return (
     <main className="page-width index-page">
+      <TopicCorridor topic={topic} />
       <nav className="breadcrumbs" aria-label="현재 위치">
         <Link href="/">홈</Link>
         <span aria-hidden="true">/</span>
@@ -42,24 +44,6 @@ export default async function TopicPage({ params }: Props) {
         <p>{topic.description}</p>
       </header>
       <div className="topic-detail-layout">
-        <aside className="topic-directory">
-          <p className="eyebrow">주제 둘러보기</p>
-          <nav aria-label="다른 주제">
-            {topics.map((t) => (
-              <Link
-                key={t.id}
-                href={`/topics/${t.id}`}
-                aria-current={t.id === id ? "page" : undefined}
-              >
-                {t.label}
-                <span aria-hidden="true">{t.id === id ? "●" : "→"}</span>
-              </Link>
-            ))}
-          </nav>
-          <Link href={`/archive?topic=${id}`} className="text-link">
-            이 주제에서 검색 →
-          </Link>
-        </aside>
         <div className="question-groups">
           {topic.questions.map((q, i) => (
             <section
@@ -90,6 +74,7 @@ export default async function TopicPage({ params }: Props) {
             </Link>
           </div>
         </div>
+        <aside className="topic-map-side"><SurroundingMap topic={topic} /></aside>
       </div>
     </main>
   );

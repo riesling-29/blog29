@@ -62,3 +62,23 @@ Search Console 계정 인증·사이트맵 제출·색인 상태 확인은 수�
 ## 반영 순서
 
 Blog29의 새 세미나 상세 경로를 먼저 공개하고, Seminars의 연결 변경을 뒤이어 공개합니다. 운영 반영은 저장소의 발행 규칙에 따라 확인한 변경으로 진행합니다. 이전 경로 삭제나 데이터 이전은 없습니다. 문제가 있으면 각 저장소의 개편 커밋을 되돌려 기존 배포 경로로 재배포할 수 있습니다.
+
+## 2026-10-18 — Corridor and surrounding map
+
+The accepted direction is a shared topic/question corridor and an expanded reader,
+with a local map for other resources and a separate in-document table of contents.
+The homepage now presents topics and a mixed article/seminar list. Global navigation
+no longer separates articles and seminars; existing URLs and format filters remain.
+
+Reading breadcrumbs include the resource's first question in its primary topic.
+This is a stable editorial address, not a claim about the visitor's entry route.
+The existing reading-history mechanism still restores actual prior reading positions.
+Map nodes use public catalog relationships; fallback peers are explicitly labelled
+same-topic rather than prerequisite or recommended next reading. Unregistered
+relationships are not invented. Full titles and relation explanations are available
+in the expandable list. Mobile map and TOC use native disclosures.
+
+Light: limestone ivory, olive, terracotta. Dark: near-black green, softened ivory,
+restrained brass. Brand direction: precision in information, elegance in presentation;
+no literal architectural or military ornaments. Original article bodies and slides
+remain unchanged. Production release is separate from the existing draft preview.
