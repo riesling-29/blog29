@@ -14,6 +14,9 @@ const MarkdownIt = requireSource('markdown-it');
 const { decodeHTML } = requireSource('entities');
 const markdown = new MarkdownIt({ html: true });
 const notesMarkdown = new MarkdownIt({ html: false, linkify: true, breaks: true });
+for (const tld of ['py', 'ts', 'tsx', 'js', 'jsx', 'mjs', 'cjs', 'md', 'json', 'yaml', 'yml', 'rs', 'go', 'rb', 'sh', 'bash', 'zsh']) {
+  notesMarkdown.linkify.tlds(tld, false);
+}
 const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: source, encoding: 'utf8' }).trim();
 const ids = ['ai-agent-harness-seminar', 'persistent-work-agents-seminar', 'saif-2026-seminar'];
 const strip = html => decodeHTML(html.replace(/<br\s*\/?\s*>/gi, ' ').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim());
