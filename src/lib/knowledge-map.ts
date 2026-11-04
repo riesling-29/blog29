@@ -24,6 +24,7 @@ const articleLabels: Record<string, string> = {
   "persistent-work-agents-seminar": "지속형 발표",
   "agent-army-pr-1000": "다중 에이전트",
   "ocel-2-overview": "OCEL 2.0",
+  "black-company-grok-bot": "에이전트 감사",
   "ai-subscription-api-local-llm-cost-2026": "구독·API·로컬",
   "saif-2026": "SAIF 2026",
   "saif-2026-seminar": "SAIF 발표",

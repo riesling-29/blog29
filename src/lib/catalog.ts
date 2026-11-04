@@ -87,7 +87,7 @@ export const topics: Topic[] = [
       {
         label: "업무의 흐름을 어떻게 기록할까?",
         description: "여러 객체가 얽힌 실제 업무를 이벤트 로그로 표현합니다.",
-        resourceIds: ["ocel-2-overview"],
+        resourceIds: ["ocel-2-overview", "black-company-grok-bot"],
       },
     ],
   },
@@ -159,6 +159,11 @@ const articleClassification: Record<string, ArticleClassification> = {
     primaryTopic: "process-intelligence",
     topics: ["process-intelligence"],
     readingPurpose: "입문",
+  },
+  "black-company-grok-bot": {
+    primaryTopic: "process-intelligence",
+    topics: ["process-intelligence"],
+    readingPurpose: "사례",
   },
   "ai-subscription-api-local-llm-cost-2026": {
     primaryTopic: "ai-practice",
