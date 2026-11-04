@@ -170,6 +170,11 @@ const articleClassification: Record<string, ArticleClassification> = {
     topics: ["process-intelligence"],
     readingPurpose: "사례",
   },
+  "agent-transcript-to-ocel": {
+    primaryTopic: "process-intelligence",
+    topics: ["process-intelligence"],
+    readingPurpose: "사례",
+  },
   "ocel-2-overview": {
     primaryTopic: "process-intelligence",
     topics: ["process-intelligence"],

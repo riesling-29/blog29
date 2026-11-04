@@ -25,6 +25,7 @@ const articleLabels: Record<string, string> = {
   "agent-army-pr-1000": "다중 에이전트",
   "pi-intro-dfg-discovery-conformance": "PI 입문",
   "agent-company-process-audit": "회사 감사",
+  "agent-transcript-to-ocel": "OCEL 변환",
   "ocel-2-overview": "OCEL 2.0",
   "black-company-grok-bot": "에이전트 감사",
   "ai-subscription-api-local-llm-cost-2026": "구독·API·로컬",
