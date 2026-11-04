@@ -180,6 +180,11 @@ const articleClassification: Record<string, ArticleClassification> = {
     topics: ["process-intelligence"],
     readingPurpose: "사례",
   },
+  "share-agent-logs-or-pi-results": {
+    primaryTopic: "process-intelligence",
+    topics: ["process-intelligence"],
+    readingPurpose: "비교·판단",
+  },
   "ocel-2-overview": {
     primaryTopic: "process-intelligence",
     topics: ["process-intelligence"],

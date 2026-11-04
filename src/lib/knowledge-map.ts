@@ -27,6 +27,7 @@ const articleLabels: Record<string, string> = {
   "agent-company-process-audit": "회사 감사",
   "agent-transcript-to-ocel": "OCEL 변환",
   "report-to-lead-rule-check": "직보 점검",
+  "share-agent-logs-or-pi-results": "로그 공개",
   "ocel-2-overview": "OCEL 2.0",
   "black-company-grok-bot": "에이전트 감사",
   "ai-subscription-api-local-llm-cost-2026": "구독·API·로컬",
