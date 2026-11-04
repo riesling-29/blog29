@@ -116,6 +116,9 @@ export function SeminarPresentation({ documentId, slides, title, initialSourceIn
       <button type="button" disabled={!pages.length || pageIndex === 0} onClick={() => select(pageIndex - 1)}>← 이전</button>
       <label><span className="sr-only">발표 페이지 선택</span><select value={pageIndex} disabled={!pages.length} onChange={event => select(Number(event.target.value))}>{pages.map((page,i) => <option key={`${page.sourceId}-${page.part}-${page.readingFallback ? 'fallback' : 'slide'}`} value={i}>{i + 1}. {page.title}{page.readingFallback ? ' (읽기 화면)' : page.parts > 1 ? ` (${page.part}/${page.parts})` : ''}</option>)}</select></label>
       <span role="status" aria-live="polite">{pages.length ? `${pageIndex + 1} / ${pages.length}` : '준비 중'}</span>
+      {current?.readingFallback && (
+        <button type="button" className="presentation-exit-reading-pager" data-exit-to-reading={String(current.sourceIndex)}>읽기 화면에서 보기</button>
+      )}
       <button type="button" disabled={!pages.length || pageIndex === pages.length - 1} onClick={() => select(pageIndex + 1)}>다음 →</button>
     </div>
     <div ref={viewport} className="presentation-viewport">
