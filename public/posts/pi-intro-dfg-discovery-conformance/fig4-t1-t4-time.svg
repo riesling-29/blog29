@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" aria-labelledby="t d">
+<title id="t">T1과 T4 처리 시간</title>
+<desc id="d">같은 분 단위 축에 놓은 T1(22분)과 T4(6분)의 구간 막대.</desc>
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4B5160"/></marker>
+<marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker>
+</defs>
+<style>
+text{font-family:Pretendard, 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;fill:#1F2329}
+.lbl{font-size:20px;font-weight:600}
+.sm{font-size:15px;fill:#5B6170}
+.h{font-size:18px;font-weight:700}
+.num{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;font-variant-numeric:tabular-nums;font-size:19px;font-weight:700}
+.code{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;font-size:15px;fill:#5B6170}
+.acc{fill:#C2410C;font-weight:700}
+.node{fill:#F3F4F6;stroke:#6B7280;stroke-width:1.5}
+.e{fill:none;stroke:#4B5160;marker-end:url(#ah)}
+
+</style>
+<rect x="0.5" y="0.5" width="719" height="379" rx="16" fill="#FFFFFF" stroke="#D9DCE1"/>
+<text class="sm" x="28" y="40">막대 안 숫자: 구간 길이(분) · 같은 축, 0분에서 시작</text>
+<text class="h" x="28" y="92">T1</text><text class="code" x="28" y="116">09:00</text>
+<rect x="100" y="70" width="48.0" height="36" fill="#D1D5DB"/><text class="num" x="124.0" y="95" text-anchor="middle">2</text><line x1="100" y1="70" x2="100" y2="106" stroke="#FFFFFF" stroke-width="2"/>
+<rect x="148.0" y="70" width="72.0" height="36" fill="#E5E7EB"/><text class="num" x="184.0" y="95" text-anchor="middle">3</text><line x1="148.0" y1="70" x2="148.0" y2="106" stroke="#FFFFFF" stroke-width="2"/>
+<rect x="220.0" y="70" width="360.0" height="36" fill="#3F5F7F"/><text class="num" style="fill:#FFFFFF" x="400.0" y="95" text-anchor="middle">15</text><line x1="220.0" y1="70" x2="220.0" y2="106" stroke="#FFFFFF" stroke-width="2"/>
+<rect x="580.0" y="70" width="48.0" height="36" fill="#E5E7EB"/><text class="num" x="604.0" y="95" text-anchor="middle">2</text><line x1="580.0" y1="70" x2="580.0" y2="106" stroke="#FFFFFF" stroke-width="2"/>
+<text class="num" x="638.0" y="95">22분</text>
+<text style="font-size:16px;font-weight:700;fill:#3F5F7F" x="400.0" y="134" text-anchor="middle">실행 → 검증 15분, 가장 긴 구간</text>
+<text class="sm" x="100" y="160">접수 → 계획, 계획 → 실행, 실행 → 검증, 검증 → 보고</text>
+<text class="h" x="28" y="222">T4</text><text class="code" x="28" y="246">10:00</text>
+<rect x="100" y="200" width="24.0" height="36" fill="#D1D5DB"/><text class="num" x="112.0" y="225" text-anchor="middle">1</text><line x1="100" y1="200" x2="100" y2="236" stroke="#FFFFFF" stroke-width="2"/>
+<rect x="124.0" y="200" width="48.0" height="36" fill="#E5E7EB"/><text class="num" x="148.0" y="225" text-anchor="middle">2</text><line x1="124.0" y1="200" x2="124.0" y2="236" stroke="#FFFFFF" stroke-width="2"/>
+<rect x="173.5" y="201.5" width="69.0" height="33" fill="#FFF4ED" stroke="#C2410C" stroke-width="3" stroke-dasharray="7 4"/><text class="num acc" x="208.0" y="225" text-anchor="middle">3</text><line x1="172.0" y1="200" x2="172.0" y2="236" stroke="#FFFFFF" stroke-width="2"/>
+<text class="num" x="254.0" y="225">6분</text>
+<text class="acc" style="font-size:16px" x="100" y="264">마지막 3분: 실행 → 보고, 검증 없음 (점선)</text>
+<text class="sm" x="100" y="290">접수 → 계획, 계획 → 실행, 실행 → 보고</text>
+<line x1="100" y1="318" x2="628.0" y2="318" stroke="#6B7280" stroke-width="1.2"/>
+<line x1="100.0" y1="318" x2="100.0" y2="324" stroke="#6B7280"/><text class="num" style="font-size:15px;font-weight:500;fill:#5B6170" x="100.0" y="344" text-anchor="middle">0</text>
+<line x1="220.0" y1="318" x2="220.0" y2="324" stroke="#6B7280"/><text class="num" style="font-size:15px;font-weight:500;fill:#5B6170" x="220.0" y="344" text-anchor="middle">5</text>
+<line x1="340.0" y1="318" x2="340.0" y2="324" stroke="#6B7280"/><text class="num" style="font-size:15px;font-weight:500;fill:#5B6170" x="340.0" y="344" text-anchor="middle">10</text>
+<line x1="460.0" y1="318" x2="460.0" y2="324" stroke="#6B7280"/><text class="num" style="font-size:15px;font-weight:500;fill:#5B6170" x="460.0" y="344" text-anchor="middle">15</text>
+<line x1="580.0" y1="318" x2="580.0" y2="324" stroke="#6B7280"/><text class="num" style="font-size:15px;font-weight:500;fill:#5B6170" x="580.0" y="344" text-anchor="middle">20</text>
+<line x1="628.0" y1="318" x2="628.0" y2="324" stroke="#6B7280"/><text class="num" style="font-size:15px;font-weight:500;fill:#5B6170" x="628.0" y="344" text-anchor="middle">22</text>
+<text class="sm" x="628.0" y="368" text-anchor="end">분</text>
+</svg>

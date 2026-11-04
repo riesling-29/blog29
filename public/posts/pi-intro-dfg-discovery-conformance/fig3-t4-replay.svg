@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 490" width="720" height="490" role="img" aria-labelledby="t d">
+<title id="t">기준 모델 위 T4 재생</title>
+<desc id="d">장소 6개 페트리넷에서 T4를 재생하면 실행 후 장소에 잔여 1, 검증 자리에 누락 1이 생기고 적합도는 0.8.</desc>
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4B5160"/></marker>
+<marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker>
+</defs>
+<style>
+text{font-family:Pretendard, 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;fill:#1F2329}
+.lbl{font-size:20px;font-weight:600}
+.sm{font-size:15px;fill:#5B6170}
+.h{font-size:18px;font-weight:700}
+.num{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;font-variant-numeric:tabular-nums;font-size:19px;font-weight:700}
+.code{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;font-size:15px;fill:#5B6170}
+.acc{fill:#C2410C;font-weight:700}
+.node{fill:#F3F4F6;stroke:#6B7280;stroke-width:1.5}
+.e{fill:none;stroke:#4B5160;marker-end:url(#ah)}
+.pl{fill:#FFFFFF;stroke:#6B7280;stroke-width:1.8} .tr{fill:#F3F4F6;stroke:#6B7280;stroke-width:1.5} .tauT{fill:#9AA0AB;stroke:#6B7280} .skip{fill:#FFFFFF;stroke:#6B7280;stroke-width:1.8;stroke-dasharray:6 4}
+</style>
+<rect x="0.5" y="0.5" width="719" height="489" rx="16" fill="#FFFFFF" stroke="#D9DCE1"/>
+<text class="sm" x="28" y="40">원: 장소 · 사각형: 전이 · T4 순서: 접수 → 계획 → 실행 → 보고</text>
+<circle class="pl" cx="54" cy="170" r="22"/><text class="sm" style="fill:#1F2329" x="54" y="214" text-anchor="middle">시작</text>
+<circle class="pl" cx="254" cy="170" r="22"/><text class="sm" style="fill:#1F2329" x="254" y="214" text-anchor="middle">접수 후</text>
+<circle class="pl" cx="454" cy="170" r="22"/><text class="sm" style="fill:#1F2329" x="454" y="214" text-anchor="middle">계획 후</text>
+<circle class="pl" cx="654" cy="170" r="22"/><text class="sm" style="fill:#1F2329" x="654" y="214" text-anchor="middle">실행 후</text>
+<rect class="tr" x="120" y="146" width="68" height="48" rx="6"/><text class="lbl" style="font-size:18px" x="154" y="177" text-anchor="middle">접수</text>
+<rect class="tr" x="320" y="146" width="68" height="48" rx="6"/><text class="lbl" style="font-size:18px" x="354" y="177" text-anchor="middle">계획</text>
+<rect class="tr" x="520" y="146" width="68" height="48" rx="6"/><text class="lbl" style="font-size:18px" x="554" y="177" text-anchor="middle">실행</text>
+<line class="e" x1="76" y1="170" x2="118" y2="170" stroke-width="1.8" />
+<line class="e" x1="188" y1="170" x2="230" y2="170" stroke-width="1.8" />
+<line class="e" x1="276" y1="170" x2="318" y2="170" stroke-width="1.8" />
+<line class="e" x1="388" y1="170" x2="430" y2="170" stroke-width="1.8" />
+<line class="e" x1="476" y1="170" x2="518" y2="170" stroke-width="1.8" />
+<line class="e" x1="588" y1="170" x2="630" y2="170" stroke-width="1.8" />
+<rect class="tauT" x="540" y="78" width="28" height="36" rx="4"/><text class="sm" x="554" y="134" text-anchor="middle">τ (되돌아가기)</text>
+<path class="e" d="M654,148 C654,116 620,96 570,96" stroke-width="1.8"/><path class="e" d="M540,96 C490,96 454,116 454,146" stroke-width="1.8"/>
+<circle cx="654" cy="170" r="8" fill="#1F2329"/>
+<text class="acc" style="font-size:17px" x="692" y="240" text-anchor="end">● 잔여 1 (실행 후)</text>
+<path class="e" d="M654,192 L654,260 L154,260 L154,314" stroke-width="1.8" style="fill:none"/>
+<rect class="skip" x="120" y="316" width="68" height="48" rx="6"/><text class="lbl" style="font-size:18px" x="154" y="347" text-anchor="middle">검증</text>
+<text class="sm" x="154" y="386" text-anchor="middle">발화 안 함</text>
+<line class="e" x1="188" y1="340" x2="230" y2="340" stroke-width="1.8" />
+<circle cx="254" cy="340" r="22" fill="#FFF4ED" stroke="#C2410C" stroke-width="3" stroke-dasharray="6 4"/><text class="sm" style="fill:#1F2329" x="254" y="384" text-anchor="middle">검증 후</text>
+<text class="num acc" x="254" y="347" text-anchor="middle">+</text>
+<text class="acc" style="font-size:17px" x="254" y="302" text-anchor="middle">＋ 누락 1 (검증 자리)</text>
+<line class="e" x1="276" y1="340" x2="318" y2="340" stroke-width="1.8" />
+<rect class="tr" x="320" y="316" width="68" height="48" rx="6"/><text class="lbl" style="font-size:18px" x="354" y="347" text-anchor="middle">보고</text>
+<line class="e" x1="388" y1="340" x2="430" y2="340" stroke-width="1.8" />
+<circle class="pl" cx="454" cy="340" r="22"/><text class="sm" style="fill:#1F2329" x="454" y="384" text-anchor="middle">끝</text>
+<line x1="28" y1="422" x2="692" y2="422" stroke="#E5E7EB"/>
+<text class="sm" x="28" y="450">p = <tspan class="num" style="font-size:16px">5</tspan>, c = <tspan class="num" style="font-size:16px">5</tspan>, m = <tspan class="num" style="font-size:16px">1</tspan>, r = <tspan class="num" style="font-size:16px">1</tspan></text>
+<text x="28" y="476" style="font-size:16px">적합도 <tspan class="num" style="font-size:16px;font-weight:600">1/2 × (1 − 1/5) + 1/2 × (1 − 1/5) = 0.8</tspan></text>
+</svg>

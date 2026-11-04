@@ -160,6 +160,11 @@ const articleClassification: Record<string, ArticleClassification> = {
     topics: ["ai-agents"],
     readingPurpose: "개념·비교",
   },
+  "pi-intro-dfg-discovery-conformance": {
+    primaryTopic: "process-intelligence",
+    topics: ["process-intelligence"],
+    readingPurpose: "입문",
+  },
   "ocel-2-overview": {
     primaryTopic: "process-intelligence",
     topics: ["process-intelligence"],

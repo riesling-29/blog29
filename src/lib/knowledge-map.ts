@@ -23,6 +23,7 @@ const articleLabels: Record<string, string> = {
   "persistent-work-agents": "지속형",
   "persistent-work-agents-seminar": "지속형 발표",
   "agent-army-pr-1000": "다중 에이전트",
+  "pi-intro-dfg-discovery-conformance": "PI 입문",
   "ocel-2-overview": "OCEL 2.0",
   "black-company-grok-bot": "에이전트 감사",
   "ai-subscription-api-local-llm-cost-2026": "구독·API·로컬",
