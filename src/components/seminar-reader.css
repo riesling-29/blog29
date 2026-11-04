@@ -2,7 +2,7 @@
 .seminar-reader-toolbar { position:sticky; top:0; z-index:10; background:var(--background); display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.7rem 0; border-block:1px solid var(--line); }
 .seminar-view-switch { display:flex; gap:.3rem; }
 .seminar-view-switch button,.seminar-pager button,.seminar-exit { border:1px solid var(--control-line); padding:.5rem .85rem; min-height:44px; min-width:44px; font-size:.875rem; line-height:1.35; border-radius:3px; color:var(--muted); }
-:root[data-theme="dark"] .seminar-view-switch button,
+:root[data-theme="dark"] .seminar-view-switch button[aria-pressed=false]:not(.seminar-present-start),
 :root[data-theme="dark"] .seminar-pager button,
 :root[data-theme="dark"] .seminar-exit { border-color:rgba(255,255,255,.34); }
 .seminar-view-switch button[aria-pressed=true] { background:var(--selection); border-color:var(--accent); color:var(--foreground); font-weight:650; }
