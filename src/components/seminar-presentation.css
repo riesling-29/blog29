@@ -44,6 +44,8 @@
 .seminar-presentation .master-footer { position:absolute; top:var(--master-footerTop); left:var(--master-left); right:var(--master-right); border-top:1px solid var(--line); padding-top:8px; display:flex; justify-content:space-between; gap:32px; font-size:12px; line-height:18px; color:var(--muted); }
 .seminar-presentation .master-footer > span:first-child { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .presentation-loading { position:absolute; top:45%; left:56px; right:56px; font-size:22px; line-height:1.6; text-align:center; }
+.seminar-presentation .master-body .presentation-exit-reading { margin-top:8px; min-height:44px; padding:.55rem 1.1rem; border:1px solid var(--accent); border-radius:3px; background:var(--surface); color:var(--foreground); font-size:var(--master-bodySize); font-weight:650; }
+.seminar-presentation .master-body .presentation-exit-reading:hover { background:var(--selection); }
 .presentation-bottom { position:relative; display:flex; align-items:center; gap:1rem; flex-shrink:0; height:44px; font-size:.7rem; color:var(--muted); }
 .presentation-bottom > p { margin:0 auto 0 0; }
 .presentation-popup summary { cursor:pointer; padding:.6rem; min-height:44px; color:var(--accent); }

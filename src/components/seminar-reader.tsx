@@ -27,6 +27,11 @@ export function SeminarReader({ slides, title, documentId }: { documentId: strin
     setPresenting(true);
   }
   const end = useCallback(() => { restoreReader.current = selectedSource.current; setPresenting(false); }, []);
+  const exitToReading = useCallback((index: number) => {
+    selectSource(index);
+    restoreReader.current = index;
+    setPresenting(false);
+  }, [selectSource]);
 
   useEffect(() => {
     if (!presenting) {
@@ -62,6 +67,6 @@ export function SeminarReader({ slides, title, documentId }: { documentId: strin
       {slide.sources.length > 0 && <div className="seminar-sources"><span>근거</span>{slide.sources.map(source => <a key={source.url} href={source.url}>{source.name}</a>)}</div>}
       {slide.notesHtml && <details className="seminar-speaker-notes"><summary>발표자 노트</summary><div dangerouslySetInnerHTML={{__html:slide.notesHtml}} /></details>}
     </section>)}</div>
-    {presenting && <SeminarPresentation documentId={documentId} slides={slides} title={title} initialSourceIndex={startSource} onSourceChange={selectSource} onExit={end} />}
+    {presenting && <SeminarPresentation documentId={documentId} slides={slides} title={title} initialSourceIndex={startSource} onSourceChange={selectSource} onExit={end} onExitToReading={exitToReading} />}
   </div>;
 }

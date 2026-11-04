@@ -8,9 +8,9 @@ import './seminar-presentation.css';
 
 const masterStyle = Object.fromEntries(Object.entries(master).map(([name,value]) => [`--master-${name}`, `${value}px`])) as CSSProperties;
 
-type Props = { documentId: string; slides: SeminarSlide[]; title: string; initialSourceIndex: number; onSourceChange: (index: number) => void; onExit: () => void };
+type Props = { documentId: string; slides: SeminarSlide[]; title: string; initialSourceIndex: number; onSourceChange: (index: number) => void; onExit: () => void; onExitToReading: (sourceIndex: number) => void };
 
-export function SeminarPresentation({ documentId, slides, title, initialSourceIndex, onSourceChange, onExit }: Props) {
+export function SeminarPresentation({ documentId, slides, title, initialSourceIndex, onSourceChange, onExit, onExitToReading }: Props) {
   const [pages, setPages] = useState<PresentationPage[]>([]);
   const [pageIndex, setPageIndex] = useState(0);
   const [error, setError] = useState('');
@@ -99,10 +99,22 @@ export function SeminarPresentation({ documentId, slides, title, initialSourceIn
     if (next >= 0) { event.preventDefault(); select(next); }
   }
 
-  return <div ref={root} className="seminar-presentation" style={masterStyle} onClick={followSection}>
+  function handlePresentationClick(event: MouseEvent<HTMLDivElement>) {
+    const exitReading = event.target instanceof Element
+      ? event.target.closest<HTMLButtonElement>('[data-exit-to-reading]')
+      : null;
+    if (exitReading) {
+      event.preventDefault();
+      onExitToReading(Number(exitReading.dataset.exitToReading));
+      return;
+    }
+    followSection(event);
+  }
+
+  return <div ref={root} className="seminar-presentation" style={masterStyle} onClick={handlePresentationClick}>
     <div className="seminar-pager">
       <button type="button" disabled={!pages.length || pageIndex === 0} onClick={() => select(pageIndex - 1)}>← 이전</button>
-      <label><span className="sr-only">발표 페이지 선택</span><select value={pageIndex} disabled={!pages.length} onChange={event => select(Number(event.target.value))}>{pages.map((page,i) => <option key={`${page.sourceId}-${page.part}`} value={i}>{i + 1}. {page.title}{page.parts > 1 ? ` (${page.part}/${page.parts})` : ''}</option>)}</select></label>
+      <label><span className="sr-only">발표 페이지 선택</span><select value={pageIndex} disabled={!pages.length} onChange={event => select(Number(event.target.value))}>{pages.map((page,i) => <option key={`${page.sourceId}-${page.part}-${page.readingFallback ? 'fallback' : 'slide'}`} value={i}>{i + 1}. {page.title}{page.readingFallback ? ' (읽기 화면)' : page.parts > 1 ? ` (${page.part}/${page.parts})` : ''}</option>)}</select></label>
       <span role="status" aria-live="polite">{pages.length ? `${pageIndex + 1} / ${pages.length}` : '준비 중'}</span>
       <button type="button" disabled={!pages.length || pageIndex === pages.length - 1} onClick={() => select(pageIndex + 1)}>다음 →</button>
     </div>
