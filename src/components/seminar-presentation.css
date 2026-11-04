@@ -9,6 +9,7 @@
 .seminar-presentation .master-body { position:absolute; top:var(--master-bodyTop); left:var(--master-left); right:var(--master-right); height:var(--master-bodyHeight); display:flow-root; margin:0; padding:0; font-size:var(--master-bodySize); line-height:32px; word-break:keep-all; overflow-wrap:anywhere; }
 .seminar-presentation .master-body * { box-sizing:border-box; min-width:0; max-width:100%; }
 .seminar-presentation .master-body :is(p,ul,ol,dl,blockquote,pre,table) { margin:0 0 16px; }
+.seminar-presentation .master-body :is(p,ul,ol,dl,blockquote,pre,table):last-child { margin-bottom:0; }
 .seminar-presentation .master-body :is(h3,h4,h5,h6) { font-size:var(--master-subtitleSize); line-height:36px; font-weight:650; margin:0 0 12px; }
 .seminar-presentation .master-body :is(ul,ol) { padding-left:28px; }
 .seminar-presentation .master-body li { margin:0 0 10px; }

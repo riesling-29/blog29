@@ -1,8 +1,14 @@
 .seminar-reader { min-width:0; margin-top:2rem; }
 .seminar-reader-toolbar { position:sticky; top:0; z-index:10; background:var(--background); display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.7rem 0; border-block:1px solid var(--line); }
 .seminar-view-switch { display:flex; gap:.3rem; }
-.seminar-view-switch button,.seminar-pager button,.seminar-exit { border:1px solid var(--control-line); padding:.5rem .8rem; min-height:44px; font-size:.8rem; border-radius:3px; color:var(--muted); }
-.seminar-view-switch button[aria-pressed=true] { background:var(--selection); border-color:var(--accent); color:var(--foreground); }
+.seminar-view-switch button,.seminar-pager button,.seminar-exit { border:1px solid var(--control-line); padding:.5rem .85rem; min-height:44px; min-width:44px; font-size:.875rem; line-height:1.35; border-radius:3px; color:var(--muted); }
+:root[data-theme="dark"] .seminar-view-switch button[aria-pressed=false]:not(.seminar-present-start),
+:root[data-theme="dark"] .seminar-pager button,
+:root[data-theme="dark"] .seminar-exit { border-color:rgba(255,255,255,.34); }
+.seminar-view-switch button[aria-pressed=true] { background:var(--selection); border-color:var(--accent); color:var(--foreground); font-weight:650; }
+.seminar-view-switch .seminar-present-start[aria-pressed=false] { color:var(--foreground); border-color:var(--accent); background:var(--surface); font-weight:650; }
+.seminar-present-icon { display:inline-block; margin-left:.35rem; font-size:.75em; color:var(--accent); }
+.seminar-view-switch .seminar-present-start[aria-pressed=true] .seminar-present-icon { color:inherit; }
 .seminar-slide-count { color:var(--muted); font-size:.7rem; }
 .seminar-page { padding:2.5rem 0; border-bottom:1px solid var(--line); min-width:0; }
 .seminar-page[hidden],.seminar-pages[hidden] { display:none!important; }
