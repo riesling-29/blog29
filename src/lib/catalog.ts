@@ -175,6 +175,11 @@ const articleClassification: Record<string, ArticleClassification> = {
     topics: ["process-intelligence"],
     readingPurpose: "사례",
   },
+  "report-to-lead-rule-check": {
+    primaryTopic: "process-intelligence",
+    topics: ["process-intelligence"],
+    readingPurpose: "사례",
+  },
   "ocel-2-overview": {
     primaryTopic: "process-intelligence",
     topics: ["process-intelligence"],
