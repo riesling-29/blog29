@@ -50,7 +50,9 @@ export function SeminarReader({ slides, title, documentId }: { documentId: strin
     <div className="seminar-reader-toolbar">
       <div className="seminar-view-switch" role="group" aria-label="세미나 보기 방식">
         <button type="button" ref={exitButton} aria-pressed={!presenting} onClick={presenting ? end : undefined}>읽기</button>
-        <button type="button" aria-pressed={presenting} onClick={!presenting ? begin : undefined}>발표 모드</button>
+        <button type="button" className="seminar-present-start" aria-pressed={presenting} onClick={!presenting ? begin : undefined}>
+          발표 모드 <span className="seminar-present-icon" aria-hidden="true">▶</span>
+        </button>
       </div>
       {presenting ? <><span className="seminar-present-title">{title}</span><button type="button" onClick={end} className="seminar-exit">발표 종료 <span>Esc</span></button></> : <span className="seminar-slide-count">{slides.length}개 자료{notesCount > 0 && ` · 발표자 노트 ${notesCount}개`}</span>}
     </div>
