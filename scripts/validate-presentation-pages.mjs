@@ -72,7 +72,7 @@ assert.equal(linked.map(preservedText).join(''),preservedText(links));
   assert(forced.filter(page=>page.sourceIndex===0 && !page.readingFallback).length>0);
   assert(forced.filter(page=>page.sourceIndex===5 && !page.readingFallback).length>0);
 }
-// Layout-accurate page totals (master body 462px) for the three published seminars.
+// Editorial page totals, no layout (JSDOM scrollHeight stays 0 so fits() is always true).
 {
   const css=readFileSync(new URL('../src/components/seminar-presentation.css',import.meta.url),'utf8');
   const {window:layoutWindow}=new JSDOM(`<!doctype html><html><head><style>${css}</style></head><body></body></html>`);
@@ -88,7 +88,7 @@ assert.equal(linked.map(preservedText).join(''),preservedText(links));
     'persistent-work-agents-seminar':18,
     'saif-2026-seminar':30,
   };
-  // Gesso browser 실측(마스터 캔버스): harness 42, persistent 18, saif 33. JSDOM+css 합계는 위 값.
+  // Browser layout (Gesso): harness 42, persistent 18, saif 33 — not measurable in this block.
   for(const [id,count] of Object.entries(expected)) {
     const doc=JSON.parse(readFileSync(new URL(`../src/content/seminars/${id}.json`,import.meta.url),'utf8'));
     layoutWindow.document.body.append(measure,titleMeasure);

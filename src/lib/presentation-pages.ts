@@ -143,12 +143,6 @@ export function createReadingFallbackPage(slide: SeminarSlide, sourceIndex: numb
   page.className = 'editorial-page presentation-reading-fallback';
   page.dataset.layout = 'text';
 
-  const lead = document.createElement('p');
-  lead.className = 'lead';
-  const number = document.createElement('strong');
-  number.textContent = String(sourceIndex + 1).padStart(2, '0');
-  lead.append(number, document.createTextNode(` · ${slide.title}`));
-
   const message = document.createElement('p');
   message.textContent =
     '이 장은 발표 화면에 맞지 않아 읽기 화면에서 보여 드립니다.';
@@ -161,7 +155,7 @@ export function createReadingFallbackPage(slide: SeminarSlide, sourceIndex: numb
   button.textContent = '읽기 화면에서 보기';
   action.append(button);
 
-  page.append(lead, message, action);
+  page.append(message, action);
   return page;
 }
 
@@ -224,11 +218,10 @@ export async function buildPresentationPages(
     if(cancelled())return [];
     function fits(node: HTMLElement) {
       measure.replaceChildren(node.cloneNode(true));
-      const natural =
+      return (
         measure.scrollHeight <= measure.clientHeight + 0.5 &&
-        measure.scrollWidth <= measure.clientWidth + 0.5;
-      if (options?.forceFallbackSourceIndices?.has(sourceIndex)) return false;
-      return natural;
+        measure.scrollWidth <= measure.clientWidth + 0.5
+      );
     }
     let parts: HTMLElement[];
     try {
