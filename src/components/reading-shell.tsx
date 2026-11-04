@@ -91,17 +91,31 @@ export function ReadingShell({
           <Link className="reader-back" href={question?.href ?? `/topics/${resource.primaryTopic}`}>← 주제 목록으로</Link>
           <ReturnToReading />
           <div className="reading-mobile-controls">
-            <details><summary>주변 지도</summary>{topic && <SurroundingMap topic={topic} resource={resource} />}</details>
-            <details><summary>이 글의 목차</summary><HeadingNavigation headings={headings} label="모바일 본문 목차" /></details>
+            <details>
+              <summary>이 글의 목차</summary>
+              <HeadingNavigation headings={headings} label="모바일 본문 목차" />
+            </details>
+            <details>
+              <summary>주변 지도</summary>
+              {topic && <SurroundingMap topic={topic} resource={resource} />}
+            </details>
           </div>
           {children}
         </div>
         <aside className="reading-side reading-side-toc">
-          {topic && <SurroundingMap topic={topic} resource={resource} />}
-          <details className="reader-outline"><summary>이 글의 목차</summary>
+          <details className="reader-outline" open>
+            <summary>이 글의 목차</summary>
             <HeadingNavigation headings={headings} />
-            <a href="#reading-title" className="reading-top-link">처음으로 ↑</a>
+            <a href="#reading-title" className="reading-top-link">
+              처음으로 ↑
+            </a>
           </details>
+          {topic && (
+            <details className="reader-map-outline">
+              <summary>주변 지도</summary>
+              <SurroundingMap topic={topic} resource={resource} />
+            </details>
+          )}
         </aside>
       </div>
     </main>

@@ -99,7 +99,7 @@
   letter-spacing: 0.025em;
 }
 .reading-toc {
-  font-size: 0.76rem;
+  font-size: 0.85rem;
   line-height: 1.6;
 }
 .reading-toc ol {
@@ -115,7 +115,7 @@
 }
 .reading-toc-child a {
   padding-left: 1.3rem;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
 }
 .reading-toc a[aria-current="location"] {
   color: var(--accent);
@@ -147,7 +147,7 @@
   flex-wrap: wrap;
   gap: 0.55rem 1rem;
   align-items: center;
-  font-size: 0.73rem;
+  font-size: 0.78rem;
   color: var(--muted);
 }
 .reading-article-meta a {
@@ -174,7 +174,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--muted);
 }
 .reading-tags {
@@ -184,7 +184,7 @@
   margin-top: 1.2rem;
 }
 .reading-tags a {
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   color: var(--muted);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -194,19 +194,6 @@
 .reading-tags a:hover {
   color: var(--accent);
   border-color: var(--accent);
-}
-.reading-prose {
-  margin-top: 2.8rem;
-  line-height: 1.9;
-}
-.reading-prose > :is(p, ul, ol, blockquote, h1, h2, h3, h4, h5, h6, hr) {
-  max-width: 100%;
-  margin-left: 0;
-  margin-right: 0;
-}
-.reading-prose > :is(pre, table, figure, svg) {
-  width: 100%;
-  max-width: 100%;
 }
 .reading-prose [data-reading-heading],
 #reading-title {
@@ -358,8 +345,42 @@
 .reading-side { top:1.25rem; max-height:calc(100svh - 2.5rem); }
 .reading-article-header h1 { font-family:inherit; font-weight:650; font-size:clamp(1.85rem,2.7vw,2.7rem); }
 .reading-article-header { padding-bottom:1.5rem; }
-.reading-prose { margin-top:2rem; font-size:1.02rem; line-height:1.85; }
-.reading-prose > * { min-width:0; max-width:100%; }
+.reading-prose {
+  margin-top: 2rem;
+  font-size: 1.02rem;
+  line-height: 1.75;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-break: strict;
+}
+.reading-prose > :is(p, ul, ol, blockquote, h2, h3, h4) {
+  max-width: 65ch;
+}
+.reading-prose > :is(p, ul, ol, blockquote) {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+.reading-prose > :is(h1, h2, h3, h4, h5, h6, hr) {
+  max-width: 65ch;
+}
+.reading-prose > :is(pre, table, figure, .reading-table-scroll, .code-block-figure) {
+  width: 100%;
+  max-width: 100%;
+}
+.reading-prose :is(a) {
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+.reading-prose :is(pre, pre code, code) {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+.reading-prose .reading-table-scroll :is(th, td) {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-break: strict;
+}
+.reading-prose > * { min-width:0; }
 .reading-prose :is(p,ul,ol,blockquote,figure,pre,table) { margin-left:0; margin-right:0; }
 .reading-prose :is(img,svg,video,iframe,object) { max-width:100%; }
 .reading-prose :is(img,svg,video) { height:auto; }
@@ -369,8 +390,10 @@
 .reading-table-scroll:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
 .reading-prose .reading-table-scroll table { display:table; width:100%; max-width:none; margin:0; overflow:visible; }
 .reading-prose pre { width:100%; max-width:100%; overscroll-behavior-x:contain; }
-.reader-outline { border:0; border-top:1px solid var(--line); padding:.7rem 0 0; margin-top:.8rem; background:transparent; }
-.reader-outline summary { color:var(--muted); font-size:.76rem; min-height:36px; cursor:pointer; }
+.reader-outline { border:0; border-top:1px solid var(--line); padding:.7rem 0 0; margin-top:0; margin-bottom:.8rem; background:transparent; }
+.reader-outline summary { color:var(--muted); font-size:.82rem; min-height:36px; cursor:pointer; }
+.reader-map-outline { border:0; border-top:1px solid var(--line); padding:.7rem 0 0; margin-top:0; background:transparent; }
+.reader-map-outline summary { color:var(--muted); font-size:.82rem; min-height:36px; cursor:pointer; }
 .reading-mobile-controls { display:none; }
 @media(max-width:1199px) { .reading-grid { grid-template-columns:minmax(0,1fr) 340px; gap:1.75rem; } }
 @media(max-width:999px) { .reading-page { max-width:800px; } .reading-grid { display:block; } .reading-side-toc { display:none; } .reading-mobile-controls { display:grid; grid-template-columns:1fr 1fr; align-items:start; } .reading-mobile-controls details[open] { grid-column:1 / -1; } .reading-mobile-controls details > .knowledge-map:not(.knowledge-map--expanded) { max-height:none; overflow:visible; padding:.75rem; } }
