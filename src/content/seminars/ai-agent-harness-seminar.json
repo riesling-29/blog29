@@ -192,7 +192,7 @@
       "title": "요청과 실행 결과가 쌓여 작업이 이어집니다",
       "section": "2. 주문 계산 오류를 고치는 과정",
       "html": "<div class=\"seminar-table-scroll\" role=\"region\" aria-label=\"표\" tabindex=\"0\"><table class=\"medium\">\n<thead><tr><th>순서</th><th>모델이 요청한 작업</th><th>도구가 반환한 관측 결과</th></tr></thead>\n<tbody>\n<tr><td>1. 파일 확인</td><td>계산 함수와 테스트 파일 읽기</td><td>계산식과 예상값 9,900원 확인</td></tr>\n<tr><td>2. 테스트</td><td>현재 코드의 테스트 실행</td><td>10,000 ≠ 9,900, 실패, 종료 코드 1</td></tr>\n<tr><td>3. 수정</td><td>할인 후 금액에 세금을 계산하도록 편집</td><td>파일 변경 완료</td></tr>\n<tr><td>4. 재검증</td><td>같은 테스트 다시 실행</td><td>2개 테스트 통과, 종료 코드 0</td></tr>\n</tbody>\n</table></div>\n<p class=\"takeaway\">작업이 끝나면 모델이 변경 이유와 검증 범위를 보고하고,<br>하네스가 사용자에게 전달합니다. 사용자는 실제 변경과 테스트 범위를 검토합니다.</p>",
-      "notesHtml": "<p>1~4는 블로그 실행 기록의 순서다. 표 아래 문장은 작업 결과를 사용자에게 설명하는 후속 단계를 말한다.<br>\n이 기록은 실제 도구 작업의 발췌이며 특정 제품 내부 모델 API 메시지의 전체 복제본이 아니다.<br>\n원문 파일 확인 명령은 rg -n 'def total_with_discount|return|test_discount_before_tax|assertEqual' <a href=\"http://order.py\">order.py</a> test_order.py다.</p>\n",
+      "notesHtml": "<p>1~4는 블로그 실행 기록의 순서다. 표 아래 문장은 작업 결과를 사용자에게 설명하는 후속 단계를 말한다.<br>\n이 기록은 실제 도구 작업의 발췌이며 특정 제품 내부 모델 API 메시지의 전체 복제본이 아니다.<br>\n원문 파일 확인 명령은 rg -n 'def total_with_discount|return|test_discount_before_tax|assertEqual' <code>order.py</code> <code>test_order.py</code>다.</p>\n",
       "sources": [
         {
           "name": "블로그 원문 · 실제 실행 기록",

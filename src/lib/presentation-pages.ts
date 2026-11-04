@@ -10,7 +10,14 @@ export type PresentationPage = {
   html: string;
   part: number;
   parts: number;
+  readingFallback?: boolean;
 };
+
+export type BuildPresentationOptions = {
+  /** Test hook: force slide-level fallback without changing production fits logic. */
+  forceFallbackSourceIndices?: ReadonlySet<number>;
+};
+
 type Fits = (node: HTMLElement) => boolean;
 const accessories = '.title-row,.product-head,.ev,.source,.note,.code-note,.basis,.iso-caption,.recap-scope,.recap-repeat,.code-label,.lead,.definition,.sr-only,[hidden],[aria-hidden="true"],[data-presentation-repeat]';
 const diagrams = '.agent-system,.recap-flow,.mathline,.vs,.system-loop,.recap-cache';
@@ -131,24 +138,117 @@ export function fitEditorialPage(page: HTMLElement, fits: Fits): HTMLElement[] {
   return result;
 }
 
+export function createReadingFallbackPage(slide: SeminarSlide, sourceIndex: number): HTMLElement {
+  const page = document.createElement('div');
+  page.className = 'editorial-page presentation-reading-fallback';
+  page.dataset.layout = 'text';
+
+  const message = document.createElement('p');
+  message.textContent =
+    '이 장은 발표 화면에 맞지 않아 읽기 화면에서 보여 드립니다.';
+
+  const action = document.createElement('p');
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'presentation-exit-reading';
+  button.dataset.exitToReading = String(sourceIndex);
+  button.textContent = '읽기 화면에서 보기';
+  action.append(button);
+
+  page.append(message, action);
+  return page;
+}
+
+function warnSlideFallback(
+  slide: SeminarSlide,
+  sourceIndex: number,
+  measure: HTMLElement,
+  documentId: string,
+  cause: unknown,
+) {
+  let maxScrollHeight = 0;
+  const limit = measure.clientHeight;
+  try {
+    for (const page of composeSeminarSection(slide, documentId, sourceIndex)) {
+      measure.replaceChildren(page.cloneNode(true));
+      maxScrollHeight = Math.max(maxScrollHeight, measure.scrollHeight);
+    }
+  } catch {
+    /* compose errors are logged via cause */
+  }
+  const detail = cause instanceof Error ? cause.message : String(cause);
+  console.warn(
+    `[Blog29 presentation] "${slide.title}" (${slide.id}): measured body height ${maxScrollHeight}px, limit ${limit}px. ${detail}`,
+  );
+}
+
+function buildSlidePresentationParts(
+  slide: SeminarSlide,
+  sourceIndex: number,
+  documentId: string,
+  measure: HTMLElement,
+  titleMeasure: HTMLElement,
+  fits: Fits,
+  options?: BuildPresentationOptions,
+): HTMLElement[] {
+  if (options?.forceFallbackSourceIndices?.has(sourceIndex)) {
+    throw new Error('forced fallback (test hook)');
+  }
+  titleMeasure.textContent = slide.title;
+  if (titleMeasure.scrollHeight > titleMeasure.clientHeight + 1) {
+    throw new Error(`제목 배치 확인이 필요합니다: ${slide.title}`);
+  }
+  const parts: HTMLElement[] = [];
+  for (const page of composeSeminarSection(slide, documentId, sourceIndex)) {
+    parts.push(...fitEditorialPage(page, fits));
+  }
+  return parts;
+}
+
 export async function buildPresentationPages(
   slides: SeminarSlide[],
   measure: HTMLElement,
   titleMeasure: HTMLElement,
   cancelled: () => boolean,
   documentId: string,
+  options?: BuildPresentationOptions,
 ): Promise<PresentationPage[]> {
   const pages:PresentationPage[]=[];
   for(const [sourceIndex,slide] of slides.entries()) {
     if(cancelled())return [];
-    titleMeasure.textContent=slide.title;
-    if(titleMeasure.scrollHeight>titleMeasure.clientHeight+1)throw new Error(`제목 배치 확인이 필요합니다: ${slide.title}`);
     function fits(node: HTMLElement) {
       measure.replaceChildren(node.cloneNode(true));
-      return measure.scrollHeight<=measure.clientHeight+.5 && measure.scrollWidth<=measure.clientWidth+.5;
+      return (
+        measure.scrollHeight <= measure.clientHeight + 0.5 &&
+        measure.scrollWidth <= measure.clientWidth + 0.5
+      );
     }
-    const parts=composeSeminarSection(slide,documentId,sourceIndex).flatMap(page=>fitEditorialPage(page,fits));
-    parts.forEach((part,i)=>pages.push({sourceIndex,sourceId:slide.id,title:slide.title,section:slide.section,layout:part.dataset.layout as EditorialLayout,html:part.outerHTML,part:i+1,parts:parts.length}));
+    let parts: HTMLElement[];
+    try {
+      parts = buildSlidePresentationParts(
+        slide,
+        sourceIndex,
+        documentId,
+        measure,
+        titleMeasure,
+        fits,
+        options,
+      );
+    } catch (cause) {
+      warnSlideFallback(slide, sourceIndex, measure, documentId, cause);
+      parts = [createReadingFallbackPage(slide, sourceIndex)];
+    }
+    parts.forEach((part,i)=>pages.push({
+      sourceIndex,
+      sourceId:slide.id,
+      title:slide.title,
+      section:slide.section,
+      layout:part.dataset.layout as EditorialLayout,
+      html:part.outerHTML,
+      part:i+1,
+      parts:parts.length,
+      readingFallback: part.classList.contains('presentation-reading-fallback') || undefined,
+    }));
     if(sourceIndex%3===0)await new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));
   }
   measure.replaceChildren();return pages;

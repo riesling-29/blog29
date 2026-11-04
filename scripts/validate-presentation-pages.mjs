@@ -23,6 +23,13 @@ for(const filename of readdirSync(new URL('../src/content/seminars/',import.meta
     for(const [index,slide]of doc.slides.entries()) {
       const group=pages.filter(page=>page.sourceIndex===index);
       assert(group.length>0);
+      if(group.some(page=>page.readingFallback)) {
+        assert.equal(group.length,1);
+        assert(group[0].readingFallback);
+        assert.equal(group[0].parts,1);
+        assert.match(group[0].html,/읽기 화면에서 보기/);
+        continue;
+      }
       assert.equal(group.map(page=>preservedText(root(page.html))).join(''),preservedText(root(slide.html)),`${doc.id}/${slide.id}: exact ordered source text`);
       assert.deepEqual(group.map(page=>page.part),group.map((_,i)=>i+1));
       assert(group.every(page=>page.parts===group.length && page.title===slide.title && page.sourceId===slide.id));
@@ -56,5 +63,41 @@ assert.throws(()=>fitEditorialPage(diagram,()=>false));
 const links=root('<div class="refs"><div class="ref"><div>자료의 출처를 확인할 수 있는 상세 설명입니다.</div><a href="/a">첫 자료</a> · <a href="/b">두번째 자료</a></div><div class="ref"><p>추가 자료의 설명을 같은 순서로 그대로 보존합니다.</p></div></div>');
 const linked=fitEditorialPage(links,node=>node.textContent.length<65);
 assert.equal(linked.map(preservedText).join(''),preservedText(links));
+// One slide forced to fallback must not block the rest of the deck.
+{
+  const sample=JSON.parse(readFileSync(new URL('../src/content/seminars/ai-agent-harness-seminar.json',import.meta.url),'utf8'));
+  const [measure,title]=box(600);
+  const forced=await buildPresentationPages(sample.slides,measure,title,()=>false,sample.id,{forceFallbackSourceIndices:new Set([4])});
+  assert(forced.some(page=>page.readingFallback && page.sourceIndex===4));
+  assert(forced.filter(page=>page.sourceIndex===0 && !page.readingFallback).length>0);
+  assert(forced.filter(page=>page.sourceIndex===5 && !page.readingFallback).length>0);
+}
+// Editorial page totals, no layout (JSDOM scrollHeight stays 0 so fits() is always true).
+{
+  const css=readFileSync(new URL('../src/components/seminar-presentation.css',import.meta.url),'utf8');
+  const {window:layoutWindow}=new JSDOM(`<!doctype html><html><head><style>${css}</style></head><body></body></html>`);
+  for(const name of ['document','Node','Element','HTMLElement','HTMLTableElement']) globalThis[name]=layoutWindow[name];
+  const measure=layoutWindow.document.createElement('div');
+  measure.className='seminar-slide-content master-body';
+  Object.defineProperties(measure,{clientHeight:{get:()=>462},clientWidth:{get:()=>1168},scrollWidth:{get:()=>1168}});
+  const titleMeasure=layoutWindow.document.createElement('h2');
+  titleMeasure.className='master-title';
+  Object.defineProperties(titleMeasure,{clientHeight:{get:()=>104},scrollHeight:{get:()=>104}});
+  const expected={
+    'ai-agent-harness-seminar':40,
+    'persistent-work-agents-seminar':18,
+    'saif-2026-seminar':30,
+  };
+  // Browser layout (Gesso): harness 42, persistent 18, saif 33 — not measurable in this block.
+  for(const [id,count] of Object.entries(expected)) {
+    const doc=JSON.parse(readFileSync(new URL(`../src/content/seminars/${id}.json`,import.meta.url),'utf8'));
+    layoutWindow.document.body.append(measure,titleMeasure);
+    const built=await buildPresentationPages(doc.slides,measure,titleMeasure,()=>false,doc.id);
+    assert.equal(built.length,count,`${id} page count`);
+    assert(!built.some(page=>page.readingFallback),`${id} should not use reading fallback`);
+    measure.replaceChildren();
+  }
+  layoutWindow.close();
+}
 window.close();
 console.log(`Presentation pagination valid: ${count} source/capacity cases; orphan badge/arrow/hidden caption regression, whole code, exact text/links, cancellation. Synthetic capacity only.`);
