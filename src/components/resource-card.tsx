@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Resource } from "@/lib/catalog";
 import { getTopic } from "@/lib/catalog";
-import { formatDate } from "@/utils/formatDate";
+import { formatDateShort } from "@/utils/formatDate";
 export function ResourceCard({
   resource,
   index,
@@ -33,7 +33,10 @@ export function ResourceCard({
           </span>
           <span>{getTopic(resource.primaryTopic)?.label}</span>
           {resource.date && (
-            <time dateTime={resource.date}>{formatDate(resource.date)}</time>
+            <time dateTime={resource.date}>{formatDateShort(resource.date)}</time>
+          )}
+          {resource.readingMinutes != null && resource.format === "article" && (
+            <span className="reading-minutes">약 {resource.readingMinutes}분</span>
           )}
         </div>
         <h3>

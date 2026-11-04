@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 
 :root {
   color-scheme: light;
@@ -20,19 +21,18 @@
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  /* Near-black green, softened ivory and low-key antique gold. */
-  --background: #050907;
-  --foreground: #d7d9ce;
-  --muted: #8e9c91;
+  --background: #0b0c0e;
+  --foreground: #e2e4e9;
+  --muted: #9aa0ab;
   --accent: #b5a16f;
   --accent-hover: #ccbb91;
-  --surface: #0a100d;
-  --paper: #0d1510;
-  --line: #203329;
-  --selection: #273a2e;
+  --surface: #14161a;
+  --paper: #14161a;
+  --line: rgba(255, 255, 255, 0.08);
+  --selection: #252830;
   --terracotta: #b7997c;
-  --wine: #9eaf98;
-  --control-line: #50685a;
+  --wine: #c4a8a0;
+  --control-line: rgba(255, 255, 255, 0.18);
 }
 @theme inline {
   --color-background: var(--background);
@@ -59,7 +59,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family:
-    var(--font-geist-sans), "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    "Pretendard Variable", var(--font-geist-sans), "Apple SD Gothic Neo",
+    "Malgun Gothic", system-ui, sans-serif;
 }
 ::selection {
   background: var(--selection);
@@ -293,6 +294,11 @@ main h1 {
   padding: 0.85rem;
   text-align: left;
   min-width: 8rem;
+  font-variant-numeric: tabular-nums;
+}
+.prose-blog td {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.9em;
 }
 .prose-blog th {
   color: var(--foreground);
@@ -622,9 +628,10 @@ main h1 {
   align-items: center;
   gap: 11px;
   flex-wrap: wrap;
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   line-height: 1.6;
   color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
 .format-label {
   color: var(--accent);
@@ -635,6 +642,8 @@ main h1 {
 }
 .resource-meta time {
   margin-left: auto;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
 }
 .resource-card h3,
 .resource-card h2 {
@@ -674,7 +683,7 @@ main h1 {
   display: inline-block;
   margin-top: 12px;
   color: var(--muted);
-  font-size: 0.67rem;
+  font-size: 0.78rem;
 }
 .resource-card--compact {
   padding: 22px 0;
@@ -1175,7 +1184,7 @@ summary:focus-visible {
   }
   .resource-meta {
     gap: 8px;
-    font-size: 0.65rem;
+    font-size: 0.78rem;
   }
   .resource-card p {
     font-size: 0.83rem;
@@ -1378,7 +1387,7 @@ summary:focus-visible {
 .topic-detail-layout { display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:2.5rem; align-items:start; }
 .topic-map-side { position:sticky; top:1.5rem; }
 .question-heading h2 { scroll-margin-top:2rem; }
-.reader-outline { border:1px solid var(--line); background:var(--paper); padding:1rem; border-radius:4px; }
+.topic-map-side .reader-outline { border:1px solid var(--line); background:var(--paper); padding:1rem; border-radius:4px; }
 
 .reader-back { display:inline-block; font-size:.8rem; color:var(--accent); margin-bottom:1.3rem; min-height:32px; }
 @media(max-width:899px) { .topic-detail-layout { grid-template-columns:1fr; gap:1.5rem; } .topic-map-side { position:static; } .topic-corridor { gap:1.2rem; } .home-recent { margin-top:2.5rem; } }
@@ -1387,3 +1396,130 @@ summary:focus-visible {
 .archive-heading { display:flex; align-items:baseline; gap:1rem; padding:.7rem 0 1.8rem; }
 .archive-heading h1 { font-family:inherit; font-size:1.7rem; font-weight:650; letter-spacing:-.04em; }
 .archive-heading span { color:var(--muted); font-size:.78rem; }
+
+time {
+  font-variant-numeric: tabular-nums;
+}
+
+.reading-prose :is(th, td) {
+  font-variant-numeric: tabular-nums;
+}
+
+.reading-article-dates time,
+.reading-article-meta .reading-minutes {
+  font-variant-numeric: tabular-nums;
+}
+
+.num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shiki / rehype-pretty-code — tokens use --shiki-light/--shiki-dark on each span */
+:root[data-theme="light"] figure[data-rehype-pretty-code-figure] span[style] {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+  font-style: var(--shiki-light-font-style) !important;
+  font-weight: var(--shiki-light-font-weight) !important;
+  text-decoration: var(--shiki-light-text-decoration) !important;
+}
+:root[data-theme="dark"] figure[data-rehype-pretty-code-figure] span[style] {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+.code-block-figure {
+  margin: 1.4rem 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.code-block-wrap {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.code-block-wrap pre {
+  margin: 0;
+  padding: 3rem 1.1rem 1.1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  background: transparent !important;
+  border: 0;
+  border-radius: 0;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.code-block-wrap pre code {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: inherit;
+  color: inherit;
+}
+
+.code-block-wrap--overflow::after {
+  content: "";
+  position: absolute;
+  top: 2.4rem;
+  right: 0;
+  bottom: 0.35rem;
+  width: 2.5rem;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--surface));
+}
+
+.code-block-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem 0.55rem;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 92%, var(--background));
+}
+
+.code-block-lang {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: lowercase;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+.code-block-copy {
+  margin-left: auto;
+  min-height: 32px;
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 0.25rem;
+  background: var(--paper);
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.code-block-copy:hover {
+  color: var(--foreground);
+  border-color: var(--accent);
+}
+
+.code-block-copy:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Resource, Topic } from "@/lib/catalog";
-import { formatDate } from "@/utils/formatDate";
+import { formatDateShort } from "@/utils/formatDate";
 export function ArchiveExplorer({
   resources,
   topics,
@@ -143,7 +143,7 @@ export function ArchiveExplorer({
                   {topics.find((t) => t.id === r.primaryTopic)?.label ??
                     "운영 기록"}
                 </span>
-                {r.date && <time dateTime={r.date}>{formatDate(r.date)}</time>}
+                {r.date && <time dateTime={r.date}>{formatDateShort(r.date)}</time>}
               </div>
               <h2>
                 <Link href={r.href}>

@@ -4,7 +4,23 @@ import { getResources } from "@/lib/catalog";
 import { ResourceCard } from "@/components/resource-card";
 import { TopicCards } from "@/components/topic-cards";
 import { TopicCorridor } from "@/components/knowledge-navigation";
-export const metadata: Metadata = { alternates: { canonical: "/" } };
+import { siteConfig } from "@/config/site";
+import {
+  mergeOpenGraph,
+  mergeTwitter,
+} from "@/config/site-metadata";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: mergeOpenGraph({
+    title: "글·세미나",
+    description: siteConfig.description,
+  }),
+  twitter: mergeTwitter({
+    title: "글·세미나",
+    description: siteConfig.description,
+  }),
+};
 export default function Home() {
   const resources = getResources().filter(r => r.primaryTopic !== "operations");
   return <main className="page-width index-page corridor-home">

@@ -7,7 +7,8 @@ import { getAllPostsMetadata, getPostContent } from "@/lib/posts";
 import { getRelationsFrom, getResource, getTopic } from "@/lib/catalog";
 import { ReadingShell, RelatedResources } from "@/components/reading-shell";
 import { ContextualLink } from "@/components/contextual-link";
-import { formatDate } from "@/utils/formatDate";
+import { CodeBlockFigure } from "@/components/code-block";
+import { formatDateShort } from "@/utils/formatDate";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -45,7 +46,11 @@ export async function generateMetadata({
       publishedTime: post.data.date,
       modifiedTime: post.data.updated,
       tags: post.data.tags,
-      images: ["/og.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.data.title,
+      description: post.data.excerpt,
     },
   };
 }
@@ -90,6 +95,7 @@ export default async function PostPage({ params }: PageProps) {
         )}
       />
     ),
+    figure: CodeBlockFigure,
   };
   const { data, content, headings } = await getPostContent(slug, {
     components,
@@ -107,18 +113,18 @@ export default async function PostPage({ params }: PageProps) {
               {topic?.label}
             </Link>
             <span>{resource.readingPurpose || "글"}</span>
-            <span>약 {resource.readingMinutes}분</span>
+            <span className="reading-minutes">약 {resource.readingMinutes}분</span>
           </div>
           <h1 id="reading-title" tabIndex={-1}>
             {data.title}
           </h1>
           <p className="reading-deck">{data.excerpt}</p>
           <div className="reading-article-dates">
-            <time dateTime={data.date}>{formatDate(data.date)}</time>
+            <time dateTime={data.date}>{formatDateShort(data.date)}</time>
             {data.updated && data.updated !== data.date && (
               <span>
                 수정{" "}
-                <time dateTime={data.updated}>{formatDate(data.updated)}</time>
+                <time dateTime={data.updated}>{formatDateShort(data.updated)}</time>
               </span>
             )}
           </div>
