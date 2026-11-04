@@ -35,6 +35,9 @@ export function ResourceCard({
           {resource.date && (
             <time dateTime={resource.date}>{formatDate(resource.date)}</time>
           )}
+          {resource.readingMinutes != null && resource.format === "article" && (
+            <span className="reading-minutes">약 {resource.readingMinutes}분</span>
+          )}
         </div>
         <h3>
           <Link href={resource.href}>

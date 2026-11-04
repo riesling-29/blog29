@@ -7,6 +7,7 @@ import { getAllPostsMetadata, getPostContent } from "@/lib/posts";
 import { getRelationsFrom, getResource, getTopic } from "@/lib/catalog";
 import { ReadingShell, RelatedResources } from "@/components/reading-shell";
 import { ContextualLink } from "@/components/contextual-link";
+import { CodeBlockFigure } from "@/components/code-block";
 import { formatDate } from "@/utils/formatDate";
 
 interface PageProps {
@@ -45,7 +46,11 @@ export async function generateMetadata({
       publishedTime: post.data.date,
       modifiedTime: post.data.updated,
       tags: post.data.tags,
-      images: ["/og.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.data.title,
+      description: post.data.excerpt,
     },
   };
 }
@@ -90,6 +95,7 @@ export default async function PostPage({ params }: PageProps) {
         )}
       />
     ),
+    figure: CodeBlockFigure,
   };
   const { data, content, headings } = await getPostContent(slug, {
     components,

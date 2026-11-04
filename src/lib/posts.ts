@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import matter from "gray-matter";
 import remarkGfm from "remark-gfm";
+import rehypePrettyCode from "rehype-pretty-code";
 import { compileMDX } from "next-mdx-remote/rsc";
 import type { MDXComponents } from "mdx/types";
 import type { Root, RootContent } from "mdast";
@@ -174,6 +175,18 @@ export async function getPostContent(
           remarkGfm,
           remarkHeadingIds,
           sectionRelationsPlugin(relationSections),
+        ],
+        rehypePlugins: [
+          [
+            rehypePrettyCode,
+            {
+              theme: {
+                light: "github-light",
+                dark: "github-dark",
+              },
+              keepBackground: false,
+            },
+          ],
         ],
       },
     },
