@@ -8,6 +8,7 @@ import type { MDXComponents } from "mdx/types";
 import type { Root, RootContent } from "mdast";
 import type { Plugin } from "unified";
 import { getHeadings, remarkHeadingIds } from "./headings";
+import { blog29CodeLight } from "./code-light-theme";
 
 export type PostData = {
   title: string;
@@ -181,7 +182,7 @@ export async function getPostContent(
             rehypePrettyCode,
             {
               theme: {
-                light: "github-light",
+                light: blog29CodeLight,
                 dark: "github-dark",
               },
               keepBackground: false,

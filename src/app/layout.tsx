@@ -3,6 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/config/site";
+import {
+  siteOpenGraphDefaults,
+  siteTwitterDefaults,
+} from "@/config/site-metadata";
 import { ReadingHistoryProvider } from "@/components/reading-navigation";
 import "./globals.css";
 
@@ -23,27 +27,8 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  openGraph: {
-    type: "website",
-    locale: "ko_KR",
-    siteName: siteConfig.name,
-    title: siteConfig.name,
-    description: siteConfig.description,
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Blog29 — Notes & Observations",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
-    images: ["/og.png"],
-  },
+  openGraph: siteOpenGraphDefaults,
+  twitter: siteTwitterDefaults,
 };
 
 export default function RootLayout({

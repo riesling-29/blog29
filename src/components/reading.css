@@ -263,6 +263,9 @@
   margin: 0.45rem 0 0;
   color: var(--muted);
   font-size: 0.78rem;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-break: strict;
 }
 .reading-relation-destination {
   display: block;

@@ -5,17 +5,21 @@ import { ResourceCard } from "@/components/resource-card";
 import { TopicCards } from "@/components/topic-cards";
 import { TopicCorridor } from "@/components/knowledge-navigation";
 import { siteConfig } from "@/config/site";
+import {
+  mergeOpenGraph,
+  mergeTwitter,
+} from "@/config/site-metadata";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-  openGraph: {
+  openGraph: mergeOpenGraph({
     title: "글·세미나",
     description: siteConfig.description,
-  },
-  twitter: {
+  }),
+  twitter: mergeTwitter({
     title: "글·세미나",
     description: siteConfig.description,
-  },
+  }),
 };
 export default function Home() {
   const resources = getResources().filter(r => r.primaryTopic !== "operations");
