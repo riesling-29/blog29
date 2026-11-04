@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 
 :root {
   color-scheme: light;
@@ -58,7 +59,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family:
-    var(--font-pretendard), var(--font-geist-sans), "Apple SD Gothic Neo",
+    "Pretendard Variable", var(--font-geist-sans), "Apple SD Gothic Neo",
     "Malgun Gothic", system-ui, sans-serif;
 }
 ::selection {
@@ -1183,7 +1184,7 @@ summary:focus-visible {
   }
   .resource-meta {
     gap: 8px;
-    font-size: 0.65rem;
+    font-size: 0.78rem;
   }
   .resource-card p {
     font-size: 0.83rem;
@@ -1405,8 +1406,7 @@ time {
 }
 
 .reading-article-dates time,
-.reading-article-meta span {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
+.reading-article-meta .reading-minutes {
   font-variant-numeric: tabular-nums;
 }
 
@@ -1415,17 +1415,15 @@ time {
   font-variant-numeric: tabular-nums;
 }
 
-/* Shiki / rehype-pretty-code — match site theme via data-theme on html */
-[data-theme="light"] .shiki,
-[data-theme="light"] .shiki span {
+/* Shiki / rehype-pretty-code — tokens use --shiki-light/--shiki-dark on each span */
+:root[data-theme="light"] figure[data-rehype-pretty-code-figure] span[style] {
   color: var(--shiki-light) !important;
   background-color: var(--shiki-light-bg) !important;
   font-style: var(--shiki-light-font-style) !important;
   font-weight: var(--shiki-light-font-weight) !important;
   text-decoration: var(--shiki-light-text-decoration) !important;
 }
-[data-theme="dark"] .shiki,
-[data-theme="dark"] .shiki span {
+:root[data-theme="dark"] figure[data-rehype-pretty-code-figure] span[style] {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
   font-style: var(--shiki-dark-font-style) !important;
@@ -1451,7 +1449,7 @@ time {
 
 .code-block-wrap pre {
   margin: 0;
-  padding: 2.75rem 1.1rem 1.1rem;
+  padding: 3rem 1.1rem 1.1rem;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   background: transparent !important;

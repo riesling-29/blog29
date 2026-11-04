@@ -169,6 +169,9 @@
   color: var(--muted);
   line-height: 1.85;
   margin: 0 0 1.5rem;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-break: strict;
 }
 .reading-article-dates {
   display: flex;
@@ -347,21 +350,21 @@
 .reading-article-header { padding-bottom:1.5rem; }
 .reading-prose {
   margin-top: 2rem;
-  font-size: 1.02rem;
+  font-size: 1.09375rem;
   line-height: 1.75;
   word-break: keep-all;
   overflow-wrap: break-word;
   line-break: strict;
 }
 .reading-prose > :is(p, ul, ol, blockquote, h2, h3, h4) {
-  max-width: 65ch;
+  max-width: 680px;
 }
 .reading-prose > :is(p, ul, ol, blockquote) {
   margin-top: 0;
   margin-bottom: 1.5em;
 }
 .reading-prose > :is(h1, h2, h3, h4, h5, h6, hr) {
-  max-width: 65ch;
+  max-width: 680px;
 }
 .reading-prose > :is(pre, table, figure, .reading-table-scroll, .code-block-figure) {
   width: 100%;
@@ -369,7 +372,6 @@
 }
 .reading-prose :is(a) {
   overflow-wrap: anywhere;
-  word-break: break-all;
 }
 .reading-prose :is(pre, pre code, code) {
   overflow-wrap: anywhere;

@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   title: "아카이브 · 통합 검색",
   description: "Blog29의 글과 세미나를 주제와 형식으로 찾아보세요.",
   alternates: { canonical: "/archive" },
+  openGraph: {
+    title: "아카이브 · 통합 검색",
+    description: "Blog29의 글과 세미나를 주제와 형식으로 찾아보세요.",
+  },
+  twitter: {
+    title: "아카이브 · 통합 검색",
+    description: "Blog29의 글과 세미나를 주제와 형식으로 찾아보세요.",
+  },
 };
 export default function ArchivePage() {
   return (
