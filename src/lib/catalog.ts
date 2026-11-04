@@ -165,6 +165,11 @@ const articleClassification: Record<string, ArticleClassification> = {
     topics: ["process-intelligence"],
     readingPurpose: "입문",
   },
+  "agent-company-process-audit": {
+    primaryTopic: "process-intelligence",
+    topics: ["process-intelligence"],
+    readingPurpose: "사례",
+  },
   "ocel-2-overview": {
     primaryTopic: "process-intelligence",
     topics: ["process-intelligence"],
