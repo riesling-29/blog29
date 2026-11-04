@@ -105,7 +105,12 @@ export const topics: Topic[] = [
       {
         label: "기술을 업무의 결과로 연결하려면?",
         description: "포럼의 발표와 실무 적용의 질문을 연결해 읽습니다.",
-        resourceIds: ["saif-2026", "saif-2026-seminar", "agent-army-pr-1000"],
+        resourceIds: [
+          "saif-2026",
+          "saif-2026-seminar",
+          "agent-army-pr-1000",
+          "new-pc-crash-debugging",
+        ],
       },
     ],
   },
@@ -175,6 +180,11 @@ const articleClassification: Record<string, ArticleClassification> = {
     topics: ["ai-practice", "ai-agents"],
     readingPurpose: "깊이 읽기",
     companionIds: ["saif-2026-seminar"],
+  },
+  "new-pc-crash-debugging": {
+    primaryTopic: "ai-practice",
+    topics: ["ai-practice"],
+    readingPurpose: "사례",
   },
   welcome: {
     primaryTopic: "operations",
