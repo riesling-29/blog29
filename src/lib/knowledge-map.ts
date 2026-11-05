@@ -32,6 +32,7 @@ const articleLabels: Record<string, string> = {
   "black-company-grok-bot": "에이전트 감사",
   "ai-subscription-api-local-llm-cost-2026": "구독·API·로컬",
   "new-pc-crash-debugging": "PC 크래시",
+  "nvidia-auto-ontology-review": "auto-ontology",
   "saif-2026": "SAIF 2026",
   "saif-2026-seminar": "SAIF 발표",
   welcome: "운영 안내",
