@@ -216,6 +216,11 @@ const articleClassification: Record<string, ArticleClassification> = {
     topics: ["ai-practice"],
     readingPurpose: "사례",
   },
+  "nvidia-auto-ontology-review": {
+    primaryTopic: "ai-practice",
+    topics: ["ai-practice"],
+    readingPurpose: "비교·판단",
+  },
   welcome: {
     primaryTopic: "operations",
     topics: ["operations"],
