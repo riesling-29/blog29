@@ -195,6 +195,11 @@ const articleClassification: Record<string, ArticleClassification> = {
     topics: ["process-intelligence"],
     readingPurpose: "사례",
   },
+  "voice-ai-future-workspace": {
+    primaryTopic: "ai-practice",
+    topics: ["ai-practice"],
+    readingPurpose: "연구·전망",
+  },
   "ai-subscription-api-local-llm-cost-2026": {
     primaryTopic: "ai-practice",
     topics: ["ai-practice"],
