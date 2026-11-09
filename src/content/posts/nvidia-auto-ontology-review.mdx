@@ -1,0 +1,94 @@
+---
+title: "NVIDIA auto-ontology는 사내 DB 위에 온톨로지를 자동으로 만들어 자연어 질의를 SQL로 바꾼다"
+date: "2026-11-05"
+excerpt: "NVIDIA가 공개한 auto-ontology의 동작 방식, 코드 구조와 성숙도, 실행 요구사항을 정리하고, 프로세스 마이닝·투자 리서치 DB·GB10 로컬 LLM 환경에 쓸 수 있는지 확인된 사실과 추측을 나눠 검토했습니다."
+category: "AI"
+tags: ["온톨로지", "text-to-SQL", "NVIDIA", "MCP", "로컬 LLM"]
+featured: false
+draft: false
+---
+
+[NVIDIA/auto-ontology](https://github.com/NVIDIA/auto-ontology)는 회사 데이터베이스 위에 온톨로지를 자동으로 만들어 주는 도구입니다. 여기서 온톨로지는 업무 용어, 지표, 엔티티, 관계를 정의해 둔 사전을 뜻합니다. LLM 에이전트는 이 정의를 참고해 자연어 질문을 SQL로 바꾸고 답을 냅니다. 서버, 웹 UI, MCP 서버가 함께 들어 있습니다.
+
+우리 팀은 이 저장소를 프로세스 마이닝, 투자 리서치 데이터, 로컬 LLM 운영에 쓸 수 있을지 보려고 읽었습니다. 결론부터 말하면 지금은 참고 대상이고, 조건이 맞으면 작은 시범을 해 볼 만합니다.
+
+## 동작 방식
+
+입력은 DB 연결 정보입니다. 커넥터는 Postgres, Snowflake, Databricks, MySQL, Trino, Hive, HeavyDB, DuckDB 등을 지원합니다.
+
+처리 순서는 다음과 같습니다. 먼저 스키마와 메타데이터를 수집하고, 카탈로그와 온톨로지를 자동 생성해 Postgres에 저장합니다. 임베딩은 pgvector에 넣습니다. 질문이 들어오면 엔티티를 추출하고 검색과 재순위를 거친 뒤, LangGraph 에이전트가 SQL을 생성하고 검증한 다음 실행합니다. PII 탐지 모듈도 들어 있습니다.
+
+출력은 답변, 실행한 SQL, 출처(provenance)입니다. 웹 UI(Next.js), API, MCP 서버, 에이전트 스킬 형태로 쓸 수 있습니다.
+
+모델은 NVIDIA NIM의 OpenAI 호환 API를 씁니다. 기본값은 다음과 같고, 엔드포인트는 환경 변수로 바꿀 수 있습니다.
+
+- LLM: nemotron-3.5-lightning-30b-a3b
+- 임베딩: nemotron-3-embed-1b
+- 재순위: llama-nemotron-rerank-vl-1b-v2
+
+이름에 "지식 그래프"가 나오지만 Neo4j나 cuGraph 같은 그래프 DB는 핵심 의존성이 아닙니다. Neo4j는 문서에 몇 번 언급될 뿐이고, 그래프 정보는 Postgres 안에 저장합니다.
+
+## 코드 구조와 성숙도
+
+shallow clone 기준으로 본 구조입니다.
+
+- `auto_ontology/`: 백엔드 Python 파일 434개, 테스트 포함 약 12.2만 줄. catalog(온톨로지 모델과 저장), connectors, dal(데이터 접근), ingestion_service, retrieval(text_to_sql, entity_coverage, kumo 등), semantic, pii_detection, server(FastAPI)로 나뉩니다.
+- `frontend/`: Next.js 웹 UI와 Better Auth 기반 인증
+- `mcp/`: MCP 서버
+- `skills/`: 에이전트용 스킬 3종
+- 그 밖에 helm, docker-compose.yml, alembic(DB 마이그레이션), docs(인증, 연결, 대화 API, MCP, OpenAPI)
+
+2026-11-05 KST 기준 수치는 아래와 같습니다.
+
+| 항목 | 값 |
+| --- | --- |
+| 스타 / 포크 | 4,900 / 394 |
+| 열린 이슈 | 42 |
+| 생성일 | 2026-04-28 06:45 KST |
+| 마지막 push | 2026-11-05 04:31 KST |
+| 버전 | 1.1.0 |
+| 테스트 파일 / CI 워크플로 | 약 159개 / 13개 |
+| 라이선스 | Apache-2.0 |
+
+전체 커밋 수는 확인하지 못했습니다. 최근 커밋 50개만 받았고, 그 안의 기여자는 약 13명으로 대부분 NVIDIA 직원이었습니다. GitHub API에서 릴리스 목록은 비어 있었습니다. 문서는 잘 갖춰져 있습니다. Apache-2.0이라 상업적으로 쓸 수 있지만, 외부 기여는 현재 받지 않습니다.
+
+## 실행 요구사항
+
+Docker Compose v2, uv, pgvector가 설치된 Postgres가 필요합니다. 모델은 build.nvidia.com에서 받은 NVIDIA API 키로 호스팅 API를 쓰거나, 직접 띄운 NIM 또는 OpenAI 호환 엔드포인트를 연결합니다. 호스팅 API를 쓰면 로컬 GPU가 없어도 되고, NIM을 직접 띄우면 GPU가 필요합니다. Vault는 선택 사항입니다.
+
+## 우리 팀 업무와의 관련성
+
+### 프로세스 마이닝(OCEL 2.0, PIX)
+
+확인된 사실: 프로세스 마이닝이나 이벤트 로그 분석 기능은 없습니다.
+
+추측: OCEL 로그를 Postgres나 DuckDB 테이블로 적재하면 "주문 지연 건수는?" 같은 질문을 자연어로 받는 층으로는 쓸 수 있습니다. DFG나 적합성 검사는 여전히 PIX가 맡아야 합니다. 이벤트 로그의 시간 순서와 객체 간 관계를 자동 온톨로지가 제대로 잡는지는 미검증입니다.
+
+### 투자 리서치 DB
+
+확인된 사실: 정형 DB가 대상입니다. 공시나 뉴스 같은 비정형 문서에서 관계를 뽑아내는 기능은 없습니다.
+
+추측: 종목, 기업, 인물 관계를 이미 표로 정리해 둔 DB가 있다면 질의 정확도를 높이는 데 도움이 될 수 있습니다. 문서에서 그래프를 뽑는 일에는 다른 도구가 필요합니다.
+
+### GB10(ARM64) 로컬 LLM
+
+확인된 사실: 모델 엔드포인트를 바꿀 수 있습니다. 기본 LLM은 30B급에 활성 파라미터 3B인 MoE 모델이라 로컬 구동 후보로 보입니다.
+
+미검증: NIM 컨테이너와 이 프로젝트의 Docker 이미지가 arm64를 지원하는지는 확인하지 못했습니다. 지원한다면 데이터를 밖으로 내보내지 않고 운영할 수 있을 것입니다.
+
+## 위험과 한계
+
+- 생긴 지 6개월 남짓이고 변경이 잦습니다.
+- 공식 릴리스가 없습니다.
+- 외부 기여를 받지 않아 문제를 직접 고쳐 올리기 어렵습니다.
+- 웹 UI, 인증, Vault, Helm까지 포함한 무거운 스택입니다.
+- 기본 설정이 NVIDIA 모델 생태계에 맞춰져 있습니다.
+
+## 권고
+
+지금은 참고만 하고, 조건부로 시범을 해 볼 것을 권합니다. 이벤트 로그 분석이나 비정형 문서의 관계 추출처럼 우리 팀의 핵심 문제를 직접 풀어 주지는 않습니다. 다만 GB10 위에서 사내 데이터를 자연어로 묻는 층으로는 후보가 됩니다.
+
+다음 단계로 두 가지를 잡았습니다.
+
+1. GB10을 확보하면 arm64에서 docker-compose와 로컬 nemotron 엔드포인트로 샘플 DB를 띄워 봅니다.
+2. OCEL 2.0 샘플을 Postgres에 적재하고, 자연어 질의 결과의 정확도를 PIX 분석 결과와 비교합니다.
